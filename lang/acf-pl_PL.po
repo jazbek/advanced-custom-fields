@@ -1,0 +1,871 @@
+# Copyright (C) 2010 
+# This file is distributed under the same license as the  package.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-03-31 15:26+0100\n"
+"PO-Revision-Date: 2012-03-31 15:28+0100\n"
+"Last-Translator: Bartosz Arendt <info@digitalfactory.pl>\n"
+"Language-Team: Digital Factory <info@digitalfactory.pl>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Polish\n"
+"X-Poedit-Country: POLAND\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;_x;_n;_getttext\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../acf.php:209
+msgid "Custom Fields"
+msgstr "Własne pola"
+
+#: ../acf.php:210
+msgid "Settings"
+msgstr "Ustawienia"
+
+#: ../acf.php:211
+msgid "Upgrade"
+msgstr "Aktualizacja"
+
+#: ../acf.php:407
+#: ../core/api.php:492
+#: ../core/options_page.php:184
+msgid "Validation Failed. One or more fields below are required."
+msgstr "Walidacja nie powiodła się. Jedno lub więcej pól jest wymaganych."
+
+#: ../acf.php:708
+msgid "Error: Field Type does not exist!"
+msgstr "Błąd: Takie pole nie istnieje!"
+
+#: ../core/options_page.php:62
+#: ../core/options_page.php:74
+msgid "Options"
+msgstr "Opcje"
+
+#: ../core/options_page.php:290
+msgid "Publish"
+msgstr "Opublikuj"
+
+#: ../core/screen_extra.php:18
+msgid "Advanced Custom Fields v"
+msgstr "Zaawansowane własne pola v"
+
+#: ../core/screen_extra.php:21
+msgid "Changelog"
+msgstr "Dziennik zmian"
+
+#: ../core/screen_extra.php:22
+msgid "See what's new in"
+msgstr "Zobacz co słychać nowego w"
+
+#: ../core/screen_extra.php:25
+msgid "Resources"
+msgstr "Zasoby"
+
+#: ../core/screen_extra.php:26
+msgid "Watch tutorials, read documentation, learn the API code and find some tips &amp; tricks for your next web project."
+msgstr "Obejrzyj tutorial, przeczytaj dokumentację, naucz się API i poznaj parę tricków do przydatnych w Twoim kolejnym projekcie."
+
+#: ../core/screen_extra.php:27
+msgid "View the plugins website"
+msgstr "Odwiedź witrynę wtyczki"
+
+#: ../core/screen_extra.php:30
+msgid "Support"
+msgstr "Pomoc"
+
+#: ../core/screen_extra.php:31
+msgid "Join the growing community over at the support forum to share ideas, report bugs and keep up to date with ACF"
+msgstr "Dołącz do rosnącej społeczności użytkowników i forum pomocy, aby dzielić się pomysłami, zgłąszać błedy i być na bierząco z tą wtyczką."
+
+#: ../core/screen_extra.php:32
+msgid "View the Support Forum"
+msgstr "Zobacz forum pomocy"
+
+#: ../core/screen_extra.php:35
+msgid "Developed by"
+msgstr "Opracowana przez"
+
+#: ../core/screen_extra.php:36
+msgid "Vote for ACF"
+msgstr "Głosuj na tę wtyczkę"
+
+#: ../core/screen_extra.php:36
+msgid "Twitter"
+msgstr "Twitter"
+
+#: ../core/screen_extra.php:36
+msgid "Blog"
+msgstr "Blog"
+
+#: ../core/screen_extra_activate.php:4
+msgid "Unlock Special Fields."
+msgstr "Odblokuj pola specjalne"
+
+#: ../core/screen_extra_activate.php:5
+msgid "Special Fields can be unlocked by purchasing an activation code. Each activation code can be used on multiple sites."
+msgstr "Pola specjalne można odblokować kupując kod aktywacyjny. Każdy kod aktywacyjny może być wykorzystywany wielokrotnie."
+
+#: ../core/screen_extra_activate.php:5
+msgid "Visit the Plugin Store"
+msgstr "Odwiedź sklep wtyczki"
+
+#: ../core/screen_extra_activate.php:9
+msgid "Field Type"
+msgstr "Rodzaj pola"
+
+#: ../core/screen_extra_activate.php:10
+msgid "Status"
+msgstr "Status"
+
+#: ../core/screen_extra_activate.php:11
+msgid "Activation Code"
+msgstr "Kod aktywacyjny"
+
+#: ../core/screen_extra_activate.php:23
+msgid "Repeater"
+msgstr "Pole powtarzalne"
+
+#: ../core/screen_extra_activate.php:25
+#: ../core/screen_extra_activate.php:57
+msgid "Active"
+msgstr "Aktywne"
+
+#: ../core/screen_extra_activate.php:29
+#: ../core/screen_extra_activate.php:61
+msgid "Inactive"
+msgstr "Nieaktywne"
+
+#: ../core/screen_extra_activate.php:55
+msgid "Options Page"
+msgstr "Strona opcji"
+
+#: ../core/screen_extra_activate.php:84
+msgid "Unlock Fields"
+msgstr "Odblokuj pola"
+
+#: ../core/screen_extra_export.php:4
+msgid "Import"
+msgstr "Import"
+
+#: ../core/screen_extra_export.php:6
+msgid "Have an ACF export file? Import it here."
+msgstr "Wyeksportowałeś plik z polami? Możesz go zaimportować tutaj."
+
+#: ../core/screen_extra_export.php:13
+msgid "Export"
+msgstr "Eksport"
+
+#: ../core/screen_extra_export.php:14
+msgid "Want to create an ACF export file? Just select the desired ACF's and hit Export"
+msgstr "Chcesz stworzyć i wyeksportować plik z polami? Wybierz pola i kliknij Eksport"
+
+#: ../core/screen_extra_export.php:53
+msgid "Import / Export"
+msgstr "Import / Eksport"
+
+#: ../core/actions/export.php:19
+msgid "No ACF groups selected"
+msgstr "Nie zaznaczono żadnej grupy pól"
+
+#: ../core/actions/init.php:107
+msgid "Field&nbsp;Groups"
+msgstr "Pole&nbsp;Grupy"
+
+#: ../core/actions/init.php:108
+msgid "Advanced Custom Fields"
+msgstr "Zaawansowane własne pola"
+
+#: ../core/actions/init.php:109
+msgid "Add New"
+msgstr "Dodaj nowe"
+
+#: ../core/actions/init.php:110
+msgid "Add New Field Group"
+msgstr "Dodaj nową grupę pól"
+
+#: ../core/actions/init.php:111
+msgid "Edit Field Group"
+msgstr "Edytuj grupę pól"
+
+#: ../core/actions/init.php:112
+msgid "New Field Group"
+msgstr "Nowa grupa pól"
+
+#: ../core/actions/init.php:113
+msgid "View Field Group"
+msgstr "Zobacz grupę pól"
+
+#: ../core/actions/init.php:114
+msgid "Search Field Groups"
+msgstr "Szukaj grupy pól"
+
+#: ../core/actions/init.php:115
+msgid "No Field Groups found"
+msgstr "Nie znaleziono grupy pól"
+
+#: ../core/actions/init.php:116
+msgid "No Field Groups found in Trash"
+msgstr "Brak grup pól w koszu"
+
+#: ../core/admin/fields_meta_box.php:44
+#: ../core/admin/meta_box_fields.php:50
+msgid "Field Order"
+msgstr "Kolejność pola"
+
+#: ../core/admin/fields_meta_box.php:45
+#: ../core/admin/fields_meta_box.php:105
+#: ../core/admin/meta_box_fields.php:51
+#: ../core/admin/meta_box_fields.php:91
+msgid "Field Label"
+msgstr "Etykieta pola"
+
+#: ../core/admin/fields_meta_box.php:46
+#: ../core/admin/fields_meta_box.php:124
+#: ../core/admin/meta_box_fields.php:52
+#: ../core/admin/meta_box_fields.php:107
+msgid "Field Name"
+msgstr "Nazwa pola"
+
+#: ../core/admin/fields_meta_box.php:55
+msgid "No fields. Click the \"+ Add Field button\" to create your first field."
+msgstr "Brak pól. Kliknij przycisk \"+ Dodaj pole\" aby utworzyć pierwsze własne pole."
+
+#: ../core/admin/fields_meta_box.php:80
+#: ../core/admin/meta_box_fields.php:74
+msgid "Edit"
+msgstr "Edytuj"
+
+#: ../core/admin/fields_meta_box.php:81
+#: ../core/admin/meta_box_fields.php:76
+msgid "Delete"
+msgstr "Usuń"
+
+#: ../core/admin/fields_meta_box.php:106
+#: ../core/admin/meta_box_fields.php:92
+msgid "This is the name which will appear on the EDIT page"
+msgstr "To jest nawa, która pojawi się na stronie edycji"
+
+#: ../core/admin/fields_meta_box.php:125
+#: ../core/admin/meta_box_fields.php:108
+msgid "Single word, no spaces. Underscores and dashes allowed"
+msgstr "Pojedyncze słowo, bez spacji. Dozwolone są myślniki i podkreślniki"
+
+#: ../core/admin/fields_meta_box.php:158
+#: ../core/admin/meta_box_fields.php:135
+msgid "Field Instructions"
+msgstr "Instrukcje pola"
+
+#: ../core/admin/fields_meta_box.php:159
+#: ../core/admin/meta_box_fields.php:136
+msgid "Instructions for authors. Shown when submitting data"
+msgstr "Instrukcje dla autorów. Będą widoczne w trakcie wpisywania danych"
+
+#: ../core/admin/fields_meta_box.php:221
+#: ../core/admin/meta_box_fields.php:190
+msgid "+ Add Field"
+msgstr "+ Dodaj pole"
+
+#: ../core/admin/meta_box_acf.php:14
+msgid "Special Fields can be unlocked by purchasing a license key. Each key can be used on multiple sites."
+msgstr "Pola specjalne można odblokować kupując kod aktywacyjny. Każdy kod aktywacyjny może być wykorzystywany wielokrotnie."
+
+#: ../core/admin/meta_box_acf.php:26
+#: ../core/admin/page_settings.php:52
+msgid "Repeater Field"
+msgstr "Pole powtarzalne"
+
+#: ../core/admin/meta_box_acf.php:94
+#: ../core/admin/page_settings.php:166
+msgid "ACF will create a .xml export file which is compatible with the native WP import plugin."
+msgstr "Wtyczka utworzy plik eksportu .xml, który jest kompatybilny z domyślną wtyczką importu plików."
+
+#: ../core/admin/meta_box_acf.php:99
+msgid "Select which ACF groups to export"
+msgstr "Wybierz, które grupy chcesz wyeksportować"
+
+#: ../core/admin/meta_box_acf.php:143
+msgid "Have an ACF export file? Import it here. Please note that v2 and v3 .xml files are not compatible."
+msgstr "Wyeksportowałeś plik z polami? Zaimportuj go tutaj. Zwróć uwagę, że wersje 2 i 3 plików .xml nie są ze sobą kompatybilne."
+
+#: ../core/admin/meta_box_acf.php:148
+msgid "Import your .xml file"
+msgstr "Zaimportuj plik .xml"
+
+#: ../core/admin/meta_box_fields.php:17
+msgid "New Field"
+msgstr "Nowe pole"
+
+#: ../core/admin/meta_box_fields.php:38
+msgid "Move to trash. Are you sure?"
+msgstr "Przenieś do kosza. Jesteś pewny?"
+
+#: ../core/admin/meta_box_fields.php:60
+msgid "No fields. Click the <strong>+ Add Field</strong> button to create your first field."
+msgstr "Brak pól. Kliknij przycisk <strong>+ Dodaj pole</strong> aby utworzyć pierwsze własne pole."
+
+#: ../core/admin/meta_box_fields.php:71
+#: ../core/admin/meta_box_fields.php:74
+msgid "Edit this Field"
+msgstr "Edytuj to pole"
+
+#: ../core/admin/meta_box_fields.php:75
+msgid "Read documentation for this field"
+msgstr "Przeczytaj dokumentację tego pola"
+
+#: ../core/admin/meta_box_fields.php:75
+msgid "Docs"
+msgstr "Dokumentacja"
+
+#: ../core/admin/meta_box_fields.php:76
+msgid "Delete this Field"
+msgstr "Usuń to pole"
+
+#: ../core/admin/meta_box_fields.php:148
+msgid "Required?"
+msgstr "Wymagane?"
+
+#: ../core/admin/meta_box_fields.php:171
+msgid "Save Field"
+msgstr "Zapisz pole"
+
+#: ../core/admin/meta_box_fields.php:176
+msgid "Close Field"
+msgstr "Zamknij to pole"
+
+#: ../core/admin/meta_box_location.php:25
+msgid "Rules"
+msgstr "Warunki"
+
+#: ../core/admin/meta_box_location.php:26
+msgid "Create a set of rules to determine which edit screens will use these advanced custom fields"
+msgstr "Utwórz zestaw warunków, które określą w których miejscach będą wykorzystane określone własne pola"
+
+#: ../core/admin/meta_box_location.php:94
+msgid "match"
+msgstr "pasuje"
+
+#: ../core/admin/meta_box_location.php:102
+msgid "of the above"
+msgstr "do pozostałych"
+
+#: ../core/admin/meta_box_options.php:13
+msgid "Order No."
+msgstr "Nr w kolejności"
+
+#: ../core/admin/meta_box_options.php:14
+msgid "Field groups are created in order <br />from lowest to highest."
+msgstr "Grupy pól są tworzone w kolejności <br />od najniższej do najwyższej."
+
+#: ../core/admin/meta_box_options.php:30
+msgid "Position"
+msgstr "Pozycja"
+
+#: ../core/admin/meta_box_options.php:50
+msgid "Style"
+msgstr "Styl"
+
+#: ../core/admin/meta_box_options.php:70
+#: ../core/admin/options_meta_box.php:18
+msgid "Show on page"
+msgstr "Wyświetl na stronie"
+
+#: ../core/admin/meta_box_options.php:71
+#: ../core/admin/options_meta_box.php:19
+msgid "Deselect items to hide them on the edit page"
+msgstr "Usuń elementy, które chcesz ukryć na stronie edycji."
+
+#: ../core/admin/meta_box_options.php:72
+#: ../core/admin/options_meta_box.php:20
+msgid "If multiple ACF groups appear on an edit page, the first ACF group's options will be used. The first ACF group is the one with the lowest order number."
+msgstr "Jeśli na stronie edycji znajduje się kilka grup pól, zostaną zastosowane ustawienia z pierwszej z nich. Pierwsza grupa pól to ta, która ma najmniejszy numer w kolejności."
+
+#: ../core/admin/options_meta_box.php:49
+msgid "Field Group Layout"
+msgstr "Szablon grupy pól"
+
+#: ../core/admin/options_meta_box.php:50
+msgid "Display your field group with or without a box"
+msgstr "Wyświetl grupę pól w ramce lub bez niej"
+
+#: ../core/admin/options_page.php:247
+msgid "Settings saved"
+msgstr "Ustawienia zostały zapisane"
+
+#: ../core/admin/options_page.php:258
+msgid "Save"
+msgstr "Zapisz"
+
+#: ../core/admin/options_page.php:372
+msgid "No Options"
+msgstr "Brak opcji"
+
+#: ../core/admin/options_page.php:376
+msgid "Sorry, it seems there are no fields for this options page."
+msgstr "Przykro mi, ale ta strona opcji nie zawiera pól."
+
+#: ../core/admin/page_acf.php:20
+msgid "Read documentation, learn the functions and find some tips &amp; tricks for your next web project."
+msgstr "Przeczytaj dokumentację, naucz się funkcji i poznaj parę tricków, które mogą przydać Ci się w Twoim kolejnym projekcie."
+
+#: ../core/admin/page_acf.php:21
+msgid "View the ACF website"
+msgstr "Odwiedź stronę wtyczki"
+
+#: ../core/admin/page_acf.php:26
+msgid "Created by"
+msgstr "Stworzone przez"
+
+#: ../core/admin/page_acf.php:29
+msgid "Vote"
+msgstr "Głosuj"
+
+#: ../core/admin/page_acf.php:30
+msgid "Follow"
+msgstr "Śledź"
+
+#: ../core/admin/page_settings.php:23
+msgid "Advanced Custom Fields Settings"
+msgstr "Ustawienia Zaawansowanych własnych pól"
+
+#: ../core/admin/page_settings.php:40
+msgid "Activate Add-ons."
+msgstr "Aktywuj dodatki."
+
+#: ../core/admin/page_settings.php:72
+msgid "Flexible Content Field"
+msgstr "Pole z elastyczną zawartością"
+
+#: ../core/admin/page_settings.php:115
+msgid "Add-ons can be unlocked by purchasing a license key. Each key can be used on multiple sites."
+msgstr "Dodatki można odblokować kupując kod aktywacyjny. Każdy kod aktywacyjny może być wykorzystywany na dowolnej liczbie stron."
+
+#: ../core/admin/page_settings.php:115
+msgid "Find Add-ons"
+msgstr "Znajdźj dodatki."
+
+#: ../core/admin/page_settings.php:133
+msgid "Export Field Groups to XML"
+msgstr "Eksportuj Grupy pól do XML"
+
+#: ../core/admin/page_settings.php:169
+msgid "Export XML"
+msgstr "Eksport XML"
+
+#: ../core/admin/page_settings.php:175
+msgid "Import Field Groups"
+msgstr "Importuj Grupy pól"
+
+#: ../core/admin/page_settings.php:177
+msgid "Navigate to the"
+msgstr "Przejdź do"
+
+#: ../core/admin/page_settings.php:177
+msgid "Import Tool"
+msgstr "Narzędzi Importu"
+
+#: ../core/admin/page_settings.php:177
+msgid "and select WordPress"
+msgstr "i wybierz Wordpress"
+
+#: ../core/admin/page_settings.php:178
+msgid "Install WP import plugin if prompted"
+msgstr "Zaintaluj wtyczkę importu WP, jeśli zostaniesz o to poproszony"
+
+#: ../core/admin/page_settings.php:179
+msgid "Upload and import your exported .xml file"
+msgstr "Wgraj i zaimportuj wyeksportowany wcześniej plik .xml"
+
+#: ../core/admin/page_settings.php:180
+msgid "Select your user and ignore Import Attachments"
+msgstr "Wybierz użytkownika i ignoruj Importowanie załączników"
+
+#: ../core/admin/page_settings.php:181
+msgid "That's it! Happy WordPressing"
+msgstr "Gotowe!"
+
+#: ../core/admin/page_settings.php:200
+msgid "Export Field Groups to PHP"
+msgstr "Eksportuj Grupy pól do PHP"
+
+#: ../core/admin/page_settings.php:233
+msgid "ACF will create the PHP code to include in your theme"
+msgstr "ACF wygeneruje kod PHP, który możesz wkleić do swego szablonu"
+
+#: ../core/admin/page_settings.php:236
+msgid "Create PHP"
+msgstr "Utwórz PHP"
+
+#: ../core/admin/page_settings.php:242
+#: ../core/admin/page_settings.php:270
+msgid "Register Field Groups with PHP"
+msgstr "Utwórz grupę pól z PHP"
+
+#: ../core/admin/page_settings.php:244
+#: ../core/admin/page_settings.php:272
+msgid "Copy the PHP code generated"
+msgstr "Skopij wygenerowany kod PHP"
+
+#: ../core/admin/page_settings.php:245
+#: ../core/admin/page_settings.php:273
+msgid "Paste into your functions.php file"
+msgstr "Wklej do pliku functions.php"
+
+#: ../core/admin/page_settings.php:246
+#: ../core/admin/page_settings.php:274
+msgid "To activate any Add-ons, edit and use the code in the first few lines."
+msgstr "Aby aktywować dodatki, edytuj i użyj kodu w pierwszych kilku liniach."
+
+#: ../core/admin/page_settings.php:267
+msgid "Back to settings"
+msgstr "Wróć do ustawień"
+
+#: ../core/admin/page_settings.php:295
+msgid ""
+"/**\n"
+" * Activate Add-ons\n"
+" * Here you can enter your activation codes to unlock Add-ons to use in your theme. \n"
+" * Since all activation codes are multi-site licenses, you are allowed to include your key in premium themes. \n"
+" * Use the commented out code to update the database with your activation code. \n"
+" * You may place this code inside an IF statement that only runs on theme activation.\n"
+" */"
+msgstr ""
+"/**\n"
+" * Aktywuj dodatki\n"
+" * Możesz tu wpisać kody aktywacyjne uruchamiające dodatkowe funkcje. \n"
+" * W związku z tym, że kody są na dowolną ilość licencji, możesz je stosować także w płatnych szablonach. \n"
+" * Użyj kodu aby zaktualizować bazę danych. \n"
+" * Możesz umieścić ten kod w funkcjach if, które uruchamiają się np. przy aktywacji szablonu.\n"
+" */"
+
+#: ../core/admin/page_settings.php:308
+msgid ""
+"/**\n"
+" * Register field groups\n"
+" * The register_field_group function accepts 1 array which holds the relevant data to register a field group\n"
+" * You may edit the array as you see fit. However, this may result in errors if the array is not compatible with ACF\n"
+" * This code must run every time the functions.php file is read\n"
+" */"
+msgstr ""
+"/**\n"
+" * Zarejestruj grupy pól\n"
+" * Funkcja register_field_group akceptuje 1 ciąg zmiennych, która zawiera wszystkie dane służące rejestracji grupy\n"
+" * Możesz edytować tę zmienną i dopasowywać ją do swoich potrzeb. Ale może to też powodować błąd jeśli ta zmienna nie jest kompatybilna z ACF\n"
+" * Kod musi być uruchamiany każdorazowo w pliku functions.php\n"
+" */"
+
+#: ../core/admin/page_settings.php:336
+msgid "No field groups were selected"
+msgstr "Nie zaznaczono grup pól"
+
+#: ../core/fields/checkbox.php:21
+msgid "Checkbox"
+msgstr "Akceptowanie (checkbox)"
+
+#: ../core/fields/checkbox.php:44
+#: ../core/fields/radio.php:45
+#: ../core/fields/select.php:50
+msgid "No choices to choose from"
+msgstr "Brak możliwościi wyboru"
+
+#: ../core/fields/checkbox.php:101
+#: ../core/fields/radio.php:114
+#: ../core/fields/select.php:164
+msgid "Choices"
+msgstr "Opcje"
+
+#: ../core/fields/checkbox.php:102
+#: ../core/fields/radio.php:115
+#: ../core/fields/select.php:165
+msgid ""
+"Enter your choices one per line<br />\n"
+"\t\t\t\t<br />\n"
+"\t\t\t\tRed<br />\n"
+"\t\t\t\tBlue<br />\n"
+"\t\t\t\t<br />\n"
+"\t\t\t\tor<br />\n"
+"\t\t\t\t<br />\n"
+"\t\t\t\tred : Red<br />\n"
+"\t\t\t\tblue : Blue"
+msgstr ""
+"Wpisz dostęne opcje, każdy w odrębnym rzędzie<br />\n"
+"\t\t\t\t<br />\n"
+"\t\t\t\tCzerwony<br />\n"
+"\t\t\t\tNiebieski<br />\n"
+"\t\t\t\t<br />\n"
+"\t\t\t\tor<br />\n"
+"\t\t\t\t<br />\n"
+"\t\t\t\tczerwony : Czerwony<br />\n"
+"\t\t\t\tniebieski : Niebieski"
+
+#: ../core/fields/color_picker.php:21
+msgid "Color Picker"
+msgstr "Wybór koloru"
+
+#: ../core/fields/file.php:20
+msgid "File"
+msgstr "Plik"
+
+#: ../core/fields/file.php:60
+msgid "Remove File"
+msgstr "Usuń plik"
+
+#: ../core/fields/file.php:165
+msgid "No File Selected"
+msgstr "Nie zaznaczono pliku"
+
+#: ../core/fields/file.php:165
+msgid "Add File"
+msgstr "Dodaj plik"
+
+#: ../core/fields/file.php:194
+#: ../core/fields/image.php:128
+msgid "Return Value"
+msgstr "Wartość zwrotna"
+
+#: ../core/fields/file.php:342
+msgid "No files selected"
+msgstr "Nie zaznaczono plików"
+
+#: ../core/fields/file.php:419
+msgid "Add Selected Files"
+msgstr "Dodaj zaznaczone pliki"
+
+#: ../core/fields/file.php:445
+msgid "Select File"
+msgstr "Wybierz plik"
+
+#: ../core/fields/flexible_content.php:21
+msgid "Flexible Content"
+msgstr "Elastyczna treść"
+
+#: ../core/fields/flexible_content.php:38
+#: ../core/fields/flexible_content.php:183
+#: ../core/fields/repeater.php:65
+#: ../core/fields/repeater.php:184
+msgid "+ Add Row"
+msgstr "+ Dodaj rząd"
+
+#: ../core/fields/flexible_content.php:219
+#: ../core/fields/radio.php:145
+#: ../core/fields/repeater.php:355
+msgid "Layout"
+msgstr "Szablon"
+
+#: ../core/fields/flexible_content.php:221
+msgid "Reorder Layout"
+msgstr "Zmiana kolejności w szablonie"
+
+#: ../core/fields/flexible_content.php:221
+msgid "Reorder"
+msgstr "Zmiana kolejności"
+
+#: ../core/fields/flexible_content.php:222
+msgid "Add New Layout"
+msgstr "Dodaj nowy szablon"
+
+#: ../core/fields/flexible_content.php:223
+msgid "Delete Layout"
+msgstr "Usuń szablon"
+
+#: ../core/fields/flexible_content.php:233
+msgid "Label"
+msgstr "Etykieta"
+
+#: ../core/fields/flexible_content.php:243
+msgid "Name"
+msgstr "Nazwa"
+
+#: ../core/fields/flexible_content.php:253
+msgid "Display"
+msgstr "Wyświetl"
+
+#: ../core/fields/flexible_content.php:373
+#: ../core/fields/repeater.php:317
+msgid "Close Sub Field"
+msgstr "Zamknij pole"
+
+#: ../core/fields/flexible_content.php:395
+#: ../core/fields/repeater.php:374
+msgid "Button Label"
+msgstr "Tekst przycisku"
+
+#: ../core/fields/image.php:21
+msgid "Image"
+msgstr "Obrazek"
+
+#: ../core/fields/image.php:104
+msgid "No image selected"
+msgstr "Nie wybrano obrazka"
+
+#: ../core/fields/image.php:104
+msgid "Add Image"
+msgstr "Dodaj obrazek"
+
+#: ../core/fields/image.php:147
+msgid "Preview Size"
+msgstr "Wielkość obrazka"
+
+#: ../core/fields/image.php:293
+msgid "No images selected"
+msgstr "Nie wybrano obrazków"
+
+#: ../core/fields/image.php:351
+msgid "Add selected Images"
+msgstr "Dodaj zaznaczone obrazki"
+
+#: ../core/fields/image.php:377
+msgid "Select Image"
+msgstr "Wybierz obrazek"
+
+#: ../core/fields/page_link.php:21
+msgid "Page Link"
+msgstr "Link do strony"
+
+#: ../core/fields/page_link.php:194
+#: ../core/fields/post_object.php:209
+#: ../core/fields/relationship.php:241
+msgid "Post Type"
+msgstr "Typ wpisu"
+
+#: ../core/fields/page_link.php:195
+msgid ""
+"Filter posts by selecting a post type<br />\n"
+"\t\t\t\tTip: deselect all post types to show all post type's posts"
+msgstr ""
+"Filtruj wpisy wybierając typ wpisu<br />\n"
+"\t\t\t\tPodpowiedź: nie zaznaczenie żadnego typu wpisów spowoduje wyświetlenie wszystkich"
+
+#: ../core/fields/page_link.php:223
+#: ../core/fields/post_object.php:281
+#: ../core/fields/select.php:195
+msgid "Allow Null?"
+msgstr "Zezwolić na pustą wartość?"
+
+#: ../core/fields/page_link.php:242
+#: ../core/fields/post_object.php:300
+#: ../core/fields/select.php:214
+msgid "Select multiple values?"
+msgstr "Możliwość wyboru wielu wartości?"
+
+#: ../core/fields/post_object.php:21
+msgid "Post Object"
+msgstr "Wpisy"
+
+#: ../core/fields/post_object.php:231
+#: ../core/fields/relationship.php:290
+msgid "Filter from Taxonomy"
+msgstr "Filtruj wg taksonomii"
+
+#: ../core/fields/radio.php:21
+msgid "Radio Button"
+msgstr "Przycisk wyboru (radio)"
+
+#: ../core/fields/radio.php:131
+#: ../core/fields/select.php:181
+#: ../core/fields/text.php:61
+#: ../core/fields/textarea.php:62
+msgid "Default Value"
+msgstr "Domyślna wartość"
+
+#: ../core/fields/relationship.php:21
+msgid "Relationship"
+msgstr "Relacja"
+
+#: ../core/fields/relationship.php:313
+msgid "Maximum posts"
+msgstr "Maksymalna liczba wpisów"
+
+#: ../core/fields/relationship.php:314
+msgid "Set to -1 for inifinit"
+msgstr "Wpisanie -1 oznacza nieskończoność"
+
+#: ../core/fields/repeater.php:207
+msgid "Repeater Fields"
+msgstr "Pola powtarzalne"
+
+#: ../core/fields/repeater.php:341
+msgid "Row Limit"
+msgstr "Limit rzędów"
+
+#: ../core/fields/select.php:21
+msgid "Select"
+msgstr "Przycisk wyboru (dropdown)"
+
+#: ../core/fields/text.php:21
+msgid "Text"
+msgstr "Tekst"
+
+#: ../core/fields/text.php:75
+#: ../core/fields/textarea.php:76
+msgid "Formatting"
+msgstr "Formatowanie"
+
+#: ../core/fields/text.php:76
+msgid "Define how to render html tags"
+msgstr "Określ jak traktować znaczniki HTML"
+
+#: ../core/fields/textarea.php:21
+msgid "Text Area"
+msgstr "Obszar tekstowy"
+
+#: ../core/fields/textarea.php:77
+msgid "Define how to render html tags / new lines"
+msgstr "Określ jak traktować znaczniki HTML / nowe wiersze"
+
+#: ../core/fields/true_false.php:21
+msgid "True / False"
+msgstr "Prawda / Fałsz"
+
+#: ../core/fields/true_false.php:68
+msgid "Message"
+msgstr "Komunikat"
+
+#: ../core/fields/true_false.php:69
+msgid "eg. Show extra content"
+msgstr "np. Wyświetl dodatkową treść"
+
+#: ../core/fields/wysiwyg.php:21
+msgid "Wysiwyg Editor"
+msgstr "Edytor WYSIWYG"
+
+#: ../core/fields/wysiwyg.php:131
+msgid "Toolbar"
+msgstr "Pasek narzędzi"
+
+#: ../core/fields/wysiwyg.php:150
+msgid "Show Media Upload Buttons?"
+msgstr "Wyświetlić przyciski Wyślij / Wstaw?"
+
+#: ../core/fields/date_picker/date_picker.php:21
+msgid "Date Picker"
+msgstr "Wybór daty"
+
+#: ../core/fields/date_picker/date_picker.php:82
+msgid "Date format"
+msgstr "Format daty"
+
+#: ../core/fields/date_picker/date_picker.php:83
+msgid "eg. dd/mm/yy. read more about"
+msgstr "np. dd/mm/rr. czytaj więcej"
+
+#~ msgid "or"
+#~ msgstr "lub"
+
+#~ msgid "Hide this edit screen"
+#~ msgstr "Ukryj ten ekran edycji"
+
+#~ msgid "continue editing ACF"
+#~ msgstr "kontynuuj edycję"
+
+#~ msgid "Click the \"add row\" button below to start creating your layout"
+#~ msgstr "Kliknij przycisk \"dodaj rząd\" poniżej, aby zacząć tworzyć szablon"
+
+#~ msgid "Adv Upgrade"
+#~ msgstr "Zaawansowana aktualizacja"
+
+#~ msgid "Advanced&nbsp;Custom&nbsp;Fields"
+#~ msgstr "Zaawansowane&nbsp;Włąsne&nbsp;Pola"
