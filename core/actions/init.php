@@ -139,6 +139,35 @@ register_post_type('acf', array(
 	'show_in_menu'	=> false,
 ));
 
+
+/*
+ * Messages for ACF
+ */
+ 
+function acf_post_updated_messages( $messages )
+{
+	global $post, $post_ID;
+
+	$messages['acf'] = array(
+		0 => '', // Unused. Messages start at index 1.
+		1 => __('Field group updated.'),
+		2 => __('Custom field updated.'),
+		3 => __('Custom field deleted.'),
+		4 => __('Field group updated.'),
+		/* translators: %s: date and time of the revision */
+		5 => isset($_GET['revision']) ? sprintf( __('Field group restored to revision from %s'), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+		6 => __('Field group published.'),
+		7 => __('Field group saved.'),
+		8 => __('Field group submitted.'),
+		9 => __('Field group scheduled for.'),
+		10 => __('Field group draft updated.'),
+	);
+
+	return $messages;
+}
+add_filter( 'post_updated_messages', 'acf_post_updated_messages' );
+
+
 /*
  * Set Custom Columns
  * for the acf edit field groups page

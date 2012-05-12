@@ -108,43 +108,35 @@
 	*
 	*---------------------------------------------------------------------*/
 
-	$.fn.update_names = function(new_no, new_sub_no)
+	$.fn.update_names = function()
 	{
+		var field = $(this);
+		var old_id = field.attr('data-id');
+		var new_id = uniqid();
 		
-		//alert('passed through '+total_fields);
-		$(this).find('[name]').each(function()
+		
+		// give field a new id
+		field.attr('data-id', new_id);
+		
+		
+		field.find('[name]').each(function()
 		{	
 			
 			var name = $(this).attr('name');
 			var id = $(this).attr('id');
 
-			if(name && name.indexOf("fields[999]") != -1)
+			if(name && name.indexOf('[' + old_id + ']') != -1)
 			{
-				name = name.replace('fields[999]','fields['+new_no+']');
+				name = name.replace('[' + old_id + ']','[' + new_id + ']');
 			}
-			if(id && id.indexOf("fields[999]") != -1)
+			if(id && id.indexOf('[' + old_id + ']') != -1)
 			{
-				id = id.replace('fields[999]','fields['+new_no+']');
-			}
-			
-			if($(this).closest('.sub_field').hasClass('field_clone'))
-			{
-				// dont change this input (its the clone sub field!)
-			}
-			else
-			{
-				if(name && name.indexOf("[sub_fields][999]") != -1)
-				{
-					name = name.replace('[sub_fields][999]','[sub_fields]['+new_sub_no+']');
-				}
-				if(id && id.indexOf("[sub_fields][999]") != -1)
-				{
-					id = id.replace('[sub_fields][999]','[sub_fields]['+new_sub_no+']');
-				}
+				id = id.replace('[' + old_id + ']','[' + new_id + ']');
 			}
 			
 			$(this).attr('name', name);
 			$(this).attr('id', id);
+			
 		});
 	}
 	
@@ -224,8 +216,36 @@
 		});
 		
 		
-	
+		// add delete button functionality
+		$('#acf_fields a.acf_duplicate_field').live('click', function(){
+			
+			
+			// vars
+			var field = $(this).closest('.field');
+			var orig_type = field.find('tr.field_type select').val();
+			var new_field = field.clone();
+			
+			
+			// update names
+			new_field.children('input[type="hidden"]').remove();
+			new_field.update_names();
+			
+			
+			// add new field
+			field.after( new_field );
+			
+			
+			// open up form
+			new_field.find('a.acf_edit_field').first().trigger('click');
+			new_field.find('tr.field_type select').val( orig_type ).trigger('change');
+			
+			
+			// update order numbers
+			update_order_numbers();
+			
+		});
 		
+
 		
 		// Add Field Button
 		$('#acf_fields #add_field').live('click',function(){
@@ -245,17 +265,17 @@
 				
 				// it is a sub field
 				//console.log(fields.parents('.fields').last());
-				var field_length = fields.parents('.fields').last().children('.field').length;
-				var sub_field_length = fields.children('.field').length;
+				//var field_length = fields.parents('.fields').last().children('.field').length;
+				//var sub_field_length = fields.children('.field').length;
 				//alert(sub_field_length);
 				//alert('update numbers for sub field! field:'+field_length+', sub:'+sub_field_length);
 				
-				new_field.update_names(uniqid(), uniqid());
+				new_field.update_names();
 			}
 			else
 			{
-				var field_length = fields.children('.field').length;
-				new_field.update_names(uniqid(), 0);
+				//var field_length = fields.children('.field').length;
+				new_field.update_names();
 				
 				//alert('update numbers for field! field:'+field_length);
 			}
@@ -288,6 +308,7 @@
 			
 			
 		});
+		
 		
 		
 		// Auto complete field name

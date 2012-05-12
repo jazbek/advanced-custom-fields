@@ -82,23 +82,41 @@ class acf_Repeater extends acf_Field
 		?>
 		<div class="repeater" data-row_limit="<?php echo $row_limit; ?>">
 			<table class="widefat <?php if($layout == 'row'): ?>row_layout<?php endif; ?>">
-			<?php if($layout == 'table'): ?>
+			
 			<thead>
 				<tr>
-					<?php if($row_limit > 1): ?>
-					<th class="order"><!-- order --></th>
+					<?php if($row_limit > 1): ?><th class="order"></th><?php endif; ?>
+					
+					<?php if($layout == 'table'): ?>
+					
+						<?php foreach($sub_fields as $sub_field_i => $sub_field):?>
+						<th class="<?php echo $sub_field['name']; ?>" <?php if($sub_field_i != 0): ?>style="width:<?php echo 95/count($sub_fields); ?>%;"<?php endif; ?>>
+							<span><?php echo $sub_field['label']; ?></span>
+						</th>
+						<?php endforeach; ?>
+					
+					<?php else: ?>
+						
+						<?php
+						
+						$temp_th = array();
+						
+						foreach($sub_fields as $sub_field_i => $sub_field)
+						{
+							$temp_th[] = $sub_field['label'];
+						}
+						
+						?>
+						<th>
+							<span><?php echo implode(', ', $temp_th); ?></span>
+						</th>
+					
 					<?php endif; ?>
 					
-					<?php foreach($sub_fields as $sub_field_i => $sub_field):?>
-					<th class="<?php echo $sub_field['name']; ?>" <?php if($sub_field_i != 0): ?>style="width:<?php echo 95/count($sub_fields); ?>%;"<?php endif; ?>><span><?php echo $sub_field['label']; ?></span></th>
-					<?php endforeach; ?>
-					
-					<?php if($row_limit > 1): ?>
-					<th class="remove"></th>
-					<?php endif; ?>
+					<?php if($row_limit > 1): ?><th class="remove"></th><?php endif; ?>
 				</tr>
 			</thead>
-			<?php endif; ?>
+			
 			<tbody>
 				<?php foreach($field['value'] as $i => $value):?>
 				<?php //if(($i+1) > $row_limit){continue;} ?>
@@ -118,7 +136,18 @@ class acf_Repeater extends acf_Field
 					<?php if($layout == 'table'): ?>
 					<td>
 					<?php else: ?>
-					<label class="field_label"><?php echo $sub_field['label']; ?></label>
+					<div class="row-layout-field">
+					<p class="label">
+						<label><?php echo $sub_field['label']; ?></label>
+						<?php 
+						
+						if(!isset($sub_field['instructions']))
+							$sub_field['instructions'] = "";
+						
+						echo $sub_field['instructions']; 
+						
+						?>
+					</p>
 					<?php endif; ?>	
 						
 						<?php 
@@ -135,7 +164,7 @@ class acf_Repeater extends acf_Field
 					<?php if($layout == 'table'): ?>
 					</td>
 					<?php else: ?>
-
+					</div>
 					<?php endif; ?>	
 					
 					<?php endforeach; ?>
@@ -227,7 +256,7 @@ class acf_Repeater extends acf_Field
 			</div>
 	
 			<?php foreach($field['sub_fields'] as $key2 => $sub_field): ?>
-				<div class="<?php if($key2 == 999){echo "field_clone";}else{echo "field";} ?> sub_field">
+				<div class="<?php if($key2 == 999){echo "field_clone";}else{echo "field";} ?> sub_field" data-id="<?php echo $key2; ?>">
 					
 					<?php if(isset($sub_field['key'])): ?>
 						<input type="hidden" name="fields[<?php echo $key; ?>][sub_fields][<?php echo $key2; ?>][key]" value="<?php echo $sub_field['key']; ?>" />
@@ -242,6 +271,8 @@ class acf_Repeater extends acf_Field
 								</strong>
 								<div class="row_options">
 									<span><a class="acf_edit_field" title="<?php _e("Edit this Field",'acf'); ?>" href="javascript:;"><?php _e("Edit",'acf'); ?></a> | </span>
+									<span><a title="<?php _e("Read documentation for this field",'acf'); ?>" href="http://www.advancedcustomfields.com/docs/field-types/" target="_blank"><?php _e("Docs",'acf'); ?></a> | </span>
+									<span><a class="acf_duplicate_field" title="<?php _e("Duplicate this Field",'acf'); ?>" href="javascript:;"><?php _e("Duplicate",'acf'); ?></a> | </span>
 									<span><a class="acf_delete_field" title="<?php _e("Delete this Field",'acf'); ?>" href="javascript:;"><?php _e("Delete",'acf'); ?></a>
 								</div>
 							</td>
@@ -329,7 +360,7 @@ class acf_Repeater extends acf_Field
 			<?php endforeach; ?>
 		</div>
 		<div class="table_footer">
-			<div class="order_message"></div>
+			<div class="order_message"><?php _e('Drag and drop to reorder','acf'); ?></div>
 			<a href="javascript:;" id="add_field" class="acf-button"><?php _e('+ Add Sub Field','acf'); ?></a>
 		</div>
 	</div>

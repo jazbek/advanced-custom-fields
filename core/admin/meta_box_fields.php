@@ -60,7 +60,7 @@ foreach($this->fields as $field)
 		<?php _e("No fields. Click the <strong>+ Add Field</strong> button to create your first field.",'acf'); ?>
 	</div>
 	<?php foreach($fields as $key => $field): ?>
-	<div class="<?php echo ($key == 999) ? "field_clone" : "field"; ?>">
+	<div class="<?php echo ($key == 999) ? "field_clone" : "field"; ?>" data-id="<?php echo $key; ?>">
 		<?php if(isset($field['key'])): ?><input type="hidden" name="fields[<?php echo $key; ?>][key]" value="<?php echo $field['key']; ?>" /><?php endif; ?>
 		<div class="field_meta">
 			<table class="acf widefat">
@@ -72,8 +72,9 @@ foreach($this->fields as $field)
 						</strong>
 						<div class="row_options">
 							<span><a class="acf_edit_field" title="<?php _e("Edit this Field",'acf'); ?>" href="javascript:;"><?php _e("Edit",'acf'); ?></a> | </span>
-							<span><a title="<?php _e("Read documentation for this field",'acf'); ?>" href="http://advancedcustomfields.com/documentation" target="_blank"><?php _e("Docs",'acf'); ?></a> | </span>
-							<span><a class="acf_delete_field" title="<?php _e("Delete this Field",'acf'); ?>" href="javascript:;"><?php _e("Delete",'acf'); ?></a>
+							<span><a title="<?php _e("Read documentation for this field",'acf'); ?>" href="http://www.advancedcustomfields.com/docs/field-types/" target="_blank"><?php _e("Docs",'acf'); ?></a> | </span>
+							<span><a class="acf_duplicate_field" title="<?php _e("Duplicate this Field",'acf'); ?>" href="javascript:;"><?php _e("Duplicate",'acf'); ?></a> | </span>
+							<span><a class="acf_delete_field" title="<?php _e("Delete this Field",'acf'); ?>" href="javascript:;"><?php _e("Delete",'acf'); ?></a></span>
 						</div>
 					</td>
 					<td class="field_name"><?php echo $field['name']; ?></td>
@@ -186,6 +187,6 @@ foreach($this->fields as $field)
 	<?php endforeach; ?>
 </div>
 <div class="table_footer">
-	<div class="order_message"></div>
+	<div class="order_message"><?php _e('Drag and drop to reorder','acf'); ?></div>
 	<a href="javascript:;" id="add_field" class="acf-button"><?php _e('+ Add Field','acf'); ?></a>
 </div>

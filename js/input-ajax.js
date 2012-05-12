@@ -44,36 +44,6 @@
 			post_format		:	false,
 			taxonomy		:	false
 		};
-		
-		
-		// add classes
-		$('#poststuff .postbox[id*="acf_"]').addClass('acf_postbox');
-		$('#adv-settings label[for*="acf_"]').addClass('acf_hide_label');
-		
-		// hide acf stuff
-		$('#poststuff .acf_postbox').hide();
-		$('#adv-settings .acf_hide_label').hide();
-		
-		// loop through acf metaboxes
-		$('#poststuff .postbox.acf_postbox').each(function(){
-			
-			// vars
-			var options = $(this).find('.inside > .options');
-			var show = options.attr('data-show');
-			var layout = options.attr('data-layout');
-			var id = $(this).attr('id').replace('acf_', '');
-			
-			// layout
-			$(this).addClass(layout);
-			
-			// show / hide
-			if(show == 'true')
-			{
-				$(this).show();
-				$('#adv-settings .acf_hide_label[for="acf_' + id + '-hide"]').show();
-			}
-			
-		});
 	
 	});
 	

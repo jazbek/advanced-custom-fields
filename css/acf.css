@@ -4,7 +4,7 @@
 *
 *--------------------------------------------------------------------------------------------*/
 #icon-edit {
-	background: url(../images/acf-icon-32.png) 0 0 no-repeat !important;
+	background: url(../images/sprite.png) 0 0 no-repeat !important;
 }
 
 #toplevel_page_edit-post_type-acf .wp-menu-image { background: url("../../../../wp-admin/images/menu.png") no-repeat scroll 0 -1px transparent; }

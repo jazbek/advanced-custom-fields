@@ -29,6 +29,47 @@ var acf = {
 	
 	
 	/*
+	*  Document Ready
+	*
+	*  @description: adds ajax data		
+	*  @created: 1/03/2011
+	*/
+	
+	$(document).ready(function(){
+	
+		// add classes
+		$('#poststuff .postbox[id*="acf_"]').addClass('acf_postbox');
+		$('#adv-settings label[for*="acf_"]').addClass('acf_hide_label');
+		
+		// hide acf stuff
+		$('#poststuff .acf_postbox').hide();
+		$('#adv-settings .acf_hide_label').hide();
+		
+		// loop through acf metaboxes
+		$('#poststuff .postbox.acf_postbox').each(function(){
+			
+			// vars
+			var options = $(this).find('.inside > .options');
+			var show = options.attr('data-show');
+			var layout = options.attr('data-layout');
+			var id = $(this).attr('id').replace('acf_', '');
+			
+			// layout
+			$(this).addClass(layout);
+			
+			// show / hide
+			if(show == 'true')
+			{
+				$(this).show();
+				$('#adv-settings .acf_hide_label[for="acf_' + id + '-hide"]').show();
+			}
+			
+		});
+	
+	});
+	
+	
+	/*
 	*  Submit form
 	*
 	*  @description: does validation, deletes all hidden metaboxes (otherwise, post data will be overriden by hidden inputs)
@@ -705,63 +746,65 @@ var acf = {
 	*  @created: 3/03/2011
 	*/
 	
-	// update order numbers
-	function update_fc_order_numbers(div)
-	{
-		div.children('.values').children('table').each(function(i){
-			$(this).children('tbody').children('tr').children('td.order').html(i+1);
-		});
-	
-	}
-	
 	
 	// make sortable
 	function make_fc_sortable(div){
 		
-		div.children('.values').unbind('sortable').sortable({
-			update: function(event, ui){
-				update_fc_order_numbers(div);
-			},
-			items : '> table',
-			handle: '> tbody > tr > td.order',
-			axis: "y" // limit the dragging to up/down only
+		// only apply once
+		if( div.children('.values').hasClass('ui-sortable') )
+		{
+			return false;
+		}
+		
+		
+		// add sortable
+		div.children('.values').sortable({
+			items : '> .layout',
+			handle: '> .actions .order',
+			//axis: "y" // limit the dragging to up/down only
 		});
 	}
 	
 	
 	// add row
-	$('.acf_flexible_content #fc_add_row').live('click', function(){
-		
-		if($(this).hasClass('active'))
-		{
-			$(this).removeClass('active');
-			$(this).closest('.table_footer').find('.acf_popup').animate({ opacity : 0, bottom : '35px' }, 250);
-		}
-		else
-		{
-			$(this).addClass('active');
-			$(this).closest('.table_footer').find('.acf_popup').css({display : 'block', opacity : 0, bottom : '15px'}).animate({ opacity : 1, bottom : '25px' }, 250);
-		}
+	$('.acf_flexible_content #fc_add_row').live('focus', function(){
+
+		$(this).addClass('active');
+		$(this).closest('.table_footer').find('.acf_popup').css({display : 'block', opacity : 0, bottom : '15px'}).animate({ opacity : 1, bottom : '25px' }, 250);
+	
+	});
+	
+	
+	// add row
+	$('.acf_flexible_content #fc_add_row').live('blur', function(){
+
+		$(this).removeClass('active');
+		$(this).closest('.table_footer').find('.acf_popup').animate({ opacity : 0, bottom : '35px' }, 250, function(){
+			$(this).css({ display : 'none' });
+		});
+
 	});
 	
 	
 	// remove row
-	$('.acf_flexible_content #fc_remove_row').live('click', function(){
+	$('.acf_flexible_content .actions .delete').live('click', function(){
 		
-		var div = $(this).closest('.acf_flexible_content');
-		var table = $(this).closest('table');
-		var temp = $('<div style="height:' + table.height() + 'px"></div>');
 		
-		table.animate({'left' : '50px', 'opacity' : 0}, 250, function(){
-			table.before(temp).remove();
+		// elements
+		var layout = $(this).closest('.layout');
+		var div = layout.closest('.acf_flexible_content');
+		var temp = $('<div style="height:' + layout.height() + 'px"></div>');
+		
+		
+		// animate away layout
+		layout.animate({'left' : '50px', 'opacity' : 0}, 250, function(){
+			layout.before(temp).remove();
 			
 			temp.animate({'height' : 0 }, 250, function(){
 				temp.remove();
 			});
-			
-			update_fc_order_numbers(div);
 		
-			if(!div.children('.values').children('table').exists())
+			if(!div.children('.values').children('.layout').exists())
 			{
 				div.children('.no_value_message').show();
 			}
@@ -784,7 +827,7 @@ var acf = {
 		div.children('.clones').acf_deactivate_wysiwyg();
 		
 		// create new field
-		var new_field = div.children('.clones').children('table[data-layout="' + layout + '"]').clone(false);
+		var new_field = div.children('.clones').children('.layout[data-layout="' + layout + '"]').clone(false);
 		
 		// update names
 		var new_id = uniqid();
@@ -804,13 +847,6 @@ var acf = {
 		
 		// activate wysiwyg
 		$(document).trigger('acf/setup_fields',new_field);
-		//new_field.acf_activate_wysiwyg();
-		
-		update_fc_order_numbers(div);
-		
-		// hide acf popup
-		$(this).closest('.table_footer').find('#fc_add_row').removeClass('active');
-		$(this).closest('.acf_popup').hide();
 		
 		// validation
 		div.closest('.field').removeClass('error');
