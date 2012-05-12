@@ -3,7 +3,7 @@
 Plugin Name: Advanced Custom Fields
 Plugin URI: http://www.advancedcustomfields.com/
 Description: Fully customise WordPress edit screens with powerful fields. Boasting a professional interface and a powerfull API, it’s a must have for any web developer working with WordPress.Field types include: Wysiwyg, text, textarea, image, file, select, checkbox, page link, post object, date picker, color picker and more!
-Version: 3.1.8
+Version: 3.1.9
 Author: Elliot Condon
 Author URI: http://www.elliotcondon.com/
 License: GPL
@@ -26,6 +26,7 @@ class Acf
 	var $upgrade_version;
 	var $fields;
 	var $options_page;
+	var $cache;
 	
 	
 	/*--------------------------------------------------------------------------------------
@@ -45,17 +46,20 @@ class Acf
 		$this->dir = plugins_url('',__FILE__);
 		$this->siteurl = get_bloginfo('url');
 		$this->wpadminurl = admin_url();
-		$this->version = '3.1.8';
+		$this->version = '3.1.9';
 		$this->upgrade_version = '3.1.8'; // this is the latest version which requires an upgrade
+		$this->cache = array(); // basic array cache to hold data throughout the page load
 		
 		
 		// set text domain
 		//load_plugin_textdomain('acf', false, $this->path.'/lang' );
 		load_plugin_textdomain('acf', false, basename(dirname(__FILE__)).'/lang' );
 		
+		
 		// load options page
 		$this->setup_options_page();
 		$this->setup_everything_fields();
+		
 		
 		// actions
 		add_filter('pre_get_posts', array($this, 'pre_get_posts'));  
@@ -83,6 +87,58 @@ class Acf
 		
 		return true;
 	}
+	
+	
+	/*--------------------------------------------------------------------------------------
+	*
+	*	get_cache
+	*
+	*	@author Elliot Condon
+	*	@since 3.1.9
+	* 
+	*-------------------------------------------------------------------------------------*/
+	
+	function get_cache($key = false)
+	{
+		// key is required
+		if( !$key )
+			return false;
+		
+		
+		// does cache at key exist?
+		if( !isset($this->cache[$key]) )
+			return false;
+		
+		
+		// return cahced item
+		return $this->cache[$key];
+	}
+	
+	
+	/*--------------------------------------------------------------------------------------
+	*
+	*	set_cache
+	*
+	*	@author Elliot Condon
+	*	@since 3.1.9
+	* 
+	*-------------------------------------------------------------------------------------*/
+	
+	function set_cache($key = false, $value = null)
+	{
+		// key is required
+		if( !$key )
+			return false;
+		
+		
+		// update the cache array
+		$this->cache[$key] = $value;
+		
+		
+		// return true. Probably not needed
+		return true;
+	}
+	
 	
 	
 	/*--------------------------------------------------------------------------------------
@@ -417,6 +473,7 @@ class Acf
 		echo '<style type="text/css"> 
 			#toplevel_page_edit-post_type-acf a[href="edit.php?post_type=acf&page=acf-upgrade"]{ display:none; }
 			#toplevel_page_edit-post_type-acf .wp-menu-image { background: url("../wp-admin/images/menu.png") no-repeat scroll 0 -33px transparent; }
+			#toplevel_page_edit-post_type-acf:hover .wp-menu-image { background-position: 0 -1px; }
 			#toplevel_page_edit-post_type-acf .wp-menu-image img { display:none; }
 		</style>';
 		
@@ -450,7 +507,8 @@ class Acf
 		}
 		else
 		{
-	
+			$post_type = get_post_type($post);
+			
 			// get style for page
 			$metabox_ids = $this->get_input_metabox_ids(array('post_id' => $post->ID), false);
 			$style = isset($metabox_ids[0]) ? $this->get_input_style($metabox_ids[0]) : '';
@@ -544,7 +602,7 @@ class Acf
 	function get_field_groups()
 	{
 		// return cache
-		$cache = wp_cache_get('acf_field_groups');
+		$cache = $this->get_cache('acf_field_groups');
 		if($cache != false)
 		{
 			return $cache;
@@ -581,7 +639,7 @@ class Acf
 		$acfs = apply_filters('acf_register_field_group', $acfs);
 		
 		// update cache
-		wp_cache_set('acf_field_groups', $acfs);
+		$this->set_cache('acf_field_groups', $acfs);
 		
 		// return
 		if(empty($acfs))
@@ -2002,6 +2060,7 @@ class Acf
 	
 	function render_fields_for_input($fields, $post_id)
 	{
+		
 		// create fields
 		if($fields)
 		{
@@ -2029,9 +2088,11 @@ class Acf
 				}
 				
 				echo '<div id="acf-' . $field['name'] . '" class="field field-' . $field['type'] . $required_class . '">';
-								
-					echo '<label class="field_label" for="fields[' . $field['key'] . ']">' . $field['label'] . $required_label . '</label>';
-					if($field['instructions']) echo '<p class="instructions">' . $field['instructions'] . '</p>';
+
+					echo '<p class="label">';
+						echo '<label for="fields[' . $field['key'] . ']">' . $field['label'] . $required_label . '</label>';
+						echo $field['instructions'];
+					echo '</p>';
 					
 					$field['name'] = 'fields[' . $field['key'] . ']';
 					$this->create_field($field);
@@ -2040,6 +2101,7 @@ class Acf
 				
 			}
 		}
+		
 	}
 	
 	
