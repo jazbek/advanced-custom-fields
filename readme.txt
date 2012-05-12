@@ -85,6 +85,21 @@ http://www.advancedcustomfields.com/support/
 
 == Changelog ==
 
+= 3.1.9 =
+* Updated Images / JS - Please hard refresh your browser to clear your cache
+* Remove caching from acf_field_groups, replace with temp cache
+* Add "Duplicate Field" on field group edit page
+* Fix link to documentation on field group edit page
+* add "update_value" to API
+* Include new Polish translation
+* Create a nicer style for flexible content
+* Create a nicer style for repeater fields with row layout
+* Create a nicer style for "no metabox" fields
+* Add Spanish translation. Thanks to @hectorgarrofe
+* Fix css for options page no metabox
+* Added custom post_updated_messages
+* Changed "Drag and drop to reorder" from an image to a string for translation
+
 = 3.1.8 =
 * Options page fields now save their data in the wp_options table. This will require a "Database Upgrade" when you update ACF. This upgrade will move your Options page data from the postmeta table to the options table.
 * Added _e() and __() functions to more text throughout plugin
