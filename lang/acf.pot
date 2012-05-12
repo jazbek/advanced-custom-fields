@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  \n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/advanced-custom-fields\n"
-"POT-Creation-Date: 2012-04-29 08:44:54+00:00\n"
+"POT-Creation-Date: 2012-05-12 11:12:49+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -12,61 +12,61 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#: acf.php:233 core/admin/meta_box_options.php:83
+#: acf.php:289 core/admin/meta_box_options.php:83
 msgid "Custom Fields"
 msgstr ""
 
-#: acf.php:234
+#: acf.php:290
 msgid "Settings"
 msgstr ""
 
-#: acf.php:235
+#: acf.php:291
 msgid "Upgrade"
 msgstr ""
 
-#: acf.php:446
+#: acf.php:503
 msgid "Fields"
 msgstr ""
 
-#: acf.php:447
+#: acf.php:504
 msgid "Location"
 msgstr ""
 
-#: acf.php:447
+#: acf.php:504
 msgid "Add Fields to Edit Screens"
 msgstr ""
 
-#: acf.php:448 core/admin/meta_box_location.php:133 core/options_page.php:62
+#: acf.php:505 core/admin/meta_box_location.php:133 core/options_page.php:62
 #: core/options_page.php:74
 msgid "Options"
 msgstr ""
 
-#: acf.php:448
+#: acf.php:505
 msgid "Customise the edit page"
 msgstr ""
 
-#: acf.php:475 core/api.php:503 core/everything_fields.php:202
+#: acf.php:533 core/api.php:503 core/everything_fields.php:202
 #: core/options_page.php:182
 msgid "Validation Failed. One or more fields below are required."
 msgstr ""
 
-#: acf.php:801
+#: acf.php:859
 msgid "Error: Field Type does not exist!"
 msgstr ""
 
-#: acf.php:2027
+#: acf.php:2086
 msgid "required"
 msgstr ""
 
-#: acf.php:2122
+#: acf.php:2184
 msgid "Parent Page"
 msgstr ""
 
-#: acf.php:2123
+#: acf.php:2185
 msgid "Child Page"
 msgstr ""
 
-#: acf.php:2131
+#: acf.php:2193
 msgid "Default Template"
 msgstr ""
 
@@ -143,7 +143,7 @@ msgstr ""
 msgid "Field&nbsp;Groups"
 msgstr ""
 
-#: core/actions/init.php:117 core/fields/flexible_content.php:222
+#: core/actions/init.php:117 core/fields/flexible_content.php:257
 msgid "Add New"
 msgstr ""
 
@@ -175,12 +175,49 @@ msgstr ""
 msgid "No Field Groups found in Trash"
 msgstr ""
 
-#: core/actions/init.php:152
+#: core/actions/init.php:153 core/actions/init.php:156
+msgid "Field group updated."
+msgstr ""
+
+#: core/actions/init.php:154
+msgid "Custom field updated."
+msgstr ""
+
+#: core/actions/init.php:155
+msgid "Custom field deleted."
+msgstr ""
+
+#. translators: %s: date and time of the revision
+#: core/actions/init.php:158
+msgid "Field group restored to revision from %s"
+msgstr ""
+
+#: core/actions/init.php:159
+msgid "Field group published."
+msgstr ""
+
+#: core/actions/init.php:160
+msgid "Field group saved."
+msgstr ""
+
+#: core/actions/init.php:161
+msgid "Field group submitted."
+msgstr ""
+
+#: core/actions/init.php:162
+msgid "Field group scheduled for."
+msgstr ""
+
+#: core/actions/init.php:163
+msgid "Field group draft updated."
+msgstr ""
+
+#: core/actions/init.php:181
 msgid "Title"
 msgstr ""
 
-#: core/admin/meta_box_fields.php:17 core/fields/flexible_content.php:210
-#: core/fields/repeater.php:189
+#: core/admin/meta_box_fields.php:17 core/fields/flexible_content.php:245
+#: core/fields/repeater.php:218
 msgid "New Field"
 msgstr ""
 
@@ -188,27 +225,27 @@ msgstr ""
 msgid "Move to trash. Are you sure?"
 msgstr ""
 
-#: core/admin/meta_box_fields.php:50 core/fields/flexible_content.php:274
-#: core/fields/repeater.php:215
+#: core/admin/meta_box_fields.php:50 core/fields/flexible_content.php:309
+#: core/fields/repeater.php:244
 msgid "Field Order"
 msgstr ""
 
-#: core/admin/meta_box_fields.php:51 core/admin/meta_box_fields.php:91
-#: core/fields/flexible_content.php:275 core/fields/flexible_content.php:320
-#: core/fields/repeater.php:216 core/fields/repeater.php:261
+#: core/admin/meta_box_fields.php:51 core/admin/meta_box_fields.php:92
+#: core/fields/flexible_content.php:310 core/fields/flexible_content.php:357
+#: core/fields/repeater.php:245 core/fields/repeater.php:292
 msgid "Field Label"
 msgstr ""
 
-#: core/admin/meta_box_fields.php:52 core/admin/meta_box_fields.php:107
-#: core/fields/flexible_content.php:276 core/fields/flexible_content.php:336
-#: core/fields/repeater.php:217 core/fields/repeater.php:277
+#: core/admin/meta_box_fields.php:52 core/admin/meta_box_fields.php:108
+#: core/fields/flexible_content.php:311 core/fields/flexible_content.php:373
+#: core/fields/repeater.php:246 core/fields/repeater.php:308
 msgid "Field Name"
 msgstr ""
 
-#: core/admin/meta_box_fields.php:53 core/admin/meta_box_fields.php:122
-#: core/admin/page_settings.php:44 core/fields/flexible_content.php:277
-#: core/fields/flexible_content.php:351 core/fields/repeater.php:218
-#: core/fields/repeater.php:292
+#: core/admin/meta_box_fields.php:53 core/admin/meta_box_fields.php:123
+#: core/admin/page_settings.php:44 core/fields/flexible_content.php:312
+#: core/fields/flexible_content.php:388 core/fields/repeater.php:247
+#: core/fields/repeater.php:323
 msgid "Field Type"
 msgstr ""
 
@@ -219,67 +256,84 @@ msgid ""
 msgstr ""
 
 #: core/admin/meta_box_fields.php:71 core/admin/meta_box_fields.php:74
-#: core/fields/flexible_content.php:301 core/fields/flexible_content.php:304
-#: core/fields/repeater.php:241 core/fields/repeater.php:244
+#: core/fields/flexible_content.php:336 core/fields/flexible_content.php:339
+#: core/fields/repeater.php:270 core/fields/repeater.php:273
 msgid "Edit this Field"
 msgstr ""
 
-#: core/admin/meta_box_fields.php:74 core/fields/flexible_content.php:304
-#: core/fields/repeater.php:244
+#: core/admin/meta_box_fields.php:74 core/fields/flexible_content.php:339
+#: core/fields/repeater.php:273
 msgid "Edit"
 msgstr ""
 
-#: core/admin/meta_box_fields.php:75
+#: core/admin/meta_box_fields.php:75 core/fields/flexible_content.php:340
+#: core/fields/repeater.php:274
 msgid "Read documentation for this field"
 msgstr ""
 
-#: core/admin/meta_box_fields.php:75
+#: core/admin/meta_box_fields.php:75 core/fields/flexible_content.php:340
+#: core/fields/repeater.php:274
 msgid "Docs"
 msgstr ""
 
-#: core/admin/meta_box_fields.php:76 core/fields/flexible_content.php:305
-#: core/fields/repeater.php:245
+#: core/admin/meta_box_fields.php:76 core/fields/flexible_content.php:341
+#: core/fields/repeater.php:275
+msgid "Duplicate this Field"
+msgstr ""
+
+#: core/admin/meta_box_fields.php:76 core/fields/flexible_content.php:341
+#: core/fields/repeater.php:275
+msgid "Duplicate"
+msgstr ""
+
+#: core/admin/meta_box_fields.php:77 core/fields/flexible_content.php:342
+#: core/fields/repeater.php:276
 msgid "Delete this Field"
 msgstr ""
 
-#: core/admin/meta_box_fields.php:76 core/fields/flexible_content.php:223
-#: core/fields/flexible_content.php:305 core/fields/repeater.php:245
+#: core/admin/meta_box_fields.php:77 core/fields/flexible_content.php:258
+#: core/fields/flexible_content.php:342 core/fields/repeater.php:276
 msgid "Delete"
 msgstr ""
 
-#: core/admin/meta_box_fields.php:92 core/fields/flexible_content.php:321
-#: core/fields/repeater.php:262
+#: core/admin/meta_box_fields.php:93 core/fields/flexible_content.php:358
+#: core/fields/repeater.php:293
 msgid "This is the name which will appear on the EDIT page"
 msgstr ""
 
-#: core/admin/meta_box_fields.php:108 core/fields/flexible_content.php:337
-#: core/fields/repeater.php:278
+#: core/admin/meta_box_fields.php:109 core/fields/flexible_content.php:374
+#: core/fields/repeater.php:309
 msgid "Single word, no spaces. Underscores and dashes allowed"
 msgstr ""
 
-#: core/admin/meta_box_fields.php:135
+#: core/admin/meta_box_fields.php:136
 msgid "Field Instructions"
 msgstr ""
 
-#: core/admin/meta_box_fields.php:136
+#: core/admin/meta_box_fields.php:137
 msgid "Instructions for authors. Shown when submitting data"
 msgstr ""
 
-#: core/admin/meta_box_fields.php:148
+#: core/admin/meta_box_fields.php:149
 msgid "Required?"
 msgstr ""
 
-#: core/admin/meta_box_fields.php:171 core/fields/flexible_content.php:371
-#: core/fields/repeater.php:312
+#: core/admin/meta_box_fields.php:172 core/fields/flexible_content.php:408
+#: core/fields/repeater.php:343
 msgid "Save Field"
 msgstr ""
 
-#: core/admin/meta_box_fields.php:176 core/fields/flexible_content.php:376
-#: core/fields/repeater.php:317
+#: core/admin/meta_box_fields.php:177 core/fields/flexible_content.php:413
+#: core/fields/repeater.php:348
 msgid "Close Field"
 msgstr ""
 
-#: core/admin/meta_box_fields.php:190
+#: core/admin/meta_box_fields.php:190 core/fields/flexible_content.php:427
+#: core/fields/repeater.php:363
+msgid "Drag and drop to reorder"
+msgstr ""
+
+#: core/admin/meta_box_fields.php:191
 msgid "+ Add Field"
 msgstr ""
 
@@ -738,66 +792,66 @@ msgstr ""
 msgid "Flexible Content"
 msgstr ""
 
-#: core/fields/flexible_content.php:38 core/fields/flexible_content.php:183
-#: core/fields/repeater.php:65 core/fields/repeater.php:184
+#: core/fields/flexible_content.php:38 core/fields/flexible_content.php:218
+#: core/fields/repeater.php:65 core/fields/repeater.php:213
 msgid "+ Add Row"
 msgstr ""
 
-#: core/fields/flexible_content.php:219 core/fields/radio.php:144
-#: core/fields/repeater.php:355
+#: core/fields/flexible_content.php:254 core/fields/radio.php:144
+#: core/fields/repeater.php:386
 msgid "Layout"
 msgstr ""
 
-#: core/fields/flexible_content.php:221
+#: core/fields/flexible_content.php:256
 msgid "Reorder Layout"
 msgstr ""
 
-#: core/fields/flexible_content.php:221
+#: core/fields/flexible_content.php:256
 msgid "Reorder"
 msgstr ""
 
-#: core/fields/flexible_content.php:222
+#: core/fields/flexible_content.php:257
 msgid "Add New Layout"
 msgstr ""
 
-#: core/fields/flexible_content.php:223
+#: core/fields/flexible_content.php:258
 msgid "Delete Layout"
 msgstr ""
 
-#: core/fields/flexible_content.php:233
+#: core/fields/flexible_content.php:268
 msgid "Label"
 msgstr ""
 
-#: core/fields/flexible_content.php:243
+#: core/fields/flexible_content.php:278
 msgid "Name"
 msgstr ""
 
-#: core/fields/flexible_content.php:253
+#: core/fields/flexible_content.php:288
 msgid "Display"
 msgstr ""
 
-#: core/fields/flexible_content.php:260
+#: core/fields/flexible_content.php:295
 msgid "Table"
 msgstr ""
 
-#: core/fields/flexible_content.php:261 core/fields/repeater.php:366
+#: core/fields/flexible_content.php:296 core/fields/repeater.php:397
 msgid "Row"
 msgstr ""
 
-#: core/fields/flexible_content.php:285 core/fields/repeater.php:226
+#: core/fields/flexible_content.php:320 core/fields/repeater.php:255
 msgid ""
 "No fields. Click the \"+ Add Sub Field button\" to create your first field."
 msgstr ""
 
-#: core/fields/flexible_content.php:376 core/fields/repeater.php:317
+#: core/fields/flexible_content.php:413 core/fields/repeater.php:348
 msgid "Close Sub Field"
 msgstr ""
 
-#: core/fields/flexible_content.php:391 core/fields/repeater.php:333
+#: core/fields/flexible_content.php:428 core/fields/repeater.php:364
 msgid "+ Add Sub Field"
 msgstr ""
 
-#: core/fields/flexible_content.php:398 core/fields/repeater.php:374
+#: core/fields/flexible_content.php:435 core/fields/repeater.php:405
 msgid "Button Label"
 msgstr ""
 
@@ -943,15 +997,15 @@ msgstr ""
 msgid "Repeater"
 msgstr ""
 
-#: core/fields/repeater.php:207
+#: core/fields/repeater.php:236
 msgid "Repeater Fields"
 msgstr ""
 
-#: core/fields/repeater.php:341
+#: core/fields/repeater.php:372
 msgid "Row Limit"
 msgstr ""
 
-#: core/fields/repeater.php:365
+#: core/fields/repeater.php:396
 msgid "Table (default)"
 msgstr ""
 
