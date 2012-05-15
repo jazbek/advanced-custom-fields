@@ -73,8 +73,8 @@
     font-size: 13px;
     font-weight: bold;
     padding: 0;
-    margin: 0 5px 0 0;
-    display: inline;
+    margin: 0 0 3px;
+    display: block;
     vertical-align: text-bottom;
 }
 
@@ -86,9 +86,6 @@
 	padding-top: 0;
 }
 
-#poststuff .acf_postbox p.instructions {
-	
-}
 
 /* no box style */
 #poststuff .acf_postbox.no_box {

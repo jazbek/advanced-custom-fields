@@ -85,6 +85,11 @@ http://www.advancedcustomfields.com/support/
 
 == Changelog ==
 
+= 3.2.0 =
+* Fixed Browser bug with Flexible Field: Add Row button works again
+* Added Brazilian Translation. Thanks to Marcelo Paoli Graciano - www.paolidesign.com.br
+* Reverted input CSS to separate field label / instructions onto new lines.
+
 = 3.1.9 =
 * Updated Images / JS - Please hard refresh your browser to clear your cache
 * Remove caching from acf_field_groups, replace with temp cache

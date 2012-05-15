@@ -767,6 +767,10 @@ var acf = {
 	
 	
 	// add row
+	$('.acf_flexible_content #fc_add_row').live('click', function(){
+		$(this).trigger('focus');
+	});
+	
 	$('.acf_flexible_content #fc_add_row').live('focus', function(){
 
 		$(this).addClass('active');
