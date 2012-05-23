@@ -111,6 +111,10 @@ class acf_Field
 	
 	function update_value($post_id, $field, $value)
 	{
+		// strip slashes
+		$value = stripslashes($value);
+		
+		
 		// if $post_id is a string, then it is used in the everything fields and can be found in the options table
 		if( is_numeric($post_id) )
 		{
