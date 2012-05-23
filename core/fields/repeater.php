@@ -233,7 +233,7 @@ class acf_Repeater extends acf_Field
 				</thead>
 			<?php endif; ?>
 			<tbody>
-				<?php foreach($field['value'] as $i => $value):?>
+				<?php if( $field['value'] ): foreach($field['value'] as $i => $value):?>
 
 				<tr>
 					
@@ -289,7 +289,7 @@ class acf_Repeater extends acf_Field
 						<td class="remove"><a class="add-row add-row-before" href="javascript:;"></a><a class="remove-row" href="javascript:;"></a></td>
 					<?php endif; ?>
 				</tr>
-				<?php endforeach; ?>
+				<?php endforeach; endif; ?>
 			</tbody>
 			</table>
 			<?php if($row_limit > 1): ?>
