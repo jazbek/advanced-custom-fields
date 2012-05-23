@@ -237,7 +237,8 @@
 			
 			// open up form
 			new_field.find('a.acf_edit_field').first().trigger('click');
-			new_field.find('tr.field_type select').val( orig_type ).trigger('change');
+			//console.log( new_field.find('tr.field_type select').first() );
+			new_field.find('tr.field_type select').first().val( orig_type ).trigger('change');
 			
 			
 			// update order numbers
@@ -345,7 +346,7 @@
 			// update field type (if not a clone field)
 			if($(this).closest('.field_clone').length == 0)
 			{
-				$(this).closest('.field').find('td.field_type').html(label);
+				$(this).closest('.field').find('td.field_type').first().html(label);
 			}
 			
 		});

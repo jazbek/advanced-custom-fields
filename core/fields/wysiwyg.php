@@ -20,8 +20,8 @@ class acf_Wysiwyg extends acf_Field
     	$this->name = 'wysiwyg';
 		$this->title = __("Wysiwyg Editor",'acf');
 		
-		add_action('admin_head', array($this, 'add_tiny_mce'));
-		add_filter( 'wp_default_editor', array($this, 'my_default_editor'));
+		add_action( 'admin_head', array($this, 'add_tiny_mce') );
+		add_filter( 'wp_default_editor', array($this, 'my_default_editor') );
 		
    	}
    	
@@ -64,7 +64,12 @@ class acf_Wysiwyg extends acf_Field
    		}
    		else
    		{
-   			wp_tiny_mce();
+   			// only add for pre 3.3
+   			if(get_bloginfo('version') < "3.3")
+   			{
+   				wp_tiny_mce();
+   			}
+   			
    		}
 		
 	}

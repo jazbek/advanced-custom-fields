@@ -1,8 +1,5 @@
 <?php
 
-// strip slashes
-$_POST = array_map('stripslashes_deep', $_POST);
-
 // save fields
 $fields = $_POST['fields'];
 

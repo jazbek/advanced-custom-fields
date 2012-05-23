@@ -134,10 +134,6 @@ class Options_page
 		if(isset($_POST['update_options']))
 		{
 			
-			// strip slashes
-			$_POST = array_map('stripslashes_deep', $_POST);
-			
-			
 			// options name to save against
 			$option_name = 'options';
 			
@@ -289,6 +285,8 @@ class Options_page
 							<input type="submit" class="acf-button" value="Save Options" name="update_options" />
 						</div>
 					</div>
+					
+					<?php $meta_boxes = do_meta_boxes('acf_options_page', 'side', null); ?>
 					
 				</div>
 					

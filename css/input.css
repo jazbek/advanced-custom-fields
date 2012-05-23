@@ -104,12 +104,17 @@
 	Basic Field Styles
 ---------------------------------------------------------------------------------------------*/
 
-.acf_postbox .field  input[type="text"], 
-.acf_postbox .field  input[type="password"], 
-.acf_postbox .field  textarea,
-.acf_postbox .field  select{
-    width: 100%;
+.acf_postbox .field input[type="text"],
+.acf_postbox .field input[type="password"],
+.acf_postbox .field textarea{
+	width: 100%;
 	padding: 5px;
+	resize: none;
+}
+
+.acf_postbox .field select{
+	width: 100%;
+	padding: 2px;
 	resize: none;
 }
 
@@ -201,6 +206,7 @@
 .acf_image_uploader img {
 	display: none;
 	-moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+	max-width:100%;
 }
 
 .acf_image_uploader.active img {
@@ -277,11 +283,11 @@
     position: relative;
 }
 
-.repeater > table > tbody > tr:last-child td {
+.repeater > table > tbody > tr:last-child > td {
 	border-bottom: 0 none;
 }
 
-.repeater > table > tbody > tr td:last-child{
+.repeater > table > tbody > tr > td:last-child {
 	border-right: 0 none;
 }
 
@@ -302,30 +308,67 @@
 	border-right: 0 none;
 }
 
-.repeater > table > tbody > tr:hover >td.remove > a.remove_row {
+.repeater > table > tbody > tr:hover > td.remove > a.remove-row,
+.repeater > table > tbody > tr:hover > td.remove > a.add-row {
+
+	-webkit-transition-delay:0s;
+	-moz-transition-delay:0s;
+	-o-transition-delay:0s;
+	transition-delay:0s;
+	
 	visibility: visible;
+	opacity: 1;
 }
 
-.repeater.hide_remove_buttons > table > tbody > tr:hover >td.remove a.remove_row {
-	visibility: hidden;
+.repeater.disabled > table > tbody > tr:hover > td.remove > a.add-row {
+	visibility: hidden !important;
 }
-
 
 .repeater > table.row_layout > tbody > tr > td > label:first-child {
 	padding-top: 0;
 }
 
-a.remove_row {
+a.add-row {
+	display: block;
+	width: 16px;
+	height: 16px;
+	background: url(../images/button_add.png) 0 0 no-repeat;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+	border-radius: 8px;
+	position: absolute;
+	
+	
+	-webkit-transition: opacity 0.25s 0s ease-in-out, visibility 0s linear 0.25s;
+	-moz-transition: opacity 0.25s 0s ease-in-out, visibility 0s linear 0.25s;
+	-o-transition: opacity 0.25s 0s ease-in-out, visibility 0s linear 0.25s; 	
+	transition: opacity 0.25s 0s ease-in-out, visibility 0s linear 0.25s; 
+	
+	visibility: hidden;
+	opacity: 0;
+}
+
+a.add-row:hover {
+	background-position: 0 100%;
+}
+
+a.remove-row {
 	display: block;
 	width: 16px;
 	height: 16px;
 	background: url(../images/button_remove.png) 0 0 no-repeat;
-	visibility: hidden;
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 	border-radius: 8px;
+	
+	-webkit-transition: opacity 0.25s 0s ease-in-out, visibility 0s linear 0.25s;
+	-moz-transition: opacity 0.25s 0s ease-in-out, visibility 0s linear 0.25s;
+	-o-transition: opacity 0.25s 0s ease-in-out, visibility 0s linear 0.25s; 	
+	transition: opacity 0.25s 0s ease-in-out, visibility 0s linear 0.25s; 
+	
+	visibility: hidden;
+	opacity: 0;
 }
 
-a.remove_row:hover {
+a.remove-row:hover {
 	background-position: 0 100%;
 }
 
@@ -340,6 +383,10 @@ a.remove_row:hover {
 
 .repeater table tr td.order {
 	cursor: move;
+}
+
+.repeater table tr td.order:hover {
+	color: #666;
 }
 
 .repeater > table > thead > tr > th.remove,
@@ -410,6 +457,19 @@ ul.checkbox_list {
 	padding-top: 10px;
 }
 
+.repeater > table > tbody > tr.ui-sortable-helper {
+	box-shadow: 0 1px 5px rgba(0,0,0,0.2);
+}
+
+.repeater > table > tbody > tr.ui-sortable-placeholder {
+	visibility: visible !important;
+}
+
+.repeater > table > tbody > tr.ui-sortable-placeholder td {
+	border: 0 none !important;
+	box-shadow: inset 0 1px 3px rgba(0,0,0,0.15);
+	background: rgba(0,0,0,0.075);
+}
 
 
 

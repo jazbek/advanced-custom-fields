@@ -38,6 +38,7 @@ class acf_Image extends acf_Field
 	
    	function acf_get_preview_image()
    	{
+   		
    		// vars
    		$id_string = isset($_GET['id']) ? $_GET['id'] : false;
    		$preview_size = isset($_GET['preview_size']) ? $_GET['preview_size'] : 'thumbnail';
@@ -66,8 +67,8 @@ class acf_Image extends acf_Field
 				);
    			}
    		}
-   		
-		
+
+
 		// return json
 		echo json_encode( $return );
 		die();
@@ -349,33 +350,41 @@ class acf_Image extends acf_Field
 		};
 	
 		// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
-		$.getJSON(ajaxurl, data, function( json ) {
-			
-			// validate
-			if(!json)
-			{
-				return false;
+		$.ajax({
+			url: ajaxurl,
+			data : data,
+			cache: false,
+			dataType: "json",
+			success: function( json ) {
+		    	
+
+				// validate
+				if(!json)
+				{
+					return false;
+				}
+				
+				
+				// get item
+				var item = json[0];
+				
+				
+				// update acf_div
+				self.parent.acf_div.find('input.value').val( item.id );
+	 			self.parent.acf_div.find('img').attr( 'src', item.url );
+	 			self.parent.acf_div.addClass('active');
+	 	
+	 	
+	 			// validation
+	 			self.parent.acf_div.closest('.field').removeClass('error');
+	 			
+	 			
+	 			// reset acf_div and return false
+	 			self.parent.acf_div = null;
+	 			self.parent.tb_remove();
+	 	
+	 	
 			}
-			
-			
-			// get item
-			item = json[0];
-			
-			
-			// update acf_div
-			self.parent.acf_div.find('input.value').val( item.id );
- 			self.parent.acf_div.find('img').attr( 'src', item.url );
- 			self.parent.acf_div.addClass('active');
- 	
- 	
- 			// validation
- 			self.parent.acf_div.closest('.field').removeClass('error');
- 			
- 			
- 			// reset acf_div and return false
- 			self.parent.acf_div = null;
- 			self.parent.tb_remove();
- 	
 		});
 		
 		return false;

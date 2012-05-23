@@ -123,6 +123,10 @@ class acf_Field
 			update_option( '_' . $post_id . '_' . $field['name'], $field['key'] );
 		}
 		
+		
+		//clear the cache for this field
+		wp_cache_delete('acf_get_field_' . $post_id . '_' . $field['name']);
+		
 	}
 	
 	

@@ -85,6 +85,18 @@ http://www.advancedcustomfields.com/support/
 
 == Changelog ==
 
+= 3.2.1 =
+* Field groups can now be added to options page with layout "side"
+* Fixed debug error when saving a taxonomy:
+* Fixed unnecessary code: Remove Strip Slashes on save functions
+* Added new add row buttons to the repeater field and upgraded the css / js
+* Fixed debug error caused by the WYSIWYG field: wp_tiny_mce is deprecated since version 3.3! Use wp_editor() instead.
+* Fixed duplicate field error where all sub fields became repeater fields.
+* Add Swedish translation: http://advancedcustomfields.com/support/discussion/1993/swedish-translation
+* CSS improvements
+* Fixed IE9 Bug not returning an image preview on upload / select
+* Fixed Multi export php syntax bug.
+
 = 3.2.0 =
 * Fixed Browser bug with Flexible Field: Add Row button works again
 * Added Brazilian Translation. Thanks to Marcelo Paoli Graciano - www.paolidesign.com.br

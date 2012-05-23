@@ -47,7 +47,6 @@ if($action == ""):
 			</tr>
 		</thead>
 		<tbody>
-			<!-- Repeater Field -->
 			<tr>
 				<td><?php _e("Repeater Field",'acf'); ?></td>
 				<td><?php echo $this->is_field_unlocked('repeater') ? __("Active",'acf') : __("Inactive",'acf'); ?></td>
@@ -67,7 +66,6 @@ if($action == ""):
 					</form>
 				</td>
 			</tr>
-			<!-- Flexible Field -->
 			<tr>
 				<td><?php _e("Flexible Content Field",'acf'); ?></td>
 				<td><?php echo $this->is_field_unlocked('flexible_content') ? __("Active",'acf') : __("Inactive",'acf'); ?></td>
@@ -87,7 +85,6 @@ if($action == ""):
 					</form>
 				</td>
 			</tr>
-			<!-- Options Page -->
 			<tr>
 				<td><?php _e("Options Page",'acf'); ?></td>
 				<td><?php echo $this->is_field_unlocked('options_page') ? __("Active",'acf') : __("Inactive",'acf'); ?></td>
@@ -327,9 +324,11 @@ if(function_exists("register_field_group"))
 				);
 				
 ?>register_field_group(<?php var_export($var); ?>);
-}
 <?php
 			}
+?>
+}
+<?php
 		}
 		else
 		{

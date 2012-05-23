@@ -84,12 +84,11 @@ class Everything_fields
 		// set page type
 		$options = array();
 		
-		if( $pagenow == "edit-tags.php" )
+		if( $pagenow == "edit-tags.php" && isset($_GET['taxonomy']) )
 		{
 		
 			$this->data['page_type'] = "taxonomy";
 			$options['ef_taxonomy'] = $_GET['taxonomy'];
-			
 			
 			$this->data['page_action'] = "add";
 			$this->data['option_name'] = "";
@@ -111,7 +110,7 @@ class Everything_fields
 			$this->data['option_name'] = "user_" . get_current_user_id();
 			
 		}
-		elseif( $pagenow == "user-edit.php" )
+		elseif( $pagenow == "user-edit.php" && isset($_GET['user_id']) )
 		{
 		
 			$this->data['page_type'] = "user";
@@ -302,10 +301,6 @@ class Everything_fields
 		}
 		
 		
-		// strip slashes
-		$_POST = array_map('stripslashes_deep', $_POST);
-		
-		
 		// options name to save against
 		$option_name = $_POST['taxonomy'] . '_' . $term_id;
 		
@@ -340,10 +335,6 @@ class Everything_fields
 		{
 			return;
 		}
-		
-		
-		// strip slashes
-		$_POST = array_map('stripslashes_deep', $_POST);
 		
 		
 		// options name to save against
@@ -382,11 +373,7 @@ class Everything_fields
 		{
 			return $post;
 		}
-		
-		
-		// strip slashes
-		$_POST = array_map('stripslashes_deep', $_POST);
-		
+
 		
 		// save fields
 		$fields = $_POST['fields'];

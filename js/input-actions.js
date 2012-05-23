@@ -150,7 +150,7 @@ var acf = {
 			if($(this).find('.repeater').exists())
 			{
 
-				if($(this).find('.repeater tr.row').exists())
+				if($(this).find('.repeater table tbody tr').exists())
 				{
 					validation = true;
 				}
@@ -158,7 +158,6 @@ var acf = {
 				{
 					validation = false;
 				}
-				//console.log(validation);
 				
 			}
 			
@@ -612,10 +611,11 @@ var acf = {
     	return newDate.getTime();
     }
     
+    
 	// update order numbers
-	function update_r_order_numbers(div)
+	function repeater_update_order( repeater )
 	{
-		div.children('table').children('tbody').children('tr.row').each(function(i){
+		repeater.children('table').children('tbody').children('tr').each(function(i){
 			$(this).children('td.order').html(i+1);
 		});
 	
@@ -623,7 +623,7 @@ var acf = {
 	
 	
 	// make sortable
-	function make_r_sortable(div){
+	function repeater_add_sortable( repeater ){
 		
 		var fixHelper = function(e, ui) {
 			ui.children().each(function() {
@@ -632,58 +632,93 @@ var acf = {
 			return ui;
 		};
 		
-		div.children('table').children('tbody').unbind('sortable').sortable({
+		repeater.children('table').children('tbody').unbind('sortable').sortable({
 			update: function(event, ui){
-				update_r_order_numbers(div);
+				repeater_update_order( repeater );
 			},
 			items : '> tr',
 			handle: '> td.order',
 			helper: fixHelper,
-			axis: "y" // limit the dragging to up/down only
+			forceHelperSize: true,
+			forcePlaceholderSize: true,
+			scroll: true,
+			start: function (event, ui) {
+				
+				// add markup to the placeholder
+				var td_count = ui.item.children('td').length;
+        		ui.placeholder.html('<td colspan="' + td_count + '"></td>');
+   			}
 		});
 	};
 	
+	
+	// setup repeater fields
 	$(document).live('acf/setup_fields', function(e, postbox){
 		
 		$(postbox).find('.repeater').each(function(){
 		
-			var div = $(this);
-			var row_limit = parseInt(div.attr('data-row_limit'));
-			var row_count = div.children('table').children('tbody').children('tr.row').length;
+			var repeater = $(this);
+			var row_limit = parseInt( repeater.attr('data-row_limit') );	
 			
-			// has limit been reached?
-			if(row_count >= row_limit) div.find('#r_add_row').attr('disabled','true');
+			
+			// update classes based on row count
+			repeater_check_rows( repeater );
+			
 			
 			// sortable
 			if(row_limit > 1){
-				make_r_sortable(div);
+				repeater_add_sortable( repeater );
 			}
 			
 		});
 			
 	});
 	
-	// add field
-	$('.repeater #r_add_row').live('click', function(){
+	
+	// repeater_check_rows
+	function repeater_check_rows( repeater )
+	{
+		// vars
+		var row_limit = parseInt( repeater.attr('data-row_limit') );			
+		var row_count = repeater.children('table').children('tbody').children('tr').length;
 		
-		var div = $(this).closest('.repeater');
-		var row_limit = parseInt(div.attr('data-row_limit'));			
-		var row_count = div.children('table').children('tbody').children('tr.row').length;
 		
-		// row limit
-		if(row_count >= row_limit)
+		// empty?
+		if( row_count == 0 )
 		{
-			// reached row limit!
-			div.find('#r_add_row').attr('disabled','true');
+			repeater.addClass('empty');
+		}
+		else
+		{
+			repeater.removeClass('empty');
+		}
+		
+		
+		// row limit reached
+		if( row_count >= row_limit )
+		{
+			repeater.addClass('disabled');
+		}
+		else
+		{
+			repeater.removeClass('disabled');
+		}
+	}
+	
+	
+	// add field
+	function repeater_add_field( repeater, before )
+	{
+		
+		// validate
+		if( repeater.hasClass('disabled') )
+		{
 			return false;
 		}
 		
-		// deactivate any wysiwygs
-		div.children('table').children('tbody').children('tr.row_clone').acf_deactivate_wysiwyg();
-	
 		// create and add the new field
-		var new_field = div.children('table').children('tbody').children('tr.row_clone').clone(false);
-		new_field.attr('class', 'row');
+		var new_field = $( repeater.children('.clone').html() );
+		
 		
 		// update names
 		var new_id = uniqid();
@@ -695,48 +730,98 @@ var acf = {
 			
 		});
 		
+		
 		// add row
-		div.children('table').children('tbody').append(new_field); 
-		
-		// activate wysiwyg
-		$(document).trigger('acf/setup_fields',new_field);
-		//new_field.acf_activate_wysiwyg();
-	
-		update_r_order_numbers(div);
-		
-		// there is now 1 more row
-		row_count ++;
-		
-		// disable the add field button if row limit is reached
-		if(row_count >= row_limit)
+		if( before )
 		{
-			div.find('#r_add_row').attr('disabled','true');
+			before.before( new_field );
+		}
+		else
+		{
+			repeater.children('table').children('tbody').append(new_field); 
 		}
 		
+		
+		// update order
+		repeater_update_order( repeater );
+		
+		
+		// update classes based on row count
+		repeater_check_rows( repeater );
+		
+		
+		// setup fields
+		$(document).trigger('acf/setup_fields', new_field);
+
+		
 		// validation
-		div.closest('.field').removeClass('error');
-		
+		repeater.closest('.field').removeClass('error');
+	}
+	
+	
+	// add row - end
+	$('.repeater .add-row-end').live('click', function(){
+		var repeater = $(this).closest('.repeater');
+		repeater_add_field( repeater, false );
 		return false;
-		
 	});
+	
+	
+	// add row - before
+	$('.repeater .add-row-before').live('click', function(){
+		var repeater = $(this).closest('.repeater');
+		var before = $(this).closest('tr');
+		repeater_add_field( repeater, before );
+		return false;
+	});
+	
+	
+	function repeater_remove_row( tr )
+	{	
+		// vars
+		var repeater =  tr.closest('.repeater');
+		var column_count = tr.children().length;
+		var row_height = tr.height();
+
+		
+		// animate out tr
+		tr.addClass('acf-remove-item');
+		setTimeout(function(){
+			
+			tr.remove();
+			
+			// update order
+			repeater_update_order( repeater );
+			
+			
+			// update classes based on row count
+			repeater_check_rows( repeater );
+			
+		}, 400);
+		
+	}
 	
 	
 	// remove field
-	$('.repeater a#r_remove_row').live('click', function(){
-		
-		var div = $(this).closest('.repeater');
+	$('.repeater .remove-row').live('click', function(){
 		var tr = $(this).closest('tr');
-		
-		tr.animate({'left' : '50px', 'opacity' : 0}, 250,function(){
-			tr.remove();
-			update_r_order_numbers(div);
-		});
-		
-		div.find('#r_add_row').removeAttr('disabled');
-		
+		repeater_remove_row( tr );
 		return false;
+	});
+	
+	
+	// hover over tr, align add-row button to top
+	$('.repeater tr').live('mouseenter', function(){
+		
+		var button = $(this).find('a.add-row');
+		var margin = ( button.parent().height() / 2 ) + 9; // 9 = padding + border
+		
+		button.css('margin-top', '-' + margin + 'px' );
 		
 	});
+	
+	
+	
 	
 	
 	/*
