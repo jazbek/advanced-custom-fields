@@ -65,10 +65,10 @@ class acf_Wysiwyg extends acf_Field
    		else
    		{
    			// only add for pre 3.3
-   			if(get_bloginfo('version') < "3.3")
-   			{
+   			//if(get_bloginfo('version') < "3.3")
+   			//{
    				wp_tiny_mce();
-   			}
+   			//}
    			
    		}
 		
