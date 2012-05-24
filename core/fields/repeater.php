@@ -165,56 +165,18 @@ class acf_Repeater extends acf_Field
 		{
 			$field['value'][] = array();
 		}
+		
+		// setup values for row clone
+		$field['value'][999] = array();
+		foreach($sub_fields as $sub_field)
+		{
+			$sub_value = isset($sub_field['default_value']) ? $sub_field['default_value'] : '';
+			$field['value'][999][$sub_field['name']] = $sub_value;
+		}
+		
 
 		?>
 		<div class="repeater" data-row_limit="<?php echo $row_limit; ?>">
-			
-			
-			<script type="text/html" class="clone"><tr><?php 
-				
-					if($row_limit > 1): ?><td class="order"></td><?php endif; 
-					
-					if($layout == 'row'): ?><td><?php endif; 
-					
-					foreach($sub_fields as $j => $sub_field):
-					
-					if($layout == 'table'): 
-						?><td><?php 
-					else:
-						?><div class="row-layout-field"><p class="label"><label><?php echo $sub_field['label']; ?></label><?php 
-						
-						if(!isset($sub_field['instructions']))
-							$sub_field['instructions'] = "";
-						
-						echo $sub_field['instructions']; 
-						
-					?></p><?php
-					
-					endif; 
-					
-						// add value
-						$sub_field['value'] = isset($sub_field['default_value']) ? $sub_field['default_value'] : '';
-						
-						// add name
-						$sub_field['name'] = $field['name'] . '[999][' . $sub_field['key'] . ']';
-						
-						// create field
-						$this->parent->create_field($sub_field);
-						
-					if($layout == 'table'):
-						?></td><?php
-					else:
-						?></div><?php
-					endif; 
-					
-					endforeach; 
-					
-					if($layout == 'row'): ?></td><?php endif; 
-					
-					if($row_limit > 1): ?><td class="remove"><a class="add-row add-row-before" href="javascript:;"></a><a class="remove-row" href="javascript:;"></a></td><?php endif; 
-				
-				?></tr></script>
-			
 			
 			<table class="widefat <?php if($layout == 'row'): ?>row_layout<?php endif; ?>">
 			<?php if($layout == 'table'): ?>
@@ -234,8 +196,7 @@ class acf_Repeater extends acf_Field
 			<?php endif; ?>
 			<tbody>
 				<?php if( $field['value'] ): foreach($field['value'] as $i => $value):?>
-
-				<tr>
+				<tr class="<?php echo ($i == 999) ? "row-clone" : "row"; ?>">
 					
 					<?php if($row_limit > 1): ?>
 						<td class="order">

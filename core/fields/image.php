@@ -442,10 +442,10 @@ class acf_Image extends acf_Field
 	 			if((i+1) < total) 
 	 			{ 
 	 				// add row 
-	 				self.parent.acf_div.closest('.repeater').find('.table_footer #r_add_row').trigger('click'); 
+	 				self.parent.acf_div.closest('.repeater').find('.table_footer .add-row-end').trigger('click'); 
 	 			 
 	 				// set acf_div to new row image 
-	 				self.parent.acf_div = self.parent.acf_div.closest('.repeater').find('> table > tbody > tr.row:last-child .acf_image_uploader'); 
+	 				self.parent.acf_div = self.parent.acf_div.closest('.repeater').find('> table > tbody > tr:last-child .acf_image_uploader'); 
 	 			} 
 	 			else 
 	 			{ 

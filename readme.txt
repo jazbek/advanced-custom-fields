@@ -85,6 +85,12 @@ http://www.advancedcustomfields.com/support/
 
 == Changelog ==
 
+= 3.2.2 =
+* [Fixed] Fix layout bug: Nested repeaters of different layouts
+* [Fixed] Fix strip slashes bug
+* [Fixed] Fix nested repeater bug - http://www.advancedcustomfields.com/support/discussion/2068/latest-update-broken-editing-environment-
+* [Fixed] Test / Fix add multiple images to repeater
+
 = 3.2.1 =
 * Field groups can now be added to options page with layout "side"
 * Fixed debug error when saving a taxonomy:

@@ -445,7 +445,7 @@ ul.checkbox_list {
 	background: transparent !important;
 }
 
-.repeater tr.row_clone {
+.repeater tr.row-clone {
 	display: none;
 }
 
@@ -471,6 +471,11 @@ ul.checkbox_list {
 	background: rgba(0,0,0,0.075);
 }
 
+
+/* empty repeater */
+.repeater.empty table thead th {
+	border-bottom: 0 none;
+}
 
 
 

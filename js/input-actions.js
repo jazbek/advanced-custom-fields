@@ -150,7 +150,7 @@ var acf = {
 			if($(this).find('.repeater').exists())
 			{
 
-				if($(this).find('.repeater table tbody tr').exists())
+				if($(this).find('.repeater tr.row').exists())
 				{
 					validation = true;
 				}
@@ -615,7 +615,7 @@ var acf = {
 	// update order numbers
 	function repeater_update_order( repeater )
 	{
-		repeater.children('table').children('tbody').children('tr').each(function(i){
+		repeater.find('> table > tbody > tr.row').each(function(i){
 			$(this).children('td.order').html(i+1);
 		});
 	
@@ -632,11 +632,11 @@ var acf = {
 			return ui;
 		};
 		
-		repeater.children('table').children('tbody').unbind('sortable').sortable({
+		repeater.find('> table > tbody').unbind('sortable').sortable({
 			update: function(event, ui){
 				repeater_update_order( repeater );
 			},
-			items : '> tr',
+			items : '> tr.row',
 			handle: '> td.order',
 			helper: fixHelper,
 			forceHelperSize: true,
@@ -656,9 +656,18 @@ var acf = {
 	$(document).live('acf/setup_fields', function(e, postbox){
 		
 		$(postbox).find('.repeater').each(function(){
-		
+			
 			var repeater = $(this);
 			var row_limit = parseInt( repeater.attr('data-row_limit') );	
+			
+			
+			// move row-clone to be the first element (to avoid double border css bug)
+			var row_clone = repeater.find('> table > tbody > tr.row-clone');
+			if( row_clone.index() != 0 )
+			{
+				row_clone.closest('tbody').prepend( row_clone );
+			}
+			
 			
 			
 			// update classes based on row count
@@ -680,7 +689,7 @@ var acf = {
 	{
 		// vars
 		var row_limit = parseInt( repeater.attr('data-row_limit') );			
-		var row_count = repeater.children('table').children('tbody').children('tr').length;
+		var row_count = repeater.find('> table > tbody > tr.row').length;
 		
 		
 		// empty?
@@ -717,7 +726,8 @@ var acf = {
 		}
 		
 		// create and add the new field
-		var new_field = $( repeater.children('.clone').html() );
+		var new_field = repeater.find('> table > tbody > tr.row-clone').clone(false);
+		new_field.attr('class', 'row');
 		
 		
 		// update names
@@ -738,8 +748,12 @@ var acf = {
 		}
 		else
 		{
-			repeater.children('table').children('tbody').append(new_field); 
+			repeater.find('> table > tbody').append(new_field); 
 		}
+		
+		
+		// trigger mouseenter on parent repeater to work out css margin on add-row button
+		repeater.closest('tr').trigger('mouseenter');
 		
 		
 		// update order
@@ -780,7 +794,7 @@ var acf = {
 	{	
 		// vars
 		var repeater =  tr.closest('.repeater');
-		var column_count = tr.children().length;
+		var column_count = tr.children('tr.row').length;
 		var row_height = tr.height();
 
 		
@@ -790,6 +804,11 @@ var acf = {
 			
 			tr.remove();
 			
+			
+			// trigger mouseenter on parent repeater to work out css margin on add-row button
+			repeater.closest('tr').trigger('mouseenter');
+		
+		
 			// update order
 			repeater_update_order( repeater );
 			
@@ -813,7 +832,7 @@ var acf = {
 	// hover over tr, align add-row button to top
 	$('.repeater tr').live('mouseenter', function(){
 		
-		var button = $(this).find('a.add-row');
+		var button = $(this).find('> td.remove > a.add-row');
 		var margin = ( button.parent().height() / 2 ) + 9; // 9 = padding + border
 		
 		button.css('margin-top', '-' + margin + 'px' );
