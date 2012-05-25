@@ -85,6 +85,15 @@ http://www.advancedcustomfields.com/support/
 
 == Changelog ==
 
+= 3.2.3 =
+* [Fixed] Include Wysiwyg scripts / styles through the editor class
+* [Fixed] Wysiwyg in repeater not working
+* [Fixed] Remove Swedish translation until string / js bugs are fixed
+* [Fixed] Checkbox  array value issue: http://wordpress.org/support/topic/plugin-advanced-custom-fields-php-warning-in-corefieldscheckboxphp?replies=6
+* [Added] Add inherit to relationship posts query - http://www.advancedcustomfields.com/support/discussion/comment/3826#Comment_3826
+* [Fixed] Relationship shows deleted posts - http://www.advancedcustomfields.com/support/discussion/2080/strange-behavior-of-relationship-field-trash-posts
+* [Fixed] Wysiwyg editor not working on taxonomy edit page 
+
 = 3.2.2 =
 * [Fixed] Fix layout bug: Nested repeaters of different layouts
 * [Fixed] Fix strip slashes bug

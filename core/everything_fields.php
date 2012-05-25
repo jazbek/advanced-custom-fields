@@ -205,12 +205,8 @@ class Everything_fields
 		</script>';
 		
 		
-		// run action for any extra functionality
-		foreach($this->parent->fields as $field)
-		{
-			$this->parent->fields[$field->name]->admin_head();
-		}
-		do_action('admin_head-acf_input');
+		// add user js + css
+		do_action('acf_head-input');
 		
 		
 		?>
@@ -222,7 +218,7 @@ class Everything_fields
 			metabox_ids		:	'<?php echo implode( ',', $this->data['metabox_ids'] ); ?>',
 			page_type		:	'<?php echo $this->data['page_type']; ?>',
 			page_action		:	'<?php echo $this->data['page_action']; ?>',
-			option_name		:	'<?php echo $this->data['option_name']; ?>',
+			option_name		:	'<?php echo $this->data['option_name']; ?>'
 		};
 		
 		$(document).ready(function(){
@@ -269,7 +265,7 @@ class Everything_fields
 						}
 					}
 										
-					echo "$(document).trigger('acf/setup_fields', $('#wpbody') );";
+					echo "setTimeout( function(){ $(document).trigger('acf/setup_fields', $('#wpbody') ); }, 200);";
 					
 					?>
 				}

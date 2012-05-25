@@ -36,7 +36,18 @@ class acf_Checkbox extends acf_Field
 	function create_field($field)
 	{
 		// defaults
-		if(empty($field['value'])) $field['value'] = array();
+		if(empty($field['value']))
+		{
+			$field['value'] = array();
+		}
+		
+		
+		// single value to array conversion
+		if( !is_array($field['value']) )
+		{
+			$field['value'] = array( $field['value'] );
+		}
+		
 		
 		// no choices
 		if(empty($field['choices']))

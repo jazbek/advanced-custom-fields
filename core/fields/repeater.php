@@ -45,102 +45,6 @@ class acf_Repeater extends acf_Field
 	}
 	
 	
-	
-	/*--------------------------------------------------------------------------------------
-	*
-	*	create_field_row
-	*
-	*	@author Elliot Condon
-	*	@since 3.2.1
-	* 
-	*-------------------------------------------------------------------------------------
-	
-	function temp_create_row( $options = array() )
-	{
-	
-		// vars
-		$defaults = array(
-			'i' => 999,
-			'row_limit' => 999,
-			'layout' => 'row',
-			'sub_fields' => false
-		);
-		$options = array_merge($defaults, $options);
-		
-		
-		?>
-		<tr class="<?php echo ( $options['i'] == 999 ) ? "row_clone" : "row"; ?>">
-					
-			<?php 
-			
-			// add order number, if row_limit > 1
-			
-			if( $options['row_limit'] > 1 ): ?>
-				<td class="order"><?php echo $i+1; ?></td>
-			<?php endif; 
-			
-			
-			// if layout is row, create a td to hold all the fields
-			
-			if( $options['layout'] == 'row'): ?>
-				<td>
-			<?php endif;
-			
-			
-			// loop through sub fields
-			if( $options['sub_fields'] ):
-				foreach( $options['sub_fields'] as $j => $sub_field):
-				
-					if( $options['layout'] == 'table' ): ?>
-					<td>
-			<?php else: ?>
-			<div class="row-layout-field">
-			<p class="label">
-				<label><?php echo $sub_field['label']; ?></label>
-				<?php 
-				
-				if(!isset($sub_field['instructions']))
-					$sub_field['instructions'] = "";
-				
-				echo $sub_field['instructions']; 
-				
-				?>
-			</p>
-			<?php endif; ?>	
-				
-				<?php 
-				// add value
-				$sub_field['value'] = isset($value[$sub_field['name']]) ? $value[$sub_field['name']] : '';
-				
-				// add name
-				$sub_field['name'] = $field['name'] . '[' . $i . '][' . $sub_field['key'] . ']';
-				
-				// create field
-				$this->parent->create_field($sub_field);
-				?>
-				
-			<?php if($layout == 'table'): ?>
-			</td>
-			<?php else: ?>
-			</div>
-			<?php endif; ?>	
-			
-			<?php endforeach;
-			endif; ?>
-			
-			<?php if( $options['layout'] == 'row'): ?>
-				</td>
-			<?php endif; ?>
-			
-			<?php if( $options['row_limit'] > 1 ): ?>
-				<td class="remove"><a class="remove_row" id="r_remove_row" href="javascript:;"></a></td>
-			<?php endif; ?>
-		</tr>
-		<?php
-	}
-	*/
-	
-	
 	/*--------------------------------------------------------------------------------------
 	*
 	*	create_field
@@ -254,13 +158,13 @@ class acf_Repeater extends acf_Field
 			</tbody>
 			</table>
 			<?php if($row_limit > 1): ?>
-			<div class="table_footer">
-				<ul class="hl clearfix">
-					<li class="right">
-						<a href="javascript:;" class="add-row-end acf-button"><?php echo $button_label; ?></a>
-					</li>
-				</ul>
-			</div>	
+
+			<ul class="hl clearfix repeater-footer">
+				<li class="right">
+					<a href="javascript:;" class="add-row-end acf-button"><?php echo $button_label; ?></a>
+				</li>
+			</ul>
+
 			<?php endif; ?>	
 		</div>
 		<?php

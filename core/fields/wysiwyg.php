@@ -20,10 +20,54 @@ class acf_Wysiwyg extends acf_Field
     	$this->name = 'wysiwyg';
 		$this->title = __("Wysiwyg Editor",'acf');
 		
-		add_action( 'admin_head', array($this, 'add_tiny_mce') );
-		//add_action( 'admin_footer', array($this, 'admin_footer') );
+		add_filter( 'acf_head-input', array( $this, 'acf_head') );
 		add_filter( 'wp_default_editor', array($this, 'my_default_editor') );
-		
+
+   	}
+   	
+   	
+   	/*--------------------------------------------------------------------------------------
+	*
+	*	admin_print_scripts / admin_print_styles
+	*
+	*	@author Elliot Condon
+	*	@since 3.0.0
+	* 
+	*-------------------------------------------------------------------------------------*/
+	
+	function admin_print_styles()
+	{
+  		wp_enqueue_style(array(
+  			'editor-buttons',	
+		));
+	}
+	
+	
+   	/*--------------------------------------------------------------------------------------
+	*
+	*	admin_head
+	*	- Add the settings for a WYSIWYG editor (as used in wp_editor / wp_tiny_mce)
+	*
+	*	@author Elliot Condon
+	*	@since 3.2.3
+	* 
+	*-------------------------------------------------------------------------------------*/
+	
+   	function acf_head()
+   	{
+   		if ( ! class_exists('_WP_Editors' ) )
+	        require_once( ABSPATH . WPINC . '/class-wp-editor.php' );
+	
+	    $editor_id = 'acf_settings';
+	    $set = array(
+	        'teeny' => false,
+	        'tinymce' =>  true,
+	        'quicktags' => true
+	    );
+	
+	    $set = _WP_Editors::parse_settings($editor_id, $set);
+	    _WP_Editors::editor_settings($editor_id, $set);
+	    
    	}
    	
    	
@@ -43,86 +87,7 @@ class acf_Wysiwyg extends acf_Field
    	{
     	return 'tinymce'; // html or tinymce
     }
-   	
-   	
-   	/*--------------------------------------------------------------------------------------
-	*
-	*	add_tiny_mce
-	*
-	*	@author Elliot Condon
-	*	@since 3.0.3
-	*	@updated 3.0.3
-	* 
-	*-------------------------------------------------------------------------------------*/
-   	
-   	function add_tiny_mce()
-   	{
-   		global $post;
    		
-   		if($post && post_type_supports($post->post_type, 'editor'))
-   		{
-   			// do nothing, wysiwyg will render correctly!
-   		}
-   		else
-   		{
-   			// only add for pre 3.3
-   			//if(get_bloginfo('version') < "3.3")
-   			//{
-   				wp_tiny_mce();
-   			//}
-   			
-   		}
-		
-	}
-	
-   	
-   	/*--------------------------------------------------------------------------------------
-	*
-	*	admin_print_scripts / admin_print_styles
-	*
-	*	@author Elliot Condon
-	*	@since 3.0.0
-	* 
-	*-------------------------------------------------------------------------------------*/
-	
-	function admin_print_scripts()
-	{
-		wp_enqueue_script(array(
-		
-			'jquery',
-			'jquery-ui-core',
-			'jquery-ui-tabs',
-
-			// wysiwyg
-			'editor',
-			'thickbox',
-			'media-upload',
-			'word-count',
-			'post',
-			'editor-functions',
-			'tiny_mce',
-						
-		));
-	}
-	
-	function admin_print_styles()
-	{
-  		wp_enqueue_style(array(
-  			'editor-buttons',
-			'thickbox',		
-		));
-	}
-	
-	function admin_footer()
-	{
-		/*?>
-		<div style="display:none">
-			<?php wp_editor('', 'acf-temp-editor'); ?>
-		</div>
-		<?php*/
-	}
-	
-	
 	
 	/*--------------------------------------------------------------------------------------
 	*
@@ -202,7 +167,6 @@ class acf_Wysiwyg extends acf_Field
 		$id = 'wysiwyg-' . $field['name'];
 		
 		
-		
 		?>
 		<div id="wp-<?php echo $id; ?>-wrap" class="acf_wysiwyg wp-editor-wrap" data-toolbar="<?php echo $field['toolbar']; ?>">
 			<?php if($field['media_upload'] == 'yes'): ?>
@@ -214,8 +178,6 @@ class acf_Wysiwyg extends acf_Field
 					</div>
 				<?php else: ?>
 					<div id="wp-<?php echo $id; ?>-editor-tools" class="wp-editor-tools">
-						<?php /*<a onclick="switchEditors.switchto(this);" class="hide-if-no-js wp-switch-editor switch-html active" id="<?php echo $id; ?>-html">HTML</a>
-						<a onclick="switchEditors.switchto(this);" class="hide-if-no-js wp-switch-editor switch-tmce" id="<?php echo $id; ?>-tmce">Visual</a>*/ ?>
 						<div id="wp-<?php echo $id; ?>-media-buttons" class="hide-if-no-js wp-media-buttons">
 							<?php do_action( 'media_buttons' ); ?>
 						</div>
@@ -223,27 +185,9 @@ class acf_Wysiwyg extends acf_Field
 				<?php endif; ?>
 			<?php endif; ?>
 			<div id="wp-<?php echo $id; ?>-editor-container" class="wp-editor-container">
-				<?php /*<div id="qt_<?php echo $id; ?>_toolbar" class="quicktags-toolbar">
-					<input type="button" value="b" title="" class="ed_button" accesskey="b" id="qt_<?php echo $id; ?>_strong">
-					<input type="button" value="i" title="" class="ed_button" accesskey="i" id="qt_<?php echo $id; ?>_em">
-					<input type="button" value="link" title="" class="ed_button" accesskey="a" id="qt_<?php echo $id; ?>_link">
-					<input type="button" value="b-quote" title="" class="ed_button" accesskey="q" id="qt_<?php echo $id; ?>_block">
-					<input type="button" value="del" title="" class="ed_button" accesskey="d" id="qt_<?php echo $id; ?>_del">
-					<input type="button" value="ins" title="" class="ed_button" accesskey="s" id="qt_<?php echo $id; ?>_ins">
-					<input type="button" value="img" title="" class="ed_button" accesskey="m" id="qt_<?php echo $id; ?>_img">
-					<input type="button" value="ul" title="" class="ed_button" accesskey="u" id="qt_<?php echo $id; ?>_ul">
-					<input type="button" value="ol" title="" class="ed_button" accesskey="o" id="qt_<?php echo $id; ?>_ol">
-					<input type="button" value="li" title="" class="ed_button" accesskey="l" id="qt_<?php echo $id; ?>_li">
-					<input type="button" value="code" title="" class="ed_button" accesskey="c" id="qt_<?php echo $id; ?>_code">
-					<input type="button" value="more" title="" class="ed_button" accesskey="t" id="qt_<?php echo $id; ?>_more">
-					<input type="button" value="lookup" title="Dictionary lookup" class="ed_button" id="qt_<?php echo $id; ?>_spell">
-					<input type="button" value="close tags" title="Close all open tags" class="ed_button" id="qt_<?php echo $id; ?>_close">
-					<input type="button" value="fullscreen" title="Toggle fullscreen mode" class="ed_button" accesskey="f" id="qt_<?php echo $id; ?>_fullscreen">
-				</div>*/ ?>
 				<textarea id="<?php echo $id; ?>" class="wp-editor-area" name="<?php echo $field['name']; ?>" ><?php echo wp_richedit_pre($field['value']); ?></textarea>
 			</div>
 		</div>
-		<?php //wp_editor('', $id); ?>
 		
 		<?php
 

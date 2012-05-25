@@ -417,8 +417,8 @@ a.remove-row:hover {
 	margin: 0;
 }
 
-.repeater .table_footer {
-	padding: 8px 0;
+.repeater .repeater-footer {
+	margin: 8px 0;
 }
 
 #acf_input .wp_themeSkin tr.mceFirst td.mceToolbar {
@@ -729,29 +729,46 @@ ul.checkbox_list {
 	border-radius: 3px;
 }
 
-.acf_popup {
+.acf-popup {
 	position: absolute;
 	bottom: 25px;
 	right: 0;
 	background: #464646;
 	border-radius: 5px;
 	box-shadow: rgba(0,0,0,0.4) 0 0 13px;
-	margin-bottom: 45px;
 	margin-right: -5px;
-	display: none;
 	min-width: 135px;
 	z-index: 99;
+	
+	-webkit-transition: bottom 0.25s 0s, opacity 0.25s 0s ease-in-out, visibility 0s linear 0.25s;
+	-moz-transition: bottom 0.25s 0s, opacity 0.25s 0s ease-in-out, visibility 0s linear 0.25s;
+	-o-transition: bottom 0.25s 0s, opacity 0.25s 0s ease-in-out, visibility 0s linear 0.25s; 	
+	transition: bottom 0.25s 0s, opacity 0.25s 0s ease-in-out, visibility 0s linear 0.25s; 
+	
+	visibility: hidden;
+	opacity: 0;
 }
 
-.has-right-sidebar .acf_popup {
+.acf-popup.active {
+	visibility: visible;
+	opacity: 1;
+	bottom: 35px;
+	
+	-webkit-transition-delay:0s;
+	-moz-transition-delay:0s;
+	-o-transition-delay:0s;
+	transition-delay:0s;
+}
+
+.has-right-sidebar .acf-popup {
 	margin-right: -17px;
 }
 
-.has-right-sidebar .acf_popup .bit {
+.has-right-sidebar .acf-popup .bit {
 	right: 37px;
 }
 
-.acf_popup .bit {
+.acf-popup .bit {
 	position: absolute;
 	width: 56px;
 	height: 25px;
@@ -760,24 +777,25 @@ ul.checkbox_list {
 	background: url(../images/sprite.png) 0 -50px no-repeat;
 }
 
-.acf_popup ul {
+.acf-popup ul {
 	display: block;
 	margin: 0;
 	padding: 0;
 }
 
-.acf_popup ul li {
+.acf-popup ul li {
 	display: block;
 	position: relative;
 	margin: -1px 0 0;
 	padding: 0;
+	float: none;
 }
 
-.acf_popup ul li:first-child {
+.acf-popup ul li:first-child {
 	margin: 0;
 }
 
-.acf_popup ul li a {
+.acf-popup ul li a {
 	color: #cccccc;
 	font-size: 12px;
 	line-height: 14px;
@@ -790,19 +808,19 @@ ul.checkbox_list {
 	text-shadow: 0 1px 0 #222222;
 }
 
-.acf_popup ul li:first-child a {
+.acf-popup ul li:first-child a {
 	border-radius: 5px 5px 0 0;
 }
 
-.acf_popup ul li:last-child a {
+.acf-popup ul li:last-child a {
 	border-radius: 0 0 5px 5px;
 }
 
-.acf_popup ul li:only-child a {
+.acf-popup ul li:only-child a {
 	border-radius: 5px 5px 5px 5px;
 }
 
-.acf_popup ul li a:hover {
+.acf-popup ul li a:hover {
 	background: #2b8ab8;
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3da0d1', endColorstr='#1f81b2'); /* for IE */
 	background: -webkit-gradient(linear, left top, left bottom, from(#3da0d1), to(#1f81b2)); /* for webkit browsers */
@@ -830,8 +848,8 @@ ul.checkbox_list {
 	border-radius: 4px;
 }
 
-.acf_flexible_content .table_footer {
-	margin: 20px 0;
+.acf_flexible_content .flexible-footer {
+	margin: 8px 0;
 }
 
 /*---------------------------------------------------------------------------------------------

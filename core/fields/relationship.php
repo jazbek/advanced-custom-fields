@@ -80,7 +80,7 @@ class acf_Relationship extends acf_Field
 			'post_type'		=>	$field['post_type'],
 			'orderby'		=>	'title',
 			'order'			=>	'ASC',
-			'post_status' => array('publish', 'private', 'draft'),
+			'post_status' => array('publish', 'private', 'draft', 'inherit'),
 			//'meta_key'		=>	$field['meta_key'],
 			//'meta_value'	=>	$field['meta_value'],
 		));
@@ -362,7 +362,12 @@ class acf_Relationship extends acf_Field
 			$return = array();
 			foreach($value as $v)
 			{
-				$return[] = get_post($v);
+				$p = get_post($v);
+				
+				if( $p && in_array( $p->post_status, array('publish', 'private', 'draft', 'inherit')) )
+				{
+					$return[] = $p;
+				}
 			}
 		}
 		else
