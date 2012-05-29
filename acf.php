@@ -3,7 +3,7 @@
 Plugin Name: Advanced Custom Fields
 Plugin URI: http://www.advancedcustomfields.com/
 Description: Fully customise WordPress edit screens with powerful fields. Boasting a professional interface and a powerfull API, it’s a must have for any web developer working with WordPress.Field types include: Wysiwyg, text, textarea, image, file, select, checkbox, page link, post object, date picker, color picker and more!
-Version: 3.2.3
+Version: 3.2.4
 Author: Elliot Condon
 Author URI: http://www.elliotcondon.com/
 License: GPL
@@ -44,7 +44,7 @@ class Acf
 		$this->dir = plugins_url('',__FILE__);
 		$this->siteurl = get_bloginfo('url');
 		$this->wpadminurl = admin_url();
-		$this->version = '3.2.3';
+		$this->version = '3.2.4';
 		$this->upgrade_version = '3.1.8'; // this is the latest version which requires an upgrade
 		$this->cache = array(); // basic array cache to hold data throughout the page load
 		
@@ -922,7 +922,7 @@ class Acf
 	 	// If this is a new acf, there will be no custom keys!
 	 	if(!get_post_custom_keys($post_id))
 	 	{
-	 		$options['show_on_page'] = array('the_content', 'discussion', 'custom_fields', 'comments', 'slug', 'author');
+	 		$options['show_on_page'] = array('the_content', 'excerpt', 'discussion', 'custom_fields', 'comments', 'slug', 'author');
 	 	}
 	 	
 	 	// return
@@ -1257,6 +1257,10 @@ class Acf
 					if(!in_array('the_content',$acf['options']['show_on_page']))
 					{
 						$html .= '#postdivrich {display: none;} ';
+					}
+					if(!in_array('excerpt',$acf['options']['show_on_page']))
+					{
+						$html .= '#postexcerpt, #screen-meta label[for=postexcerpt-hide] {display: none;} ';
 					}
 					if(!in_array('custom_fields',$acf['options']['show_on_page']))
 					{
@@ -2081,7 +2085,7 @@ class Acf
 				
 				if($field['required'] == "1")
 				{
-					$required_class = ' ' . __("required",'acf');
+					$required_class = ' required';
 					$required_label = ' <span class="required">*</span>';
 				}
 				

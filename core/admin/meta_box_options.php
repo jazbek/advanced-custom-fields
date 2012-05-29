@@ -80,6 +80,7 @@ $options = $this->get_acf_options($post->ID);
 				'value'	=>	$options['show_on_page'],
 				'choices' => array(
 					'the_content'	=>	__("Content Editor",'acf'),
+					'excerpt'		=>	__("Excerpt",'acf'),
 					'custom_fields'	=>	__("Custom Fields",'acf'),
 					'discussion'	=>	__("Discussion",'acf'),
 					'comments'		=>	__("Comments",'acf'),

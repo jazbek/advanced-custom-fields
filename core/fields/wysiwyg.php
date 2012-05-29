@@ -35,10 +35,31 @@ class acf_Wysiwyg extends acf_Field
 	* 
 	*-------------------------------------------------------------------------------------*/
 	
+	function admin_print_scripts()
+	{
+		wp_enqueue_script(array(
+		
+			'jquery',
+			'jquery-ui-core',
+			'jquery-ui-tabs',
+
+			// wysiwyg
+			'editor',
+			'thickbox',
+			'media-upload',
+			'word-count',
+			'post',
+			'editor-functions',
+			'tiny_mce',
+						
+		));
+	}
+	
 	function admin_print_styles()
 	{
   		wp_enqueue_style(array(
-  			'editor-buttons',	
+  			'editor-buttons',
+			'thickbox',		
 		));
 	}
 	

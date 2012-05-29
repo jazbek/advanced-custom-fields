@@ -85,6 +85,11 @@ http://www.advancedcustomfields.com/support/
 
 == Changelog ==
 
+= 3.2.4 =
+* [Fixed] Remove translation from validation class - http://www.advancedcustomfields.com/support/discussion/2110/custom-validation-broken-in-other-languages
+* [Fixed] Test fix WYSIWYG insert media issues
+* [Added] Add Excerpt to the field group "show on page" options
+
 = 3.2.3 =
 * [Fixed] Include Wysiwyg scripts / styles through the editor class
 * [Fixed] Wysiwyg in repeater not working
