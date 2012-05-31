@@ -319,7 +319,7 @@ switch($_POST['version'])
 	    $return = array(
 	    	'status'	=>	true,
 			'message'	=>	$message,
-			'next'		=>	false,
+			'next'		=>	'3.1.8',
 	    );
 	    
 	break;
@@ -433,6 +433,58 @@ switch($_POST['version'])
 		
 		// update version
 		update_option('acf_version','3.1.8');
+		 	
+	    $return = array(
+	    	'status'	=>	true,
+			'message'	=>	$message,
+			'next'		=>	'3.2.5',
+	    );
+	    
+	break;
+	
+	
+	/*---------------------
+	*
+	*	3.1.8
+	* 
+	*--------------------*/
+	
+	case '3.2.5':
+		
+		// vars
+		$message = __("Modifying field group options 'show on page'",'acf') . '...';
+		
+		
+		// get acf's
+		$result = get_pages(array(
+			'numberposts' 	=> 	-1,
+			'post_type'		=>	'acf',
+			'sort_column' => 'menu_order',
+			'order' => 'ASC',
+		));
+		
+		
+		$show_all = array('the_content', 'discussion', 'custom_fields', 'comments', 'slug', 'author');
+		
+		
+		// populate acfs
+		if($result)
+		{
+			foreach($result as $acf)
+			{
+				$show_on_page = get_post_meta($acf->ID, 'show_on_page', true) ? get_post_meta($acf->ID, 'show_on_page', true) : array();
+				
+				$hide_on_screen = array_diff($show_all, $show_on_page);
+				
+				update_post_meta($acf->ID, 'hide_on_screen', $hide_on_screen);
+				delete_post_meta($acf->ID, 'show_on_page');
+				
+			}
+		}
+		
+		
+		// update version
+		update_option('acf_version','3.2.5');
 		 	
 	    $return = array(
 	    	'status'	=>	true,

@@ -3,7 +3,7 @@
 Plugin Name: Advanced Custom Fields
 Plugin URI: http://www.advancedcustomfields.com/
 Description: Fully customise WordPress edit screens with powerful fields. Boasting a professional interface and a powerfull API, it’s a must have for any web developer working with WordPress.Field types include: Wysiwyg, text, textarea, image, file, select, checkbox, page link, post object, date picker, color picker and more!
-Version: 3.2.4
+Version: 3.2.5
 Author: Elliot Condon
 Author URI: http://www.elliotcondon.com/
 License: GPL
@@ -44,8 +44,8 @@ class Acf
 		$this->dir = plugins_url('',__FILE__);
 		$this->siteurl = get_bloginfo('url');
 		$this->wpadminurl = admin_url();
-		$this->version = '3.2.4';
-		$this->upgrade_version = '3.1.8'; // this is the latest version which requires an upgrade
+		$this->version = '3.2.5';
+		$this->upgrade_version = '3.2.5'; // this is the latest version which requires an upgrade
 		$this->cache = array(); // basic array cache to hold data throughout the page load
 		
 		
@@ -912,18 +912,14 @@ class Acf
 	
 	function get_acf_options($post_id)
 	{
+		
 		// defaults
 	 	$options = array(
-	 		'position'		=>	get_post_meta($post_id, 'position', true) ? get_post_meta($post_id, 'position', true) : 'normal',
-	 		'layout'		=>	get_post_meta($post_id, 'layout', true) ? get_post_meta($post_id, 'layout', true) : 'default',
-	 		'show_on_page'	=>	get_post_meta($post_id, 'show_on_page', true) ? get_post_meta($post_id, 'show_on_page', true) : array(),
+	 		'position'			=>	get_post_meta($post_id, 'position', true) ? get_post_meta($post_id, 'position', true) : 'normal',
+	 		'layout'			=>	get_post_meta($post_id, 'layout', true) ? get_post_meta($post_id, 'layout', true) : 'default',
+	 		'hide_on_screen'	=>	get_post_meta($post_id, 'hide_on_screen', true) ? get_post_meta($post_id, 'hide_on_screen', true) : array(),
 	 	);
-	 	
-	 	// If this is a new acf, there will be no custom keys!
-	 	if(!get_post_custom_keys($post_id))
-	 	{
-	 		$options['show_on_page'] = array('the_content', 'excerpt', 'discussion', 'custom_fields', 'comments', 'slug', 'author');
-	 	}
+	 
 	 	
 	 	// return
 	 	return $options;
@@ -997,7 +993,7 @@ class Acf
 	{
 		if(!isset($this->fields[$field['type']]) || !is_object($this->fields[$field['type']]))
 		{
-			return '';
+			return false;
 		}
 		
 		return $this->fields[$field['type']]->get_value($post_id, $field);
@@ -1251,41 +1247,50 @@ class Acf
 		{
 			foreach($acfs as $acf)
 			{
-				if($acf['id'] == $acf_id)
+				if($acf['id'] != $acf_id) continue;
+				
+
+				// add style to html 
+				if( in_array('the_content',$acf['options']['hide_on_screen']) )
 				{
-					// add style to html 
-					if(!in_array('the_content',$acf['options']['show_on_page']))
-					{
-						$html .= '#postdivrich {display: none;} ';
-					}
-					if(!in_array('excerpt',$acf['options']['show_on_page']))
-					{
-						$html .= '#postexcerpt, #screen-meta label[for=postexcerpt-hide] {display: none;} ';
-					}
-					if(!in_array('custom_fields',$acf['options']['show_on_page']))
-					{
-						$html .= '#postcustom, #screen-meta label[for=postcustom-hide] { display: none; } ';
-					}
-					if(!in_array('discussion',$acf['options']['show_on_page']))
-					{
-						$html .= '#commentstatusdiv, #screen-meta label[for=commentstatusdiv-hide] {display: none;} ';
-					}
-					if(!in_array('comments',$acf['options']['show_on_page']))
-					{
-						$html .= '#commentsdiv, #screen-meta label[for=commentsdiv-hide] {display: none;} ';
-					}
-					if(!in_array('slug',$acf['options']['show_on_page']))
-					{
-						$html .= '#slugdiv, #screen-meta label[for=slugdiv-hide] {display: none;} ';
-					}
-					if(!in_array('author',$acf['options']['show_on_page']))
-					{
-						$html .= '#authordiv, #screen-meta label[for=authordiv-hide] {display: none;} ';
-					}
-					
-					break;
+					$html .= '#postdivrich {display: none;} ';
 				}
-				// if($acf['id'] == $acf_id)
+				if( in_array('excerpt',$acf['options']['hide_on_screen']) )
+				{
+					$html .= '#postexcerpt, #screen-meta label[for=postexcerpt-hide] {display: none;} ';
+				}
+				if( in_array('custom_fields',$acf['options']['hide_on_screen']) )
+				{
+					$html .= '#postcustom, #screen-meta label[for=postcustom-hide] { display: none; } ';
+				}
+				if( in_array('discussion',$acf['options']['hide_on_screen']) )
+				{
+					$html .= '#commentstatusdiv, #screen-meta label[for=commentstatusdiv-hide] {display: none;} ';
+				}
+				if( in_array('comments',$acf['options']['hide_on_screen']) )
+				{
+					$html .= '#commentsdiv, #screen-meta label[for=commentsdiv-hide] {display: none;} ';
+				}
+				if( in_array('slug',$acf['options']['hide_on_screen']) )
+				{
+					$html .= '#slugdiv, #screen-meta label[for=slugdiv-hide] {display: none;} ';
+				}
+				if( in_array('author',$acf['options']['hide_on_screen']) )
+				{
+					$html .= '#authordiv, #screen-meta label[for=authordiv-hide] {display: none;} ';
+				}
+				if( in_array('format',$acf['options']['hide_on_screen']) )
+				{
+					$html .= '#formatdiv, #screen-meta label[for=formatdiv-hide] {display: none;} ';
+				}
+				if( in_array('featured_image',$acf['options']['hide_on_screen']) )
+				{
+					$html .= '#postimagediv, #screen-meta label[for=postimagediv-hide] {display: none;} ';
+				}
+				
+				
+				break;
+
 			}
 			// foreach($acfs as $acf)
 		}

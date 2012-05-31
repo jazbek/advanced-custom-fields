@@ -65,6 +65,11 @@ class acf_Repeater extends acf_Field
 		
 		
 		// add clone field
+		if( !$field['value'] )
+		{
+			$field['value'] = array();
+		}
+		
 		if($row_limit == 1 && count($field['value']) == 0)
 		{
 			$field['value'][] = array();
@@ -74,7 +79,7 @@ class acf_Repeater extends acf_Field
 		$field['value'][999] = array();
 		foreach($sub_fields as $sub_field)
 		{
-			$sub_value = isset($sub_field['default_value']) ? $sub_field['default_value'] : '';
+			$sub_value = isset($sub_field['default_value']) ? $sub_field['default_value'] : false;
 			$field['value'][999][$sub_field['name']] = $sub_value;
 		}
 		

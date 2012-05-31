@@ -85,6 +85,20 @@ http://www.advancedcustomfields.com/support/
 
 == Changelog ==
 
+= 3.2.5 =
+* [IMPORTANT] Change field group option "Show on page" to "Hide on Screen" to allow for future proof adding new elements to list. Previously exported and registered field groups via PHP will still work as expected! This change will prompt you for a database upgrade.
+* [Added] Add in edit button to upload image / file thickbox
+* [Improved] Changed loading default values. Now behaves as expected!
+* [Fixed] Test / Fix full screen mode dissapearing from editor - http://www.advancedcustomfields.com/support/discussion/2124/full-screen-button-for-zen-mode-is-gone
+* [Fixed] get_field returning false for 0 - http://advancedcustomfields.com/support/discussion/2115/get_field-returns-false-if-field-has-value-0
+* [Improved] Improve relationship sortable code with item param - http://www.advancedcustomfields.com/support/discussion/comment/3536#Comment_3536
+* [Fixed] IE category js bug - http://www.advancedcustomfields.com/support/discussion/2127/ie-78-category-checkbox-bug
+* [Fixed] Flexible content field row css bug - http://www.advancedcustomfields.com/support/discussion/2126/space-between-fields-is-a-little-tight-in-3.2.33.2.4
+* [Fixed] Repeater row limit in flexible field bug - http://www.advancedcustomfields.com/support/discussion/1635/repeater-with-row-limit-of-1-inside-flexible-field-no-rows-show
+* [Fixed] Fix update message - appears on first activation
+* [Fixed] Fix options page sidebar drag area - no border needed
+* [Fixed] Fix export options page activation - http://www.advancedcustomfields.com/support/discussion/2112/options-page-not-working-in-functions.php
+
 = 3.2.4 =
 * [Fixed] Remove translation from validation class - http://www.advancedcustomfields.com/support/discussion/2110/custom-validation-broken-in-other-languages
 * [Fixed] Test fix WYSIWYG insert media issues

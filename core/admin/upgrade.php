@@ -13,13 +13,17 @@ $version = get_option('acf_version','1.0.5');
 $next = false;
 
 // list of starting points
-if(version_compare($version,'3.0.0') < 0)
+if( $version < '3.0.0' )
 {
 	$next = '3.0.0';
 }
-elseif(version_compare($version,'3.1.8') < 0)
+elseif( $version < '3.1.8' )
 {
 	$next = '3.1.8';
+}
+elseif( $version < '3.2.5' )
+{
+	$next = '3.2.5';
 }
 ?>
 	

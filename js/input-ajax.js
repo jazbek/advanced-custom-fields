@@ -163,20 +163,7 @@
 		update_fields();
 	    
 	});
-	
-	$('#taxonomy-category input[type="checkbox"]').live('change', function(){
-		
-		acf.data.post_category = ['0'];
-		
-		$('#categorychecklist :checked').each(function(){
-			acf.data.post_category.push($(this).val())
-		});
-		
-		//console.log(data.post_category);
-		update_fields();
-		
-	});	
-	
+
 	
 	$('#post-formats-select input[type="radio"]').live('change', function(){
 		
@@ -185,17 +172,31 @@
 		
 	});	
 	
-	// taxonomy
-	$('div[id*="taxonomy-"] input[type="checkbox"]').live('change', function(){
+	
+	// taxonomy / category
+	$('.categorychecklist input[type="checkbox"]').live('change', function(){
 		
-		// ignore categories
-		if($(this).closest('#taxonomy-category').exists()) return false;
 		
-		acf.data.taxonomy = ['0'];
+		// vars
+		var category = ( $(this).closest('#categorychecklist').exists() ) ? true : false;
+		var values = ['0'];
 		
+		
+		// populate values
 		$(this).closest('ul').find('input[type="checkbox"]:checked').each(function(){
-			acf.data.taxonomy.push($(this).val())
+			values.push($(this).val())
 		});
+
+		
+		if( category )
+		{
+			acf.data.post_category = values;
+		}
+		else
+		{
+			acf.data.taxonomy = values;
+		}
+
 		
 		update_fields();
 		

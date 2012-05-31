@@ -729,6 +729,14 @@ ul.checkbox_list {
 	border-radius: 3px;
 }
 
+.acf_flexible_content td .row-layout-field {
+    padding: 30px 0 0;
+}
+
+.acf_flexible_content td .row-layout-field:first-child {
+	padding-top: 3px;
+}
+
 .acf-popup {
 	position: absolute;
 	bottom: 25px;

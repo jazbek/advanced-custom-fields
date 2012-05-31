@@ -352,6 +352,7 @@ var acf = {
 		
 		$(this).find('.relationship_right .relationship_list').sortable({
 			axis: "y", // limit the dragging to up/down only
+			items: 'a:not(.hide)',
 		    start: function(event, ui)
 		    {
 				ui.item.addClass('sortable_active');

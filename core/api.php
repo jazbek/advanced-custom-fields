@@ -306,6 +306,16 @@ function register_field_group($array)
 		$array['id'] = uniqid();
 	}
 	
+
+	// 3.2.5 - changed show_on_page option
+	if( !isset($array['options']['hide_on_screen']) && isset($array['options']['show_on_page']) )
+	{
+		$show_all = array('the_content', 'discussion', 'custom_fields', 'comments', 'slug', 'author');
+		$array['options']['hide_on_screen'] = array_diff($show_all, $array['options']['show_on_page']);
+		unset( $array['options']['show_on_page'] );
+	}
+
+
 	$GLOBALS['acf_register_field_group'][] = $array;
 }
 

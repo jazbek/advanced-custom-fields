@@ -15,7 +15,7 @@ $this->setup_fields();
  
 $version = get_option('acf_version', false);
 
-if( !$version )
+if( $version )
 {
 	if( $version < $this->upgrade_version )
 	{

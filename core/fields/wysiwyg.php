@@ -20,48 +20,11 @@ class acf_Wysiwyg extends acf_Field
     	$this->name = 'wysiwyg';
 		$this->title = __("Wysiwyg Editor",'acf');
 		
-		add_filter( 'acf_head-input', array( $this, 'acf_head') );
-		add_filter( 'wp_default_editor', array($this, 'my_default_editor') );
+		add_action( 'acf_head-input', array( $this, 'acf_head') );
+		add_action( 'wp_default_editor', array($this, 'my_default_editor') );
 
    	}
    	
-   	
-   	/*--------------------------------------------------------------------------------------
-	*
-	*	admin_print_scripts / admin_print_styles
-	*
-	*	@author Elliot Condon
-	*	@since 3.0.0
-	* 
-	*-------------------------------------------------------------------------------------*/
-	
-	function admin_print_scripts()
-	{
-		wp_enqueue_script(array(
-		
-			'jquery',
-			'jquery-ui-core',
-			'jquery-ui-tabs',
-
-			// wysiwyg
-			'editor',
-			'thickbox',
-			'media-upload',
-			'word-count',
-			'post',
-			'editor-functions',
-			'tiny_mce',
-						
-		));
-	}
-	
-	function admin_print_styles()
-	{
-  		wp_enqueue_style(array(
-  			'editor-buttons',
-			'thickbox',		
-		));
-	}
 	
 	
    	/*--------------------------------------------------------------------------------------
@@ -76,19 +39,17 @@ class acf_Wysiwyg extends acf_Field
 	
    	function acf_head()
    	{
-   		if ( ! class_exists('_WP_Editors' ) )
-	        require_once( ABSPATH . WPINC . '/class-wp-editor.php' );
-	
-	    $editor_id = 'acf_settings';
-	    $set = array(
-	        'teeny' => false,
-	        'tinymce' =>  true,
-	        'quicktags' => true
-	    );
-	
-	    $set = _WP_Editors::parse_settings($editor_id, $set);
-	    _WP_Editors::editor_settings($editor_id, $set);
-	    
+   		add_action( 'admin_footer', array( $this, 'admin_footer') );
+   	}
+   	
+   	
+   	function admin_footer()
+   	{
+	   	?>
+	   	<div style="display:none;">
+	   	<?php the_editor( '', 'acf_settings' ); ?>
+	   	</div>
+	   	<?php
    	}
    	
    	

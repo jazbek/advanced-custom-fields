@@ -170,7 +170,7 @@ class Options_page
 		// Style
 		echo '<link rel="stylesheet" type="text/css" href="'.$this->parent->dir.'/css/global.css?ver=' . $this->parent->version . '" />';
 		echo '<link rel="stylesheet" type="text/css" href="'.$this->parent->dir.'/css/input.css?ver=' . $this->parent->version . '" />';
-
+		echo '<style type="text/css">#side-sortables.empty-container { border: 0 none; }</style>';
 
 		// Javascript
 		echo '<script type="text/javascript" src="'.$this->parent->dir.'/js/input-actions.js?ver=' . $this->parent->version . '" ></script>';

@@ -222,15 +222,36 @@ class acf_File extends acf_Field
 	 ---------------------------------------------------------------------------------------------*/
 	function popup_head()
 	{	
+		// defults
+		$access = false;
+		$tab = "type";
+		
+		
+		// GET
 		if(isset($_GET["acf_type"]) && $_GET['acf_type'] == 'file')
 		{
-			$tab = isset($_GET['tab']) ? $_GET['tab'] : "type"; // "type" is the upload tab
+			$access = true;
+			if( isset($_GET['tab']) ) $tab = $_GET['tab'];
 			
+			if( isset($_POST["attachments"]) )
+			{
+				echo '<div class="updated"><p>' . __("Media attachment updated.") . '</p></div>';
+			}
+			
+		}
+		
+		
+		if( $access )
+		{
+					
 ?><style type="text/css">
 	#media-upload-header #sidemenu li#tab-type_url,
-	#media-upload-header #sidemenu li#tab-gallery, 
-	#media-items .media-item table.slidetoggle,
-	#media-items .media-item a.toggle {
+	#media-upload-header #sidemenu li#tab-gallery,
+	#media-items .media-item a.toggle,
+	#media-items .media-item tr.image-size,
+	#media-items .media-item tr.align,
+	#media-items .media-item tr.url,
+	#media-items .media-item .slidetoggle {
 		display: none !important;
 	}
 	
@@ -251,18 +272,17 @@ class acf_File extends acf_Field
 	
 	#media-items .media-item .filename.new {
 		min-height: 0;
-		padding: 25px 10px 10px;
-		line-height: 14px;
-		
+		padding: 20px 10px 10px 10px;
+		line-height: 15px;
 	}
 	
 	#media-items .media-item .title {
 		line-height: 14px;
 	}
 	
-	#media-items .media-item .button {
+	#media-items .media-item .acf-select {
 		float: right;
-		margin: -2px 0 0 10px;
+		margin: 22px 12px 0 10px;
 	}
 	
 	#media-upload .ml-submit {
@@ -282,6 +302,7 @@ class acf_File extends acf_Field
 		margin: 0 10px 0 0;
 	}
 
+
 </style>
 <script type="text/javascript">
 (function($){
@@ -292,7 +313,7 @@ class acf_File extends acf_Field
 	*  @created : 29/03/2012
 	*/
 	
-	$('#media-items .media-item .filename a.acf-select').live('click', function(){
+	$('#media-items .media-item a.acf-select').live('click', function(){
 		
 		var id = $(this).attr('href');
 		
@@ -405,6 +426,24 @@ class acf_File extends acf_Field
 	}); 
 	
 	
+	// edit toggle
+	$('#media-items .media-item a.acf-toggle-edit').live('click', function(){
+		
+		if( $(this).hasClass('active') )
+		{
+			$(this).removeClass('active');
+			$(this).closest('.media-item').find('.slidetoggle').attr('style', 'display: none !important');
+			return false;
+		}
+		else
+		{
+			$(this).addClass('active');
+			$(this).closest('.media-item').find('.slidetoggle').attr('style', 'display: table !important');
+			return false;
+		}
+		
+	});
+	
 	
 	// set a interval function to add buttons to media items
 	function acf_add_buttons()
@@ -441,8 +480,15 @@ class acf_File extends acf_Field
 				$(this).prepend('<input type="checkbox" class="acf-checkbox" value="' + id + '" <?php if($tab == "type"){echo 'checked="checked"';} ?> />');
 			}
 			
-			// change text of insert button, and add new button
-			$(this).find('.filename.new').append('<a href="' + id + '" class="button acf-select"><?php _e("Select File",'acf'); ?></a>');
+			
+			// Add edit button
+			$(this).find('.filename.new').append('<br /><a href="#" class="acf-toggle-edit">Edit</a>');
+			
+			// Add select button
+			$(this).find('.filename.new').before('<a href="' + id + '" class="button acf-select"><?php _e("Select File",'acf'); ?></a>');
+			
+			// add save changes button
+			$(this).find('tr.submit input.button').hide().before('<input type="submit" value="<?php _e("Update File",'acf'); ?>" class="button savebutton" />');
 			
 		});
 	}
@@ -464,9 +510,17 @@ class acf_File extends acf_Field
 		}, 1);
 		
 		
-		$('form#filter, form#image-form').each(function(){
+		$('form#filter').each(function(){
 			
 			$(this).append('<input type="hidden" name="acf_type" value="file" />');
+						
+		});
+		
+		$('form#image-form, form#library-form').each(function(){
+			
+			var action = $(this).attr('action');
+			action += "&acf_type=file";
+			$(this).attr('action', action);
 			
 		});
 	});

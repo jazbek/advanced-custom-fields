@@ -64,10 +64,10 @@ $options = $_POST['options'];
 
 if(!isset($options['position'])) { $options['position'] = 'normal'; }
 if(!isset($options['layout'])) { $options['layout'] = 'default'; }
-if(!isset($options['show_on_page'])) { $options['show_on_page'] = array(); }
+if(!isset($options['hide_on_screen'])) { $options['hide_on_screen'] = array(); }
 
 update_post_meta($post_id, 'position', $options['position']);
 update_post_meta($post_id, 'layout', $options['layout']);
-update_post_meta($post_id, 'show_on_page', $options['show_on_page']);
+update_post_meta($post_id, 'hide_on_screen', $options['hide_on_screen']);
 
 ?>
