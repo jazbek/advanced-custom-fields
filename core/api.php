@@ -580,11 +580,10 @@ function acf_form($options = null)
 		<input type="hidden" name="acf_save" value="true" />
 		<input type="hidden" name="post_id" value="<?php echo $options['post_id']; ?>" />
 		<input type="hidden" name="return" value="<?php echo $options['return']; ?>" />
-		<?php wp_editor('', 'acf-temp-editor'); ?>
+		<?php wp_editor('', 'acf_settings'); ?>
 	</div>
 	
 	<div id="poststuff">
-	<div class="acf_postbox">
 	<?php
 	
 	// html before fields
@@ -608,11 +607,10 @@ function acf_form($options = null)
 				
 			if($field_group['fields'])
 			{
-				
-				echo '<div class="options" data-layout="' . $field_group['options']['layout'] . '"></div>';
-				
-				$acf->render_fields_for_input($field_group['fields'], $options['post_id']);
-				
+				echo '<div id="acf_' . $field_group['id'] . '" class="postbox acf_postbox"><div class="inside">';
+					echo '<div class="options" data-layout="' . $field_group['options']['layout'] . '" data-show="true"></div>';
+					$acf->render_fields_for_input($field_group['fields'], $options['post_id']);
+				echo '</div></div>';
 			}
 			
 		endforeach;
@@ -622,14 +620,14 @@ function acf_form($options = null)
 	echo $defaults['html_after_fields'];
 	
 	?>
+	<!-- Submit -->
 	<div class="field">
 		<input type="submit" value="<?php echo $options['submit_value']; ?>" />
 	</div>
-	</div>
-	</div>
+	<!-- / Submit -->
+
+	</div><!-- <div id="poststuff"> -->
 	</form>
-	
-	
 	<?php
 	
 }

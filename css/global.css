@@ -4,18 +4,31 @@
 *
 *--------------------------------------------------------------------------------------------*/
 
+/* Image Replacement */
+.ir { display: block; text-indent: -999em; overflow: hidden; background-repeat: no-repeat; text-align: left; direction: ltr; font-size: 0; line-height: 0; }
+input.ir { border: 0 none; background: none; }
+
+
+/* Horizontal List */
 .hl { padding: 0; margin: 0; list-style: none; display: block; position: relative; }
-.hl li { float: left; display: block; margin: 0; padding: 0; }
-.hl li.right { float: right; }
+.hl > li { float: left; display: block; margin: 0; padding: 0; }
+.hl > li.right { float: right; }
+
 .hl.center { position: relative; overflow: visible; left: 50%; float: left; }
-.hl.center li { position: relative; left: -50%; }
+.hl.center > li { position: relative; left: -50%; }
+
+
+/* Block List */
+.bl { padding: 0; margin: 0; list-style: none; display: block; position: relative; }
+.bl > li { display: block; margin: 0; padding: 0; float: none; }
+
 
 .clearfix:before, .clearfix:after { content: "\0020"; display: block; height: 0; visibility: hidden; } 
 .clearfix:after { clear: both; }
 .clearfix { zoom: 1; }
 
 #icon-acf {
-	background: url(../images/acf-icon-32.png) 0 0 no-repeat !important;
+	background: url("../images/sprite.png") no-repeat scroll 0 0 transparent !important;
 }
 
 .acf-loading {

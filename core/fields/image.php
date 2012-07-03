@@ -197,19 +197,31 @@ class acf_Image extends acf_Field
 				<label><?php _e("Preview Size",'acf'); ?></label>
 			</td>
 			<td>
-				<?php 
+				<?php
+				
+				$image_sizes = array(
+					'thumbnail'	=>	__("Thumbnail",'acf'),
+					'medium'	=>	__("Medium",'acf'),
+					'large'		=>	__("Large",'acf'),
+					'full'		=>	__("Full",'acf')
+				);
+				
+				foreach(get_intermediate_image_sizes() as $size)
+				{
+					if (!isset($image_sizes[$size]))
+					{
+						$image_sizes[$size] = $size;
+					}
+				}
+				
 				$this->parent->create_field(array(
 					'type'	=>	'radio',
 					'name'	=>	'fields['.$key.'][preview_size]',
 					'value'	=>	$field['preview_size'],
 					'layout'	=>	'horizontal',
-					'choices' => array(
-						'thumbnail'	=>	__("Thumbnail",'acf'),
-						'medium'	=>	__("Medium",'acf'),
-						'large'		=>	__("Large",'acf'),
-						'full'		=>	__("Full",'acf')
-					)
+					'choices' => $image_sizes
 				));
+				
 				?>
 			</td>
 		</tr>

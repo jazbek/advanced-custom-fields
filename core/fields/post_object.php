@@ -79,6 +79,7 @@ class acf_Post_object extends acf_Field
 					'sort_column' => 'menu_order',
 					'order' => 'ASC',
 					'post_status' => array('publish', 'private', 'draft'),
+					'suppress_filters' => false,
 					//'meta_key' => $field['meta_key'],
 					//'meta_value' => $field['meta_value'],
 				));
@@ -92,6 +93,7 @@ class acf_Post_object extends acf_Field
 					'orderby' => 'title',
 					'order' => 'ASC',
 					'post_status' => array('publish', 'private', 'draft'),
+					'suppress_filters' => false,
 					//'meta_key' => $field['meta_key'],
 					//'meta_value' => $field['meta_value'],
 				));

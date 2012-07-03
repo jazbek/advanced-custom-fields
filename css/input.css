@@ -723,7 +723,7 @@ ul.checkbox_list {
 	display: none;
 }
 
-.acf_flexible_content .ui-sortable-placeholder {
+.acf_flexible_content > .values > .ui-sortable-placeholder {
 	visibility: visible !important;
 	border: #DFDFDF dashed 2px;
 	border-radius: 3px;

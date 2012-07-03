@@ -81,6 +81,7 @@ class acf_Relationship extends acf_Field
 			'orderby'		=>	'title',
 			'order'			=>	'ASC',
 			'post_status' => array('publish', 'private', 'draft', 'inherit'),
+			'suppress_filters' => false,
 			//'meta_key'		=>	$field['meta_key'],
 			//'meta_value'	=>	$field['meta_value'],
 		));

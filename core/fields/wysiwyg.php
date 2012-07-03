@@ -21,7 +21,6 @@ class acf_Wysiwyg extends acf_Field
 		$this->title = __("Wysiwyg Editor",'acf');
 		
 		add_action( 'acf_head-input', array( $this, 'acf_head') );
-		add_action( 'wp_default_editor', array($this, 'my_default_editor') );
 
    	}
    	
@@ -47,29 +46,12 @@ class acf_Wysiwyg extends acf_Field
    	{
 	   	?>
 	   	<div style="display:none;">
-	   	<?php the_editor( '', 'acf_settings' ); ?>
+	   	<?php wp_editor( '', 'acf_settings' ); ?>
 	   	</div>
 	   	<?php
    	}
    	
-   	
-   	/*--------------------------------------------------------------------------------------
-	*
-	*	my_default_editor
-	*	- this temporarily fixes a bug which causes the editors to break when the html tab 
-	*	is activeon page load
-	*
-	*	@author Elliot Condon
-	*	@since 3.0.6
-	*	@updated 3.0.6
-	* 
-	*-------------------------------------------------------------------------------------*/
-   	
-   	function my_default_editor()
-   	{
-    	return 'tinymce'; // html or tinymce
-    }
-   		
+
 	
 	/*--------------------------------------------------------------------------------------
 	*
