@@ -561,7 +561,7 @@ var acf = {
 		
 	$(window).load(function(){
 		
-		$('#acf_settings-tmce').trigger('click');
+		//$('#acf_settings-tmce').trigger('click');
 		
 		setTimeout(function(){
 		
@@ -585,9 +585,9 @@ var acf = {
 		
 		
 		// click html tab after the wysiwyg has been initialed to prevent dual editor buttons
-		setTimeout(function(){
-			$('#acf_settings-html').trigger('click');
-		}, 502);
+		//setTimeout(function(){
+		//	$('#acf_settings-html').trigger('click');
+		//}, 502);
 		
 	});
 	
