@@ -9,7 +9,7 @@
 */
 
  
-class Settings 
+class acf_settings 
 {
 
 	var $parent;

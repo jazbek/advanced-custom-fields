@@ -10,7 +10,7 @@
 *-------------------------------------------------------------------------*/
  
  
-class Everything_fields 
+class acf_everything_fields 
 {
 
 	var $parent;

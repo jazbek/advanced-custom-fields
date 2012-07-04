@@ -9,7 +9,7 @@
 */
 
  
-class Upgrade 
+class acf_upgrade 
 {
 
 	var $parent;

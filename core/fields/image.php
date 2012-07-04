@@ -23,9 +23,37 @@ class acf_Image extends acf_Field
 		add_action('admin_head-media-upload-popup', array($this, 'popup_head'));
 		add_filter('get_media_item_args', array($this, 'allow_img_insertion'));
 		add_action('wp_ajax_acf_get_preview_image', array($this, 'acf_get_preview_image'));
+		add_action('acf_head-update_attachment-image', array($this, 'acf_head_update_attachment'));
    	}
    	
    	
+   	/*
+   	*  acf_head_update_attachment
+   	*
+   	*  @description: 
+   	*  @since: 3.2.7
+   	*  @created: 4/07/12
+   	*/
+   	
+   	function acf_head_update_attachment()
+	{
+		?>
+<script type="text/javascript">
+(function($){
+	
+	// vars
+	var div = self.parent.acf_edit_attachment;
+	
+	
+	// add message
+	self.parent.acf.add_message('Image Updated.', div);
+	
+
+})(jQuery);
+</script>
+		<?php
+	}
+	
    	/*--------------------------------------------------------------------------------------
 	*
 	*	acf_get_preview_image
@@ -143,16 +171,29 @@ class acf_Image extends acf_Field
 			$file_src = wp_get_attachment_image_src($field['value'], $preview_size);
 			$file_src = $file_src[0];
 			
-			if($file_src) $class = "active";
+			if($file_src)
+			{
+				$class = "active";
+			}
 		}
 		
-		// html
-		echo '<div class="acf_image_uploader ' . $class . '" data-preview_size="' . $preview_size . '">';
-			echo '<a href="#" class="remove_image"></a>';
-			echo '<img src="' . $file_src . '" alt=""/>';	
-			echo '<input class="value" type="hidden" name="' . $field['name'] . '" value="' . $field['value'] . '" />';
-			echo '<p>'.__('No image selected','acf').'. <input type="button" class="button" value="'.__('Add Image','acf').'" /></p>';
-		echo '</div>';
+		?>
+<div class="acf-image-uploader clearfix <?php echo $class; ?>" data-preview_size="<?php echo $preview_size; ?>">
+	<input class="value" type="hidden" name="<?php echo $field['name']; ?>" value="<?php echo $field['value']; ?>" />
+	<div class="has-image">
+		<div class="hover">
+			<ul class="bl">
+				<li><a class="remove-image ir" href="#">Remove</a></li>
+				<li><a class="edit-image ir" href="#">Edit</a></li>
+			</ul>
+		</div>
+		<img src="<?php echo $file_src; ?>" alt=""/>
+	</div>
+	<div class="no-image">
+		<p><?php _e('No image selected','acf'); ?> <input type="button" class="button add-image" value="<?php _e('Add Image','acf'); ?>" />
+	</div>
+</div>
+		<?php
 	}
 	
 	
@@ -367,17 +408,18 @@ class acf_Image extends acf_Field
 				
 				
 				// get item
-				var item = json[0];
+				var item = json[0],
+					div = self.parent.acf_div;
 				
 				
 				// update acf_div
-				self.parent.acf_div.find('input.value').val( item.id );
-	 			self.parent.acf_div.find('img').attr( 'src', item.url );
-	 			self.parent.acf_div.addClass('active');
+				div.find('input.value').val( item.id );
+	 			div.find('img').attr( 'src', item.url );
+	 			div.addClass('active');
 	 	
 	 	
 	 			// validation
-	 			self.parent.acf_div.closest('.field').removeClass('error');
+	 			div.closest('.field').removeClass('error');
 	 			
 	 			
 	 			// reset acf_div and return false
@@ -446,7 +488,7 @@ class acf_Image extends acf_Field
 	 				self.parent.acf_div.closest('.repeater').find('.add-row-end').trigger('click'); 
 	 			 
 	 				// set acf_div to new row image 
-	 				self.parent.acf_div = self.parent.acf_div.closest('.repeater').find('> table > tbody > tr:last-child .acf_image_uploader'); 
+	 				self.parent.acf_div = self.parent.acf_div.closest('.repeater').find('> table > tbody > tr:last-child .acf-image-uploader'); 
 	 			} 
 	 			else 
 	 			{ 

@@ -9,7 +9,7 @@
 */
 
  
-class Input
+class acf_input
 {
 
 	var $parent,
@@ -498,6 +498,7 @@ class Input
 		// vars
 		$defaults = array(
 			'acf_action'	=>	null,
+			'acf_field'		=>	'',
 		);
 		
 		$options = array_merge($defaults, wp_parse_args( wp_get_referer() ));
@@ -510,15 +511,18 @@ class Input
 		}
 		
 		
-		do_action('acf_head-update_attachment');
+		// call the apropriate field action
+		do_action('acf_head-update_attachment-' . $options['acf_field']);
 		
 		?>
 <script type="text/javascript">
-//setTimeout(function(){
+
+	// reset global
+	self.parent.acf_edit_attachment = null;
 	
+	// remove tb
 	self.parent.tb_remove();
 	
-//}, 1000);
 </script>
 </head>
 <body>
@@ -547,6 +551,7 @@ class Input
 		// vars
 		$defaults = array(
 			'acf_action'	=>	null,
+			'acf_field'		=>	'',
 		);
 		
 		$options = array_merge($defaults, $_GET);
@@ -587,8 +592,9 @@ html.wp-toolbar {
 	
 	$(document).ready( function(){
 		
-		$('#media-single-form').append('<input type="hidden" name="acf_action" value="edit_attachment" />');
-	
+		$('#media-single-form').append('<input type="hidden" name="acf_action" value="<?php echo $options['acf_action']; ?>" />');
+		$('#media-single-form').append('<input type="hidden" name="acf_field" value="<?php echo $options['acf_field']; ?>" />');
+		
 	});
 		
 })(jQuery);

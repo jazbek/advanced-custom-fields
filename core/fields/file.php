@@ -22,7 +22,36 @@ class acf_File extends acf_Field
 		add_action('admin_head-media-upload-popup', array($this, 'popup_head'));
 		add_action('wp_ajax_acf_select_file', array($this, 'ajax_select_file'));
 		add_filter('get_media_item_args', array($this, 'allow_file_insertion'));
+		add_action('acf_head-update_attachment-file', array($this, 'acf_head_update_attachment'));
    	}
+   	
+   	
+   	/*
+   	*  acf_head_update_attachment
+   	*
+   	*  @description: 
+   	*  @since: 3.2.7
+   	*  @created: 4/07/12
+   	*/
+   	
+   	function acf_head_update_attachment()
+	{
+		?>
+<script type="text/javascript">
+(function($){
+	
+	// vars
+	var div = self.parent.acf_edit_attachment;
+	
+	
+	// add message
+	self.parent.acf.add_message('File Updated.', div);
+	
+
+})(jQuery);
+</script>
+		<?php
+	}
    	
    	
    	/*--------------------------------------------------------------------------------------
@@ -57,7 +86,8 @@ class acf_File extends acf_Field
 			</li>
 			<li>
 				<span class="acf-file-name"><?php echo $file_name[0]; ?></span><br />
-				<a href="javascript:;" class="acf-file-delete"><?php _e('Remove File','acf'); ?></a>
+				<a href="#" class="edit-file"><?php _e('Edit','acf'); ?></a> 
+				<a href="#" class="remove-file"><?php _e('Remove','acf'); ?></a>
 			</li>
 		</ul>
 		<?php
@@ -154,17 +184,17 @@ class acf_File extends acf_Field
 		$class = $field['value'] ? "active" : "";
 		
 		?>
-		<div class="acf_file_uploader <?php echo $class; ?>">
+		<div class="acf-file-uploader <?php echo $class; ?>">
 			<input class="value" type="hidden" name="<?php echo $field['name']; ?>" value="<?php echo $field['value']; ?>" />
 			<div class="has-file">
 				<?php $this->render_file( $field['value'] ); ?>
 			</div>
 			<div class="no-file">
-			<ul class="hl clearfix">
-				<li>
-					<span class="acf-file-name"><?php _e('No File Selected','acf'); ?></span>. <a href="javascript:;" class="button"><?php _e('Add File','acf'); ?></a>
-				</li>
-			</ul>
+				<ul class="hl clearfix">
+					<li>
+						<span class="acf-file-name"><?php _e('No File Selected','acf'); ?></span>. <a href="#" class="button add-file"><?php _e('Add File','acf'); ?></a>
+					</li>
+				</ul>
 			</div>
 		</div>
 		<?php
@@ -402,7 +432,7 @@ class acf_File extends acf_Field
 	 				self.parent.acf_div.closest('.repeater').find('.add-row-end').trigger('click'); 
 	 			 
 	 				// set acf_div to new row file 
-	 				self.parent.acf_div = self.parent.acf_div.closest('.repeater').find('> table > tbody > tr:last-child .acf_file_uploader'); 
+	 				self.parent.acf_div = self.parent.acf_div.closest('.repeater').find('> table > tbody > tr:last-child .acf-file-uploader'); 
 	 			} 
 	 			else 
 	 			{ 

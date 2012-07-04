@@ -286,10 +286,11 @@ var acf = {
 	*  @created: 1/03/2011
 	*/
 	
-	$('.acf_file_uploader .no-file .button').live('click', function(){
+	// add file
+	$('.acf-file-uploader .add-file').live('click', function(){
 				
 		// vars
-		var div = $(this).closest('.acf_file_uploader');
+		var div = $(this).closest('.acf-file-uploader');
 		
 		// set global var
 		window.acf_div = div;
@@ -299,16 +300,37 @@ var acf = {
 	
 		return false;
 	});
-		
-	$('.acf_file_uploader .acf-file-delete').live('click', function(){
+	
+	// remove file
+	$('.acf-file-uploader .remove-file').live('click', function(){
 		
 		// vars
-		var div = $(this).closest('.acf_file_uploader');
+		var div = $(this).closest('.acf-file-uploader');
 		
 		div.removeClass('active').find('input.value').val('');
 		
 		return false;
 		
+	});
+	
+	// edit file
+	$('.acf-file-uploader .edit-file').live('click', function(){
+		
+		// vars
+		var div = $(this).closest('.acf-file-uploader'),
+			id = div.find('input.value').val();
+		
+
+		// set global var
+		window.acf_edit_attachment = div;
+				
+		
+		// show edit attachment
+		tb_show('Edit File', acf.admin_url + 'media.php?attachment_id=' + id + '&action=edit&acf_action=edit_attachment&acf_field=file&TB_iframe=1');
+		
+		
+		return false;
+			
 	});
 	
 	
@@ -319,11 +341,12 @@ var acf = {
 	*  @created: 1/03/2011
 	*/
 	
-	$('.acf_image_uploader .button').live('click', function(){
+	// add image
+	$('.acf-image-uploader .add-image').live('click', function(){
 				
 		// vars
-		var div = $(this).closest('.acf_image_uploader');
-		var preview_size = div.attr('data-preview_size');
+		var div = $(this).closest('.acf-image-uploader'),
+			preview_size = div.attr('data-preview_size');
 		
 		// set global var
 		window.acf_div = div;
@@ -333,16 +356,39 @@ var acf = {
 	
 		return false;
 	});
-		
-	$('.acf_image_uploader .remove_image').live('click', function(){
+	
+	// remove image
+	$('.acf-image-uploader .remove-image').live('click', function(){
 		
 		// vars
-		var div = $(this).closest('.acf_image_uploader');
+		var div = $(this).closest('.acf-image-uploader');
 		
-		div.removeClass('active').find('input.value').val('');
+		div.removeClass('active');
+		div.find('input.value').val('');
+		div.find('img').attr('src', '');
 		
 		return false;
+			
+	});
+	
+	// edit image
+	$('.acf-image-uploader .edit-image').live('click', function(){
 		
+		// vars
+		var div = $(this).closest('.acf-image-uploader'),
+			id = div.find('input.value').val();
+		
+
+		// set global var
+		window.acf_edit_attachment = div;
+				
+		
+		// show edit attachment
+		tb_show('Edit Image', acf.admin_url + 'media.php?attachment_id=' + id + '&action=edit&acf_action=edit_attachment&acf_field=image&TB_iframe=1');
+		
+		
+		return false;
+			
 	});
 	
 	
@@ -1045,7 +1091,7 @@ var acf = {
 		
 		var message = $('<div class="acf-message-wrapper"><div class="message updated"><p>' + message + '</p></div></div>');
 		
-		div.append( message );
+		div.prepend( message );
 		
 		setTimeout(function(){
 			
@@ -1055,7 +1101,7 @@ var acf = {
 				message.remove();
 			});
 			
-		}, 1000);
+		}, 1500);
 			
 	};
 	

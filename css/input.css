@@ -175,87 +175,144 @@
 
 
 /*---------------------------------------------------------------------------------------------
-	Image Upload
----------------------------------------------------------------------------------------------*/
-.acf_image_uploader {
+*
+*  Image Upload
+*
+*---------------------------------------------------------------------------------------------*/
+
+
+.acf-image-uploader {
 	position: relative;
 }
 
-.acf_image_uploader a.remove_image {
-	width: 16px;
-	height: 16px;
-	background: url(../images/button_remove.png) 0 0 no-repeat;
-	position: absolute;
-	top:0;
-	left: 0;
-	cursor: pointer;
-	margin: -3px 0 0 -3px;
-	display: none;
-	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-	border-radius: 8px;
-}
+.acf-image-uploader .has-image { display: none; float: left; position: relative; }
+.acf-image-uploader .no-image { display: block; float: left; position: relative; }
 
-.acf_image_uploader.active:hover a.remove_image {
-	display: block;
-}
+.acf-image-uploader.active .has-image { display: block; }
+.acf-image-uploader.active .no-image { display: none; }
 
-.acf_image_uploader a.remove_image:hover  {
-	background-position: 0% 100%;
-}
 
-.acf_image_uploader img {
-	display: none;
-	-moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+.acf-image-uploader img {
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 	max-width:100%;
-}
-
-.acf_image_uploader.active img {
+	height: auto;
 	display: block;
 }
 
-.acf_image_uploader p {
+.acf-image-uploader .no-image p {
 	display: block;
 	margin: 0 !important;
 }
 
-.acf_image_uploader.active p {
-	display: none;
-}
-
-.acf_image_uploader input.button {
+.acf-image-uploader input.button {
 	width: auto;
 }
+
+
+/*
+*  Hover
+*/
+
+.acf-image-uploader .hover {
+	position: absolute;
+	top: -11px;
+	right: -11px;
+	
+	-webkit-transition: opacity 0.25s 0s ease-in-out, visibility 0s linear 0.25s;
+	-moz-transition: opacity 0.25s 0s ease-in-out, visibility 0s linear 0.25s;
+	-o-transition: opacity 0.25s 0s ease-in-out, visibility 0s linear 0.25s; 	
+	transition: opacity 0.25s 0s ease-in-out, visibility 0s linear 0.25s; 
+	
+	visibility: hidden;
+	opacity: 0;
+}
+
+.acf-image-uploader .has-image:hover .hover {
+	-webkit-transition-delay:0s;
+	-moz-transition-delay:0s;
+	-o-transition-delay:0s;
+	transition-delay:0s;
+	
+	visibility: visible;
+	opacity: 1;
+}
+
+.acf-image-uploader .hover ul {
+	display: block;
+	margin: 0;
+	padding: 0;
+}
+
+.acf-image-uploader .hover ul li {
+	margin: 0 0 5px 0;
+}
+
+.acf-image-uploader .hover a {
+	background: url("../images/sprite.png") no-repeat scroll -54px -102px #fff;
+    display: block;
+    height: 22px;
+    width: 22px;
+    border-radius: 15px;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+}
+
+.acf-image-uploader .hover a:hover {
+	background-position: -54px -152px;
+}
+
+.acf-image-uploader .hover a.edit-image {
+	background-position: -45px -345px;
+}
+.acf-image-uploader .hover a.edit-image:hover {
+	background-position: -45px -395px;
+}
+
+
+/*---------------------------------------------------------------------------------------------
+*
+*  ACF Message Wrapper (used by image / file / gallery)
+*
+*---------------------------------------------------------------------------------------------*/
+
+.acf-message-wrapper {
+	margin: 10px 0;
+}
+
+.acf-message-wrapper .message {
+	margin: 0 !important;
+}
+
 
 /*---------------------------------------------------------------------------------------------
 	File Upload
 ---------------------------------------------------------------------------------------------*/
-.acf_file_uploader {
+.acf-file-uploader {
 	position: relative;
 	line-height: 1.5em;
 }
 
-.acf_file_uploader .has-file {
+.acf-file-uploader .has-file {
 	display: none;
 }
 
-.acf_file_uploader .no-file {
+.acf-file-uploader .no-file {
 	display: block;
 }
 
-.acf_file_uploader.active .has-file {
+.acf-file-uploader.active .has-file {
 	display: block;
 }
 
-.acf_file_uploader.active .no-file {
+.acf-file-uploader.active .no-file {
 	display: none;
 }
 
-.acf_file_uploader img {
+.acf-file-uploader img {
 	margin: 0 5px 0 0;
 	height: 
 }
 
-.acf_file_uploader input.button {
+.acf-file-uploader input.button {
 	width: auto;
 }
 

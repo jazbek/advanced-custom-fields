@@ -10,7 +10,7 @@
 *-------------------------------------------------------------------------*/
  
  
-class Options_page 
+class acf_options_page 
 {
 
 	var $parent;

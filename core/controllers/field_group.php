@@ -9,7 +9,7 @@
 */
 
  
-class Field_group
+class acf_field_group
 {
 
 	var $parent,

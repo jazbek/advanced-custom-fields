@@ -85,6 +85,11 @@ http://www.advancedcustomfields.com/support/
 
 == Changelog ==
 
+= 3.2.7 =
+* [Fixed] Rename controller classes - http://www.advancedcustomfields.com/support/discussion/2363/fatal-error-after-update-to-3.2.6
+* [Added] Add edit button to image / file fields
+* [Fixed] WYSIWYG toolbar buttons dissapearing in HTML tab mode
+
 = 3.2.6 =
 * [Fixed] Fix flexible content inside repeater add extra row jquery bug - http://www.advancedcustomfields.com/support/discussion/2134/add-flexible-content-button-in-repeater-field-adds-new-repeater-row
 * [Added] Add suppress_filters to relationship field for WPML compatibility - http://www.advancedcustomfields.com/support/discussion/comment/5401#Comment_5401
