@@ -8,8 +8,7 @@
 
 var acf = {
 	validation : false,
-	validation_message : "Validation Failed. One or more fields below are required.", // this is overriden by a script tag generated in admin_head for translation
-	editor_mode : 'visual'
+	validation_message : "Validation Failed. One or more fields below are required." // this is overriden by a script tag generated in admin_head for translation
 };
 
 (function($){
@@ -561,7 +560,7 @@ var acf = {
 		
 	$(window).load(function(){
 		
-		//$('#acf_settings-tmce').trigger('click');
+		$('#acf_settings-tmce').trigger('click');
 		
 		setTimeout(function(){
 		
