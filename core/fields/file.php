@@ -45,7 +45,7 @@ class acf_File extends acf_Field
 	
 	
 	// add message
-	self.parent.acf.add_message('File Updated.', div);
+	self.parent.acf.add_message("<?php _e("File Updated.",'acf'); ?>", div);
 	
 
 })(jQuery);

@@ -157,11 +157,7 @@ class acf_options_page
 
 		// Javascript
 		echo '<script type="text/javascript" src="'.$this->parent->dir.'/js/input-actions.js?ver=' . $this->parent->version . '" ></script>';
-		echo '<script type="text/javascript">
-			acf.validation_message = "' . __("Validation Failed. One or more fields below are required.",'acf') . '";
-			acf.post_id = 0;
-			acf.admin_url = "' . admin_url() . '";
-		</script>';
+		echo '<script type="text/javascript">acf.post_id = 0;</script>';
 		
 		
 		// add user js + css

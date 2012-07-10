@@ -505,12 +505,7 @@ function acf_form_wp_head()
 
 	// Javascript
 	echo '<script type="text/javascript" src="'.$acf->dir.'/js/input-actions.js?ver=' . $acf->version . '" ></script>';
-	echo '<script type="text/javascript">
-		acf.validation_message = "' . __("Validation Failed. One or more fields below are required.",'acf') . '";
-		acf.post_id = ' . $post->ID . ';
-		acf.editor_mode = "wysiwyg";
-		acf.admin_url = "' . admin_url() . '";
-	</script>';
+	echo '<script type="text/javascript">acf.post_id = ' . $post->ID . ';</script>';
 	
 	
 	// add user js + css

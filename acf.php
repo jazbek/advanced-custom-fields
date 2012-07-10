@@ -3,7 +3,7 @@
 Plugin Name: Advanced Custom Fields
 Plugin URI: http://www.advancedcustomfields.com/
 Description: Fully customise WordPress edit screens with powerful fields. Boasting a professional interface and a powerfull API, it’s a must have for any web developer working with WordPress.Field types include: Wysiwyg, text, textarea, image, file, select, checkbox, page link, post object, date picker, color picker and more!
-Version: 3.2.7
+Version: 3.2.8
 Author: Elliot Condon
 Author URI: http://www.elliotcondon.com/
 License: GPL
@@ -47,7 +47,7 @@ class Acf
 		// vars
 		$this->path = plugin_dir_path(__FILE__);
 		$this->dir = plugins_url('',__FILE__);
-		$this->version = '3.2.7';
+		$this->version = '3.2.8';
 		$this->upgrade_version = '3.2.5'; // this is the latest version which requires an upgrade
 		$this->cache = array(); // basic array cache to hold data throughout the page load
 		
@@ -189,7 +189,15 @@ class Acf
 		if($this->is_field_unlocked('flexible_content'))
 		{
 			include_once('core/fields/flexible_content.php');
-			$return['flexible_content'] = new acf_flexible_content($this);
+			$return['flexible_content'] = new acf_Flexible_content($this);
+		}
+		
+		
+		// add gallery
+		if($this->is_field_unlocked('gallery'))
+		{
+			include_once('core/fields/gallery.php');
+			$return['gallery'] = new acf_Gallery($this);
 		}
 		
 		
@@ -1464,8 +1472,8 @@ class Acf
 		    case 'flexible_content':
 		    	if(md5($this->get_license_key($field_name)) == "d067e06c2b4b32b1c1f5b6f00e0d61d6"){ return true; }else{ return false; }
 		    	break;
-		    case 'everything_fields':
-		    	if(md5($this->get_license_key($field_name)) == "b6ecc9cd639f8f17d061b3eccad49b75"){ return true; }else{ return false; }
+		    case 'gallery':
+		    	if(md5($this->get_license_key($field_name)) == "69f4adc9883195bd206a868ffa954b49"){ return true; }else{ return false; }
 		    	break;
 	    }
 	}
@@ -1600,14 +1608,43 @@ class Acf
         	
 	}
 	
+
+	/*
+	*  get_all_image_sizes
+	*
+	*  @description: returns an array holding all the image sizes
+	*  @since 3.2.8
+	*  @created: 6/07/12
+	*/
 	
-	
-	
-	
-	
-	
-	
-	
+	function get_all_image_sizes()
+	{
+		// find all sizes
+		$all_sizes = get_intermediate_image_sizes();
+		
+		
+		// define default sizes
+		$image_sizes = array(
+			'thumbnail'	=>	__("Thumbnail",'acf'),
+			'medium'	=>	__("Medium",'acf'),
+			'large'		=>	__("Large",'acf'),
+			'full'		=>	__("Full",'acf')
+		);
+		
+		
+		// add extra registered sizes
+		foreach($all_sizes as $size)
+		{
+			if (!isset($image_sizes[$size]))
+			{
+				$image_sizes[$size] = ucwords( str_replace('-', ' ', $size) );
+			}
+		}
+		
+		
+		// return array
+		return $image_sizes;
+	}
 	
 	
 	

@@ -87,9 +87,9 @@ class acf_settings
 			{
 				$message = '<p>' . __("Flexible Content field deactivated",'acf') . '</p>';
 			}
-			elseif($field == "everything_fields")
+			elseif($field == "gallery")
 			{
-				$message = '<p>' . __("Everything Fields deactivated",'acf') . '</p>';
+				$message = '<p>' . __("Gallery field deactivated",'acf') . '</p>';
 			}
 			
 			// show message on page
@@ -123,9 +123,9 @@ class acf_settings
 				{
 					$message = '<p>' . __("Flexible Content field activated",'acf') . '</p>';
 				}
-				elseif($field == "everything_fields")
+				elseif($field == "gallery")
 				{
-					$message = '<p>' . __("Everything Fields activated",'acf') . '</p>';
+					$message = '<p>' . __("Gallery field activated",'acf') . '</p>';
 				}
 			}
 			else
@@ -229,6 +229,27 @@ if($action == ""):
 					</form>
 				</td>
 			</tr>
+			<?php /*
+			<tr>
+				<td><?php _e("Gallery Field",'acf'); ?></td>
+				<td><?php echo $this->parent->is_field_unlocked('gallery') ? __("Active",'acf') : __("Inactive",'acf'); ?></td>
+				<td>
+					<form action="" method="post">
+						<?php if($this->parent->is_field_unlocked('gallery')){
+							echo '<span class="activation_code">XXXX-XXXX-XXXX-'.substr($this->parent->get_license_key('gallery'),-4) .'</span>';
+							echo '<input type="hidden" name="acf_field_deactivate" value="gallery" />';
+							echo '<input type="submit" class="button" value="Deactivate" />';
+						}
+						else
+						{
+							echo '<input type="text" name="key" value="" />';
+							echo '<input type="hidden" name="acf_field_activate" value="gallery" />';
+							echo '<input type="submit" class="button" value="Activate" />';
+						} ?>
+					</form>
+				</td>
+			</tr>
+			*/ ?>
 			<tr>
 				<td><?php _e("Options Page",'acf'); ?></td>
 				<td><?php echo $this->parent->is_field_unlocked('options_page') ? __("Active",'acf') : __("Inactive",'acf'); ?></td>

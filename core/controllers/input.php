@@ -164,15 +164,12 @@ class acf_input
 		// Javascript
 		echo '<script type="text/javascript" src="' . $this->parent->dir . '/js/input-actions.js?ver=' . $this->parent->version . '" ></script>';
 		echo '<script type="text/javascript" src="' . $this->parent->dir . '/js/input-ajax.js?ver=' . $this->parent->version . '" ></script>';
-		echo '<script type="text/javascript">
-			acf.validation_message = "' . __("Validation Failed. One or more fields below are required.",'acf') . '";
-			acf.post_id = ' . $post->ID . ';
-			acf.admin_url = "' . admin_url() . '";
-		</script>';
+		echo '<script type="text/javascript">acf.post_id = ' . $post->ID . ';</script>';
 		
 		
 		// add user js + css
 		do_action('acf_head-input');
+		
 		
 		// get acf's
 		$acfs = $this->parent->get_field_groups();
@@ -442,6 +439,26 @@ class acf_input
 	
 	function acf_head_input()
 	{
+		
+		?>
+<script type="text/javascript">
+
+// admin url
+acf.admin_url = "<?php echo admin_url(); ?>";
+	
+// messages
+acf.text.validation_error = "<?php _e("Validation Failed. One or more fields below are required.",'acf'); ?>";
+acf.text.file_tb_title_add = "<?php _e("Add File to Field",'acf'); ?>";
+acf.text.file_tb_title_edit = "<?php _e("Edit File",'acf'); ?>";
+acf.text.image_tb_title_add = "<?php _e("Add Image to Field",'acf'); ?>";
+acf.text.image_tb_title_edit = "<?php _e("Edit Image",'acf'); ?>";
+acf.text.relationship_max_alert = "<?php _e("Maximum values reached ( {max} values )",'acf'); ?>";
+acf.text.gallery_tb_title_add = "<?php _e("Add Image to Gallery",'acf'); ?>";
+acf.text.gallery_tb_title_edit = "<?php _e("Edit Image",'acf'); ?>";
+
+</script>
+		<?php
+		
 		foreach($this->parent->fields as $field)
 		{
 			$field->admin_head();

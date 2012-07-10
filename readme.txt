@@ -85,6 +85,13 @@ http://www.advancedcustomfields.com/support/
 
 == Changelog ==
 
+= 3.2.8 =
+* [Added] Repeater - Add option for min rows + max rows - http://www.advancedcustomfields.com/support/discussion/2111/repeater-empty-conditional-statements#Item_4
+* [Fixed] Test / Fix Chrome Double WYSIWYG. Again...
+* [Added] Add "future" to post status options - http://advancedcustomfields.com/support/discussion/1975/changed-line-81-and-94-of-corefieldspost_object-to-show-future-entries
+* [Added] Make image sizes strings "Pretty" for preview size options
+* [Fixed] Test / Fix WYSIWYG insert image inside a repeater bug - http://www.advancedcustomfields.com/support/discussion/2404/problem-with-repeater-wysiwyg-fields-and-images
+
 = 3.2.7 =
 * [Fixed] Rename controller classes - http://www.advancedcustomfields.com/support/discussion/2363/fatal-error-after-update-to-3.2.6
 * [Added] Add edit button to image / file fields
