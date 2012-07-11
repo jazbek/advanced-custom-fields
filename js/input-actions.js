@@ -1049,7 +1049,7 @@ var acf = {
 		
 		// create new field
 		var new_id = uniqid(),
-			new_field_html = div.find('> .clones > .layout[data-layout="' + layout + '"]').html().replace(/(="[\w-\[\]]*?)(\[999\])/g, '$1[' + new_id + ']'),,
+			new_field_html = div.find('> .clones > .layout[data-layout="' + layout + '"]').html().replace(/(="[\w-\[\]]*?)(\[999\])/g, '$1[' + new_id + ']'),
 			new_field = $('<div class="layout" data-layout="' + layout + '"></div>').append( new_field_html );
 			
 
