@@ -85,6 +85,12 @@ http://www.advancedcustomfields.com/support/
 
 == Changelog ==
 
+= 3.2.9 =
+* [Added] Add new Gallery Field
+* [Fixed] Test / Fix update_field on repeater / flexible content
+* [Fixed] Fix regex JS issue with adding nested repeaters
+* [Added] Add new Czech translation - Thanks to Webees ( http://www.webees.cz/ )
+
 = 3.2.8 =
 * [Added] Repeater - Add option for min rows + max rows - http://www.advancedcustomfields.com/support/discussion/2111/repeater-empty-conditional-statements#Item_4
 * [Fixed] Test / Fix Chrome Double WYSIWYG. Again...

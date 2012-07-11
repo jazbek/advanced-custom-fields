@@ -677,7 +677,53 @@ function update_field($field_name, $value, $post_id = false)
 	{ 
 		// we can load the field properly! 
 		$field = $acf->get_acf_field($field_key); 
-	} 
+	}
+	
+	
+	// sub fields? They need formatted data
+	if( isset($field['sub_fields']) )
+	{
+		// define sub field keys
+		$sub_field_keys = array();
+		if( $field['sub_fields'] )
+		{
+			foreach( $field['sub_fields'] as $sub_field )
+			{
+				$sub_field_keys[ $sub_field['name'] ] = $sub_field['key'];
+			}
+		}
+		
+		
+		// loop through the values and format the array to use sub field keys
+		if( $value )
+		{
+			foreach( $value as $row_i => $row)
+			{
+				if( $row )
+				{
+					foreach( $row as $sub_field_name => $sub_field_value )
+					{
+						
+						if( isset($sub_field_keys[$sub_field_name]) )
+						{
+							// change the array key from "sub_field_name" to "sub_field_key"
+							$value[$row_i][ $sub_field_keys[$sub_field_name] ] = $sub_field_value;
+							
+							unset( $value[$row_i][$sub_field_name] );
+						}
+						
+					}
+					// foreach( $row as $sub_field_name => $sub_field_value )
+				}
+				// if( $row )
+			}
+			// foreach( $value as $row_i => $row)
+		}
+		// if( $value )
+
+	}
+	
+	
 	
 	
 	$acf->update_value($post_id, $field, $value);

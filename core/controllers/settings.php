@@ -229,7 +229,6 @@ if($action == ""):
 					</form>
 				</td>
 			</tr>
-			<?php /*
 			<tr>
 				<td><?php _e("Gallery Field",'acf'); ?></td>
 				<td><?php echo $this->parent->is_field_unlocked('gallery') ? __("Active",'acf') : __("Inactive",'acf'); ?></td>
@@ -249,7 +248,6 @@ if($action == ""):
 					</form>
 				</td>
 			</tr>
-			*/ ?>
 			<tr>
 				<td><?php _e("Options Page",'acf'); ?></td>
 				<td><?php echo $this->parent->is_field_unlocked('options_page') ? __("Active",'acf') : __("Inactive",'acf'); ?></td>

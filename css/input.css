@@ -1149,12 +1149,12 @@ ul.checkbox_list {
 }
 
 .acf-gallery .hover a {
-	background: url(../images/sprite.png) no-repeat scroll -54px -102px #fff;
+	background: url("../images/sprite.png") no-repeat scroll -54px -102px #fff;
     display: block;
     height: 22px;
     width: 22px;
     border-radius: 15px;
-    border: #dfdfdf solid 1px;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
 }
 
 .acf-gallery .hover a:hover {
