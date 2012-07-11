@@ -823,7 +823,7 @@ var acf = {
 	
 		// create and add the new field
 		var new_id = uniqid(),
-			new_field_html = repeater.find('> table > tbody > tr.row-clone').html().replace(/\[999]/g, '[' + new_id + ']'),
+			new_field_html = repeater.find('> table > tbody > tr.row-clone').html().replace(/(="[\w-\[\]]*?)(\[999\])/g, '$1[' + new_id + ']'),
 			new_field = $('<tr class="row"></tr>').append( new_field_html );
 		
 		
@@ -1049,7 +1049,7 @@ var acf = {
 		
 		// create new field
 		var new_id = uniqid(),
-			new_field_html = div.find('> .clones > .layout[data-layout="' + layout + '"]').html().replace(/\[999]/g, '[' + new_id + ']'),
+			new_field_html = div.find('> .clones > .layout[data-layout="' + layout + '"]').html().replace(/(="[\w-\[\]]*?)(\[999\])/g, '$1[' + new_id + ']'),,
 			new_field = $('<div class="layout" data-layout="' + layout + '"></div>').append( new_field_html );
 			
 
