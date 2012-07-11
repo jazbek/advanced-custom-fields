@@ -127,7 +127,7 @@ class acf_Repeater extends acf_Field
 				if( $field['row_limit'] > 1 ): ?><th class="order"></th><?php endif;
 				
 				foreach( $field['sub_fields'] as $sub_field_i => $sub_field):
-					?><th class="<?php echo $sub_field['name']; ?>" <?php if($sub_field_i != 0): ?>style="width:<?php echo 95/count($sub_fields); ?>%;"<?php endif; ?>><span><?php echo $sub_field['label']; ?></span></th><?php
+					?><th class="<?php echo $sub_field['name']; ?>" <?php if($sub_field_i != 0): ?>style="width:<?php echo 95/count( $field['sub_fields'] ); ?>%;"<?php endif; ?>><span><?php echo $sub_field['label']; ?></span></th><?php
 				endforeach;
 										
 				if( $field['row_min'] < $field['row_limit'] ):  ?><th class="remove"></th><?php endif;
