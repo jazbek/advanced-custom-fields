@@ -286,7 +286,7 @@ class acf_Gallery extends acf_Field
 	</script>
 	
 </div>
-		<?
+		<?php
 	}
 	
 	
