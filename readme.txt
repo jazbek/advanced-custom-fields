@@ -85,6 +85,9 @@ http://www.advancedcustomfields.com/support/
 
 == Changelog ==
 
+= 3.3.0 =
+* [Fixed] Gallery not returning correct order
+
 = 3.2.9 =
 * [Added] Add new Gallery Field
 * [Fixed] Test / Fix update_field on repeater / flexible content

@@ -344,17 +344,24 @@ class acf_Gallery extends acf_Field
 			'post__in' => $value,
 		));
 		
-		$value = array();
+		$ordered_attachments = array();
 		foreach( $attachments as $attachment)
 		{
 			// create array to hold value data
-			$value[] = array(
+			$ordered_attachments[ $attachment->ID ] = array(
 				'id' => $attachment->ID,
 				'alt' => get_post_meta($attachment->ID, '_wp_attachment_image_alt', true),
 				'title' => $attachment->post_title,
 				'caption' => $attachment->post_excerpt,
 				'description' => $attachment->post_content,
 			);
+		}
+		
+		
+		// override value array with attachments
+		foreach( $value as $k => $v)
+		{
+			$value[ $k ] = $ordered_attachments[ $v ];
 		}
 		
 		

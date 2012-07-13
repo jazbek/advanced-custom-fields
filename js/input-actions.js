@@ -632,7 +632,18 @@ var acf = {
 		$(postbox).acf_activate_wysiwyg();
 
 	});
+	
+	$(document).ready( function(){
 		
+		// store variables
+		if(tinyMCE != undefined && tinyMCE.settings != undefined)
+		{
+			acf_wysiwyg_buttons.theme_advanced_buttons1 = tinyMCE.settings.theme_advanced_buttons1;
+			acf_wysiwyg_buttons.theme_advanced_buttons2 = tinyMCE.settings.theme_advanced_buttons2;
+		}
+		
+	});
+	
 	$(window).load(function(){
 		
 		setTimeout(function(){
@@ -642,26 +653,6 @@ var acf = {
 		setTimeout(function(){
 			$(document).trigger('acf/setup_fields', $('#poststuff'));
 		}, 10);
-		
-		
-		if(typeof(tinyMCE) != "object")
-		{
-			return false;
-		}
-
-
-		// store variables
-		if(tinyMCE != undefined && tinyMCE.settings != undefined)
-		{
-			acf_wysiwyg_buttons.theme_advanced_buttons1 = tinyMCE.settings.theme_advanced_buttons1;
-			acf_wysiwyg_buttons.theme_advanced_buttons2 = tinyMCE.settings.theme_advanced_buttons2;
-		}
-		
-		
-		// click html tab after the wysiwyg has been initialed to prevent dual editor buttons
-		//setTimeout(function(){
-		//	$('#acf_settings-html').trigger('click');
-		//}, 502);
 		
 	});
 	
