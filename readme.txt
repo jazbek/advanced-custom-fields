@@ -85,6 +85,12 @@ http://www.advancedcustomfields.com/support/
 
 == Changelog ==
 
+= 3.3.1 =
+* [Fixed] Fix gallery sortable in repeater - http://support.advancedcustomfields.com/discussion/2463/gallery-within-a-repeater-image-reorder-not-working
+* [Fixed] Test / Fix two gallery fields - http://support.advancedcustomfields.com/discussion/2467/gallery-two-gallery-fieldss
+* [Fixed] Fix tinymce undefined visual editor off - http://support.advancedcustomfields.com/discussion/2465/solved-admin-conflicts-after-upgrade
+* [Updated] Update Polish translation - Thanks to www.digitalfactory.pl
+
 = 3.3.0 =
 * [Fixed] Gallery not returning correct order
 

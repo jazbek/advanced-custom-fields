@@ -624,7 +624,7 @@ var acf = {
 	// create wysiwygs
 	$(document).live('acf/setup_fields', function(e, postbox){
 		
-		if(typeof(tinyMCE) != "object")
+		if( typeof(tinyMCE) != "object" )
 		{
 			return false;
 		}
@@ -635,8 +635,13 @@ var acf = {
 	
 	$(document).ready( function(){
 		
+		if( typeof(tinyMCE) != "object" )
+		{
+			return false;
+		}
+		
 		// store variables
-		if(tinyMCE != undefined && tinyMCE.settings != undefined)
+		if( tinyMCE.settings != undefined )
 		{
 			acf_wysiwyg_buttons.theme_advanced_buttons1 = tinyMCE.settings.theme_advanced_buttons1;
 			acf_wysiwyg_buttons.theme_advanced_buttons2 = tinyMCE.settings.theme_advanced_buttons2;
@@ -1250,37 +1255,39 @@ var acf = {
 	});
 	
 	
+	// add image
+	$('.acf-gallery .toolbar .add-image').live('click', function(){
+		
+		// vars
+		var gallery = $(this).closest('.acf-gallery'),
+			preview_size = gallery.attr('data-preview_size');
+		
+		
+		// set global var
+		window.acf_div = gallery;
+			
+			
+		// show the thickbox
+		tb_show( acf.text.gallery_tb_title_add , acf.admin_url + 'media-upload.php?post_id=' + acf.post_id + '&type=image&acf_type=gallery&acf_preview_size=' + preview_size + 'TB_iframe=1');
+			
+			
+		return false;
+			
+	});
+	
+	
 	$(document).live('acf/setup_fields', function(e, postbox){
 		
 		$(postbox).find('.acf-gallery').each(function(i){
 			
 			// vars
 			var div = $(this),
-				thumbnails = div.find('.thumbnails'),
-				toolbar = div.find('.toolbar'),
-				preview_size = div.attr('data-preview_size');
-			
+				thumbnails = div.find('.thumbnails');
+				
 			
 			// update count
 			acf.update_gallery_count( div );
-			
-			
-			// add new
-			toolbar.find('.add-image').unbind('click').click( function(){
-				
-				
-				// set global var
-				window.acf_div = div;
-					
-					
-				// show the thickbox
-				tb_show( acf.text.gallery_tb_title_add , acf.admin_url + 'media-upload.php?post_id=' + acf.post_id + '&type=image&acf_type=gallery&acf_preview_size=' + preview_size + 'TB_iframe=1');
-			
-			
-				return false;	
-							
-			});
-			
+
 			
 			// sortable
 			thumbnails.find('> .inner').unbind('sortable').sortable({
@@ -1296,19 +1303,11 @@ var acf = {
 					ui.placeholder.height( ui.placeholder.height() - 4 );
 	   			}
 			});
-			
-			
-			return false;
+
 			
 		});
 	
 	});
-	
-	setInterval(function(){
-		
-		//console.log( tinyMCE.activeEditor );
-		
-	}, 2000)
 	
 	
 })(jQuery);
