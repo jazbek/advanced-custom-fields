@@ -112,6 +112,10 @@
 	resize: none;
 }
 
+.acf_postbox .field textarea {
+	resize: vertical;
+}
+
 .acf_postbox .field select{
 	width: 100%;
 	padding: 2px;

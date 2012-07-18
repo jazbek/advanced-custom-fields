@@ -289,7 +289,7 @@ if($action == ""):
 	<form method="post" action="<?php echo $this->parent->dir; ?>/core/actions/export.php">
 	<div class="wp-box">
 		<div class="wp-box-half left">
-			<div class="inner">
+			<div class="inner" style="min-height:130px;">
 				<h2><?php _e("Export Field Groups to XML",'acf'); ?></h2>
 		
 				<?php
@@ -356,7 +356,7 @@ if($action == ""):
 	<input type="hidden" name="action" value="export_php" />
 	<div class="wp-box">
 		<div class="wp-box-half left">
-			<div class="inner">
+			<div class="inner" style="min-height:130px;">
 				<h2><?php _e("Export Field Groups to PHP",'acf'); ?></h2>
 		
 				<?php

@@ -88,6 +88,13 @@ class acf_input
 		}
 		
 		
+		// validate page (Shopp)
+		if( $pagenow == "admin.php" && isset( $_GET['page'] ) && $_GET['page'] == "shopp-products" && isset( $_GET['id'] ) )
+		{
+			$return = true;
+		}
+		
+		
 		// return
 		return $return;
 	}
