@@ -85,6 +85,11 @@ http://www.advancedcustomfields.com/support/
 
 == Changelog ==
 
+= 3.3.3 =
+* [Upgrade] Database Upgrade is required to modify the taxonomy filtering data for fields. This allows for performance boosts throughout ACF.
+* [Improved] relationship field: Improve querying posts / results and use AJAX powered search to increase performance on large-scale websites
+* [Improved] post object field: Improve querying posts / results
+
 = 3.3.2 =
 * [Fixed] Integrate with Shopp plugin
 

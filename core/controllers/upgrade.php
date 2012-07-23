@@ -67,8 +67,12 @@ class acf_upgrade
 		{
 			if( $version < $this->parent->upgrade_version )
 			{
-				$this->parent->admin_message('<p>' . __("Advanced Custom Fields",'acf') . 'v' . $this->parent->version . ' ' . __("requires a database upgrade",'acf') .' (<a class="thickbox" href="' . admin_url() . 'plugin-install.php?tab=plugin-information&plugin=advanced-custom-fields&section=changelog&TB_iframe=true&width=640&height=559">' . __("why?",'acf') .'</a>). ' . __("Please",'acf') .' <a href="http://codex.wordpress.org/Backing_Up_Your_Database">' . __("backup your database",'acf') .'</a>, '. __("then click",'acf') . ' <a href="' . admin_url() . 'edit.php?post_type=acf&page=acf-upgrade" class="button">' . __("Upgrade Database",'acf') . '</a></p>');
+				$this->parent->admin_message('<p>' . __("Advanced Custom Fields",'acf') . ' v' . $this->parent->version . ' ' . __("requires a database upgrade",'acf') .' (<a class="thickbox" href="' . admin_url() . 'plugin-install.php?tab=plugin-information&plugin=advanced-custom-fields&section=changelog&TB_iframe=true&width=640&height=559">' . __("why?",'acf') .'</a>). ' . __("Please",'acf') .' <a href="http://codex.wordpress.org/Backing_Up_Your_Database">' . __("backup your database",'acf') .'</a>, '. __("then click",'acf') . ' <a href="' . admin_url() . 'edit.php?post_type=acf&page=acf-upgrade" class="button">' . __("Upgrade Database",'acf') . '</a></p>');
 				
+			}
+			elseif( $version < $this->parent->version)
+			{
+				update_option('acf_version', $this->parent->version );
 			}
 		}
 		else
@@ -103,6 +107,10 @@ class acf_upgrade
 		elseif( $version < '3.2.5' )
 		{
 			$next = '3.2.5';
+		}
+		elseif( $version < '3.3.3' )
+		{
+			$next = '3.3.3';
 		}
 		
 		?>	
@@ -624,10 +632,108 @@ class acf_upgrade
 			    $return = array(
 			    	'status'	=>	true,
 					'message'	=>	$message,
-					'next'		=>	false,
+					'next'		=>	'3.3.3',
 			    );
 			    
 			break;
+		
+		
+			/*
+			*  3.3.3
+			*
+			*  @description: changed field option: taxonomies filter on relationship / post object and page link fields.
+			*  @created: 20/07/12
+			*/
+			
+			case '3.3.3':
+				
+				// vars
+				$message = __("Modifying field option 'taxonomy'",'acf') . '...';
+				$wp_term_taxonomy = $wpdb->prefix.'term_taxonomy';
+				$term_taxonomies = array();
+				
+				$rows = $wpdb->get_results("SELECT * FROM $wp_term_taxonomy", ARRAY_A);
+			
+				if($rows)
+				{
+					foreach($rows as $row)
+					{
+						$term_taxonomies[ $row['term_id'] ] = $row['taxonomy'] . ":" . $row['term_id'];
+					}
+				}
+				
+				
+				// get acf's
+				$acfs = get_pages(array(
+					'numberposts' 	=> 	-1,
+					'post_type'		=>	'acf',
+					'sort_column' 	=>	'menu_order',
+					'order' 		=>	'ASC',
+				));
+				
+				// populate acfs
+				if($acfs)
+				{
+				foreach($acfs as $acf)
+				{
+					$fields = $this->parent->get_acf_fields($acf->ID);
+					
+					if( $fields )
+					{
+					foreach( $fields as $field )
+					{
+						
+						// only edit the option: taxonomy
+						if( !isset($field['taxonomy']) )
+						{
+							continue;
+						}
+						
+						
+						if( $field['taxonomy'] )
+						{
+						foreach( $field['taxonomy'] as $k => $v )
+						{
+							
+							// could be "all"
+							if( !is_numeric($v) )
+							{
+								continue;
+							}
+							
+							$field['taxonomy'][ $k ] = $term_taxonomies[ $v ];
+							
+							
+						}
+						// foreach( $field['taxonomy'] as $k => $v )	
+						}
+						// if( $field['taxonomy'] )
+						
+						
+						$this->parent->update_field( $acf->ID, $field);
+						
+					}
+					// foreach( $fields as $field )
+					}
+					// if( $fields )
+				}
+				// foreach($acfs as $acf)
+				}
+				// if($acfs)
+				
+				
+				// update version
+				update_option('acf_version','3.3.3');
+				
+				$return = array(
+			    	'status'	=>	true,
+					'message'	=>	$message,
+					'next'		=>	false,
+			    );
+				
+			break;
+		
+		
 		}
 		
 		// return json

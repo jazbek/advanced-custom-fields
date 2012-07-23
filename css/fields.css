@@ -598,9 +598,13 @@ table.acf_input table.acf_cf_meta select {
 *---------------------------------------------------------------------------------------------*/
 #acf_fields select optgroup,
 #acf_location select optgroup {
-	padding: 5px;
-	background: #F9F9F9;
-	border-bottom: #DFDFDF solid 1px;
+	padding: 5px 2px;
+	background: #fff;
+}
+
+#acf_fields select optgroup:first-child,
+#acf_location select optgroup:first-child {
+	
 }
 
 #acf_fields select option,
@@ -615,5 +619,5 @@ table.acf_input table.acf_cf_meta select {
 
 #acf_fields select optgroup:nth-child(2n),
 #acf_location select optgroup:nth-child(2n) {
-    background: #FCFCFC;
+    background: #F9F9F9;
 }

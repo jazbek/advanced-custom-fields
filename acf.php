@@ -3,7 +3,7 @@
 Plugin Name: Advanced Custom Fields
 Plugin URI: http://www.advancedcustomfields.com/
 Description: Fully customise WordPress edit screens with powerful fields. Boasting a professional interface and a powerfull API, it’s a must have for any web developer working with WordPress. Field types include: Wysiwyg, text, textarea, image, file, select, checkbox, page link, post object, date picker, color picker, repeater, flexible content, gallery and more!
-Version: 3.3.2
+Version: 3.3.3
 Author: Elliot Condon
 Author URI: http://www.elliotcondon.com/
 License: GPL
@@ -47,8 +47,8 @@ class Acf
 		// vars
 		$this->path = plugin_dir_path(__FILE__);
 		$this->dir = plugins_url('',__FILE__);
-		$this->version = '3.3.2';
-		$this->upgrade_version = '3.2.5'; // this is the latest version which requires an upgrade
+		$this->version = '3.3.3';
+		$this->upgrade_version = '3.3.3'; // this is the latest version which requires an upgrade
 		$this->cache = array(); // basic array cache to hold data throughout the page load
 		
 		
@@ -1551,7 +1551,7 @@ class Acf
 						{
 							foreach($terms as $term)
 							{
-								$choices[$post_type_object->label . ': ' . $taxonomy][$term->term_id] = $term->name; 
+								$choices[$post_type_object->label . ': ' . $taxonomy][$taxonomy . ':' . $term->term_id] = $term->name; 
 							}
 						}
 					}
@@ -1562,51 +1562,6 @@ class Acf
 		return $choices;
 	}
 	
-	
-	function in_taxonomy($post, $ids)
-	{
-		$terms = array();
-		
-        $taxonomies = get_object_taxonomies($post->post_type);
-    	if($taxonomies)
-    	{
-        	foreach($taxonomies as $tax)
-			{
-				$all_terms = get_the_terms($post->ID, $tax);
-				if($all_terms)
-				{
-					foreach($all_terms as $all_term)
-					{
-						$terms[] = $all_term->term_id;
-					}
-				}
-			}
-		}
-        
-        if($terms)
-		{
-			if(is_array($ids))
-			{
-				foreach($ids as $id)
-				{
-					if(in_array($id, $terms))
-					{
-						return true; 
-					}
-				}
-			}
-			else
-			{
-				if(in_array($ids, $terms))
-				{
-					return true; 
-				}
-			}
-		}
-        	
-        return false;
-        	
-	}
 	
 
 	/*

@@ -548,8 +548,10 @@ ul.checkbox_list {
 
 
 /*---------------------------------------------------------------------------------------------
-	relationship
----------------------------------------------------------------------------------------------*/
+*
+*	Relationship
+*
+*---------------------------------------------------------------------------------------------*/
 
 .acf_relationship {
 	position: relative;
@@ -603,26 +605,31 @@ ul.checkbox_list {
 	border-top-width: 0;
 }
 
-.acf_relationship .relationship_list a.hide {
-	display: none;
+.acf_relationship .relationship_list li.hide {
+	background: #f8f8f8;
 }
 
-.acf_relationship .relationship_list a.filter_hide {
-	display: none;
+.acf_relationship .relationship_list li.hide a {
+	cursor: default;
+	color: #21759B !important;
+	opacity: 0.5;
+	background: transparent !important;
 }
 
-.acf_relationship .relationship_list a {
+.acf_relationship .relationship_list li {
+	border-bottom: #f8f8f8 solid 1px;
+}
+
+.acf_relationship .relationship_list li a {
 	display: block;
 	position: relative;
 	padding: 7px 9px;
 	text-decoration: none;
-	border-bottom: #f8f8f8 solid 1px;
 }
 
-
-.acf_relationship .relationship_list a:hover {
+.acf_relationship .relationship_list li a:hover,
+.acf_relationship .relationship_list li a:focus {
 	background: #eaf2fa;
-	border-bottom-color: #eaf2fa;
 	color: #000;
 }
 
@@ -632,12 +639,12 @@ ul.checkbox_list {
 	border-top-width:1px; 
 }
 
-.acf_relationship .relationship_list a .add {
+.acf_relationship .relationship_list li a .add {
 	width: 16px;
 	height: 16px;
 	background: url(../images/button_add.png) 0 0 no-repeat;
 	position: absolute;
-	top:0;
+	top: 2px;
 	right: 0;
 	cursor: pointer;
 	margin: 5px 9px 0 0;
@@ -646,24 +653,24 @@ ul.checkbox_list {
 	border-radius: 8px;
 }
 
-.acf_relationship .relationship_list a.sortable_active {
-	background: #eaf2fa;
-}
-
-.acf_relationship .relationship_list a:hover .add {
+.acf_relationship .relationship_list li a:hover .add {
 	display: block;
 }
 
-.acf_relationship .relationship_list a .add:hover {
+.acf_relationship .relationship_list li.hide a:hover .add {
+	display: none;
+}
+
+.acf_relationship .relationship_list li a .add:hover {
 	background-position: 0 100%;
 }
 
-.acf_relationship .relationship_list a .remove {
+.acf_relationship .relationship_list li a .remove {
 	width: 16px;
 	height: 16px;
 	background: url(../images/button_remove.png) 0 0 no-repeat;
 	position: absolute;
-	top:0;
+	top: 2px;
 	right: 0;
 	cursor: pointer;
 	margin: 5px 9px 0 0;
@@ -672,16 +679,26 @@ ul.checkbox_list {
 	border-radius: 8px;
 }
 
-.acf_relationship .relationship_list a:hover .remove {
+.acf_relationship .relationship_list li a:hover .remove {
 	display: block;
 }
 
-.acf_relationship .relationship_list a .remove:hover {
+.acf_relationship .relationship_list li a .remove:hover {
 	background-position: 0 100%;
 }
 
-.acf_relationship .relationship_right .relationship_list a {
+.acf_relationship .relationship_right .relationship_list li a {
 	cursor: move;
+}
+
+.acf_relationship .load-more .acf-loading {
+	padding: 0;
+	box-shadow: none;
+	background-color: transparent;
+}
+
+.acf_relationship.no-results .load-more {
+	display: none;
 }
 
 
