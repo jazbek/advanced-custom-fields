@@ -400,20 +400,12 @@ class acf_input
 		}
 		
 		
-		// only save once! WordPress save's twice for some strange reason.
-		global $acf_flag;
-		if ($acf_flag != 0)
+		// only save once! WordPress save's a revision as well.
+		if( wp_is_post_revision($post_id) )
 		{
-			return $post_id;
-		}
-		$acf_flag = 1;
-		
-		
-		// set post ID if is a revision		
-		if(wp_is_post_revision($post_id)) 
-		{
-			$post_id = wp_is_post_revision($post_id);
-		}
+	    	return $post_id;
+        }
+        
 		
 		// save fields
 		$fields = $_POST['fields'];

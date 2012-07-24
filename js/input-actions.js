@@ -571,8 +571,10 @@ var acf = {
 	    
 	    
 	    // ajax
-	    acf.relationship_update_results( div );
-	    
+	    clearTimeout( acf.relationship_timeout );
+	    acf.relationship_timeout = setTimeout(function(){
+	    	acf.relationship_update_results( div );
+	    }, 250);
 	    
 	    return false;
 	    
@@ -619,13 +621,6 @@ var acf = {
 		div.addClass('loading');
 		
 		
-		// abort previous request
-		if( acf.relationship_xhr )
-		{
-			acf.relationship_xhr.abort();
-		}
-		
-		
 		// vars
 		var s = div.attr('data-s'),
 			paged = parseInt( div.attr('data-paged') ),
@@ -636,7 +631,7 @@ var acf = {
 		
 		
 		// get results
-	    acf.relationship_xhr = $.ajax({
+	    $.ajax({
 			url: ajaxurl,
 			type: 'post',
 			dataType: 'html',
@@ -655,6 +650,7 @@ var acf = {
 				if( !html )
 				{
 					div.addClass('no-results');
+					left.find('li:not(.load-more)').remove();
 					return;
 				}
 				
@@ -1175,7 +1171,7 @@ var acf = {
 			new_field_html = div.find('> .clones > .layout[data-layout="' + layout + '"]').html().replace(/(="[\w-\[\]]*?)(\[999\])/g, '$1[' + new_id + ']'),
 			new_field = $('<div class="layout" data-layout="' + layout + '"></div>').append( new_field_html );
 			
-
+			
 		// hide no values message
 		div.children('.no_value_message').hide();
 		
