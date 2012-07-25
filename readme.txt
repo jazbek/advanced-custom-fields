@@ -85,6 +85,9 @@ http://www.advancedcustomfields.com/support/
 
 == Changelog ==
 
+= 3.3.5 =
+* [Fixed] Fix location rule bug for taxonomy.
+
 = 3.3.4 = 
 * [Added] Added new API function: has_sub_field - replacement for the_repeater_field and the_flexible_field. Allows for nested while loops! 
 * [Improved] Improve save_post functions- http://support.advancedcustomfields.com/discussion/2540/bug-fix-for-taxonomies-and-revisions-solved

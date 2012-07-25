@@ -400,7 +400,7 @@ class acf_field_group
 			
 			case "taxonomy" :
 				
-				$choices = $this->parent->get_taxonomies_for_select();
+				$choices = $this->parent->get_taxonomies_for_select( array('simple_value' => true) );
 				$optgroup = true;
 								
 				break;
