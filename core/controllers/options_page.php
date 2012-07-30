@@ -260,7 +260,7 @@ class acf_options_page
 						<h3 class="hndle"><span><?php _e("Publish",'acf'); ?></span></h3>
 						<div class="inside">
 							<input type="hidden" name="HTTP_REFERER" value="<?php echo $_SERVER['HTTP_REFERER'] ?>" />
-							<input type="submit" class="acf-button" value="Save Options" name="update_options" />
+							<input type="submit" class="acf-button" value="<?php _e("Save Options",'acf'); ?>" name="update_options" />
 						</div>
 					</div>
 					

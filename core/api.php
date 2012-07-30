@@ -437,21 +437,25 @@ function acf_shortcode( $atts )
 {
 	// extract attributs
 	extract( shortcode_atts( array(
-		'field' => ""
+		'field' => "",
+		'post_id' => false,
 	), $atts ) );
 	
+	
 	// $field is requird
-	if(!$field || $field == "")
+	if( !$field || $field == "" )
 	{
 		return "";
 	}
 	
+	
 	// get value and return it
-	$value = get_field($field);
+	$value = get_field( $field, $post_id );
+	
 	
 	if(is_array($value))
 	{
-		$value = @implode(', ',$value);
+		$value = @implode( ', ',$value );
 	}
 	
 	return $value;

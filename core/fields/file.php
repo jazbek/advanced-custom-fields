@@ -231,8 +231,8 @@ class acf_File extends acf_Field
 					'value'	=>	$field['save_format'],
 					'layout'	=>	'horizontal',
 					'choices' => array(
-						'url'	=>	'File URL',
-						'id'	=>	'Attachment ID'
+						'url'	=>	__("File URL",'acf'),
+						'id'	=>	__("Attachment ID",'acf')
 					)
 				));
 				?>

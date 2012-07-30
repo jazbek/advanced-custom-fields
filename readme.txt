@@ -51,7 +51,7 @@ http://www.advancedcustomfields.com/docs/getting-started/
 http://www.advancedcustomfields.com/docs/field-types/
 
 = Bug Submission and Forum Support =
-http://www.advancedcustomfields.com/support/
+http://support.advancedcustomfields.com/
 
 = Please Vote and Enjoy =
 Your votes really make a difference! Thanks.
@@ -70,7 +70,7 @@ Your votes really make a difference! Thanks.
 
 = Q. I have a question =
 A. Chances are, someone else has asked it. Check out the support forum at: 
-http://www.advancedcustomfields.com/support/
+http://support.advancedcustomfields.com/
 
 
 == Screenshots ==
@@ -84,6 +84,14 @@ http://www.advancedcustomfields.com/support/
 
 
 == Changelog ==
+
+= 3.3.6 =
+* [Fixed] Fix IE regex issue (thanks to Ben Heller - http://spruce.it)
+* [Added] Check for more translatable strings (thanks to Derk Oosterveld - www.inpoint.nl)
+* [Fixed] Fix location rule post category bug
+* [Updated] Added all post status to page / post location rules - http://support.advancedcustomfields.com/discussion/2624/scheduled-pages
+* [Updated] Updated the page link field to rely on the post_object field
+* [Added] Add $post_id parameter to the [acf] shortcode
 
 = 3.3.5 =
 * [Fixed] Fix location rule bug for taxonomy.

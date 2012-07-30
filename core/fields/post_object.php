@@ -147,11 +147,11 @@ class acf_Post_object extends acf_Field
 					
 					
 					// status
-					if($post->post_status == "private" || $post->post_status == "draft")
+					if($post->post_status != "publish")
 					{
 						$title .= " ($post->post_status)";
 					}
-					
+
 					
 					// add to choices
 					if( count($field['post_type']) == 1 )

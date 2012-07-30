@@ -178,26 +178,18 @@
 		
 		
 		// vars
-		var category = ( $(this).closest('#categorychecklist').exists() ) ? true : false;
 		var values = ['0'];
 		
 		
-		// populate values
-		$(this).closest('ul').find('input[type="checkbox"]:checked').each(function(){
-			values.push($(this).val())
+		$('.categorychecklist input[type="checkbox"]:checked').each(function(){
+			values.push($(this).val());
 		});
 
 		
-		if( category )
-		{
-			acf.data.post_category = values;
-		}
-		else
-		{
-			acf.data.taxonomy = values;
-		}
+		acf.data.post_category = values;
+		acf.data.taxonomy = values;
 
-		
+
 		update_fields();
 		
 	});	

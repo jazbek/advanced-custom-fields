@@ -711,31 +711,39 @@ var acf = {
 		// add tinymce to all wysiwyg fields
 		$(this).find('.acf_wysiwyg textarea').each(function(){
 			
-			
-			if(tinyMCE != undefined && tinyMCE.settings != undefined)
+			// don't instantiate if it is a row clone
+			if( $(this).attr('id').indexOf('[999]') >= 0 )
 			{
-
-				// reset buttons
-				tinyMCE.settings.theme_advanced_buttons1 = acf_wysiwyg_buttons.theme_advanced_buttons1;
-				tinyMCE.settings.theme_advanced_buttons2 = acf_wysiwyg_buttons.theme_advanced_buttons2;
-			
-				var toolbar = $(this).closest('.acf_wysiwyg').attr('data-toolbar');
-				
-				if(toolbar == 'basic')
-				{
-					//'bold', 'italic', 'underline', 'blockquote', 'separator', 'strikethrough', 'bullist', 'numlist', 'justifyleft', 'justifycenter', 'justifyright', 'undo', 'redo', 'link', 'unlink', 'fullscreen'
-					tinyMCE.settings.theme_advanced_buttons1 = "bold, italic, underline, blockquote, |, strikethrough, bullist, numlist, justifyleft, justifycenter, justifyright, undo, redo, link, unlink, fullscreen";
-					tinyMCE.settings.theme_advanced_buttons2 = "";
-				}
-				else
-				{
-					// add images + code buttons
-					tinyMCE.settings.theme_advanced_buttons2 += ",code";
-				}
-				
-				
+				return;
 			}
 			
+			
+			// validate tinymce
+			if( tinyMCE == undefined || tinyMCE.settings == undefined )
+			{
+				return;
+			}
+			
+			
+			// reset buttons
+			tinyMCE.settings.theme_advanced_buttons1 = acf_wysiwyg_buttons.theme_advanced_buttons1;
+			tinyMCE.settings.theme_advanced_buttons2 = acf_wysiwyg_buttons.theme_advanced_buttons2;
+		
+			var toolbar = $(this).closest('.acf_wysiwyg').attr('data-toolbar');
+			
+			if(toolbar == 'basic')
+			{
+				tinyMCE.settings.theme_advanced_buttons1 = "bold, italic, underline, blockquote, |, strikethrough, bullist, numlist, justifyleft, justifycenter, justifyright, undo, redo, link, unlink, fullscreen";
+				tinyMCE.settings.theme_advanced_buttons2 = "";
+			}
+			else
+			{
+				// add images + code buttons
+				tinyMCE.settings.theme_advanced_buttons2 += ",code";
+			}
+
+			
+			// activate editor
 			wpActiveEditor = null;
 			tinyMCE.execCommand('mceAddControl', false, $(this).attr('id'));
 
@@ -942,7 +950,7 @@ var acf = {
 	
 		// create and add the new field
 		var new_id = uniqid(),
-			new_field_html = repeater.find('> table > tbody > tr.row-clone').html().replace(/(="[\w-\[\]]*?)(\[999\])/g, '$1[' + new_id + ']'),
+			new_field_html = repeater.find('> table > tbody > tr.row-clone').html().replace(/(=["]*[\w-\[\]]*?)(\[999\])/g, '$1[' + new_id + ']'),
 			new_field = $('<tr class="row"></tr>').append( new_field_html );
 		
 		
@@ -1168,7 +1176,7 @@ var acf = {
 		
 		// create new field
 		var new_id = uniqid(),
-			new_field_html = div.find('> .clones > .layout[data-layout="' + layout + '"]').html().replace(/(="[\w-\[\]]*?)(\[999\])/g, '$1[' + new_id + ']'),
+			new_field_html = div.find('> .clones > .layout[data-layout="' + layout + '"]').html().replace(/(=["]*[\w-\[\]]*?)(\[999\])/g, '$1[' + new_id + ']'),
 			new_field = $('<div class="layout" data-layout="' + layout + '"></div>').append( new_field_html );
 			
 			

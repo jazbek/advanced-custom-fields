@@ -199,13 +199,13 @@ if($action == ""):
 						<?php if($this->parent->is_field_unlocked('repeater')){
 							echo '<span class="activation_code">XXXX-XXXX-XXXX-'.substr($this->parent->get_license_key('repeater'),-4) .'</span>';
 							echo '<input type="hidden" name="acf_field_deactivate" value="repeater" />';
-							echo '<input type="submit" class="button" value="Deactivate" />';
+							echo '<input type="submit" class="button" value="' . __("Deactivate",'acf') . '" />';
 						}
 						else
 						{
 							echo '<input type="text" name="key" value="" />';
 							echo '<input type="hidden" name="acf_field_activate" value="repeater" />';
-							echo '<input type="submit" class="button" value="Activate" />';
+							echo '<input type="submit" class="button" value="' . __("Activate",'acf') . '" />';
 						} ?>
 					</form>
 				</td>
@@ -218,13 +218,13 @@ if($action == ""):
 						<?php if($this->parent->is_field_unlocked('flexible_content')){
 							echo '<span class="activation_code">XXXX-XXXX-XXXX-'.substr($this->parent->get_license_key('flexible_content'),-4) .'</span>';
 							echo '<input type="hidden" name="acf_field_deactivate" value="flexible_content" />';
-							echo '<input type="submit" class="button" value="Deactivate" />';
+							echo '<input type="submit" class="button" value="' . __("Deactivate",'acf') . '" />';
 						}
 						else
 						{
 							echo '<input type="text" name="key" value="" />';
 							echo '<input type="hidden" name="acf_field_activate" value="flexible_content" />';
-							echo '<input type="submit" class="button" value="Activate" />';
+							echo '<input type="submit" class="button" value="' . __("Activate",'acf') . '" />';
 						} ?>
 					</form>
 				</td>
@@ -237,13 +237,13 @@ if($action == ""):
 						<?php if($this->parent->is_field_unlocked('gallery')){
 							echo '<span class="activation_code">XXXX-XXXX-XXXX-'.substr($this->parent->get_license_key('gallery'),-4) .'</span>';
 							echo '<input type="hidden" name="acf_field_deactivate" value="gallery" />';
-							echo '<input type="submit" class="button" value="Deactivate" />';
+							echo '<input type="submit" class="button" value="' . __("Deactivate",'acf') . '" />';
 						}
 						else
 						{
 							echo '<input type="text" name="key" value="" />';
 							echo '<input type="hidden" name="acf_field_activate" value="gallery" />';
-							echo '<input type="submit" class="button" value="Activate" />';
+							echo '<input type="submit" class="button" value="' . __("Activate",'acf') . '" />';
 						} ?>
 					</form>
 				</td>
@@ -256,13 +256,13 @@ if($action == ""):
 						<?php if($this->parent->is_field_unlocked('options_page')){
 							echo '<span class="activation_code">XXXX-XXXX-XXXX-'.substr($this->parent->get_license_key('options_page'),-4) .'</span>';
 							echo '<input type="hidden" name="acf_field_deactivate" value="options_page" />';
-							echo '<input type="submit" class="button" value="Deactivate" />';
+							echo '<input type="submit" class="button" value="' . __("Deactivate",'acf') . '" />';
 						}
 						else
 						{
 							echo '<input type="text" name="key" value="" />';
 							echo '<input type="hidden" name="acf_field_activate" value="options_page" />';
-							echo '<input type="submit" class="button" value="Activate" />';
+							echo '<input type="submit" class="button" value="' . __("Activate",'acf') . '" />';
 						} ?>
 					</form>
 				</td>

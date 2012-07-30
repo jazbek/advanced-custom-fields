@@ -23,7 +23,7 @@ $fields = $this->parent->get_acf_fields( $post->ID );
 // add clone
 $fields[999] = array(
 	'label'		=>	__("New Field",'acf'),
-	'name'		=>	'new_field',
+	'name'		=>	__("new_field",'acf'),
 	'type'		=>	'text',
 	'order_no'	=>	'1',
 	'instructions'	=>	'',
@@ -167,8 +167,8 @@ foreach( $this->parent->fields as $field )
 									'name'	=>	'fields['.$key.'][required]',
 									'value'	=>	$field['required'],
 									'choices'	=>	array(
-										'1'	=>	'Yes',
-										'0'	=>	'No',
+										'1'	=>	__("Yes",'acf'),
+										'0'	=>	__("No",'acf'),
 									),
 									'layout'	=>	'horizontal',
 								));

@@ -130,9 +130,8 @@ class acf_Relationship extends acf_Field
 				// find title. Could use get_the_title, but that uses get_post(), so I think this uses less Memory
 				$title = apply_filters( 'the_title', $post->post_title, $post->ID );
 
-
 				// status
-				if($post->post_status == "private" || $post->post_status == "draft")
+				if($post->post_status != "publish")
 				{
 					$title .= " ($post->post_status)";
 				}

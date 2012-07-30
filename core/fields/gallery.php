@@ -263,7 +263,7 @@ class acf_Gallery extends acf_Field
 			<li class="view-grid-li active"><div class="divider divider-left"></div><a class="ir view-grid" href="#"><?php _e("Grid",'acf'); ?></a><div class="divider"></div></li>
 			<li class="view-list-li"><a class="ir view-list" href="#"><?php _e("List",'acf'); ?></a><div class="divider"></div></li>
 			<li class="count-li right">
-				<span class="count" data-0="No images selected" data-1="1 image selected" data-2="{count} images selected"></span>
+				<span class="count" data-0="<?php _e("No images selected",'acf'); ?>" data-1="<?php _e("1 image selected",'acf'); ?>" data-2="<?php _e("{count} images selected",'acf'); ?>"></span>
 			</li>
 		</ul>
 	</div>
