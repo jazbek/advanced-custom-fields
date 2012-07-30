@@ -646,19 +646,18 @@ var acf = {
 				
 				div.removeClass('no-results').removeClass('loading');
 				
-				// no results?
-				if( !html )
-				{
-					div.addClass('no-results');
-					left.find('li:not(.load-more)').remove();
-					return;
-				}
-				
-				
 				// new search?
 				if( paged == 1 )
 				{
 					left.find('li:not(.load-more)').remove();
+				}
+				
+				
+				// no results?
+				if( !html )
+				{
+					div.addClass('no-results');
+					return;
 				}
 				
 				
