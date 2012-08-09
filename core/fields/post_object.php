@@ -116,14 +116,18 @@ class acf_Post_object extends acf_Field
 			
 			
 			// set order
-			if( is_post_type_hierarchical($post_type) )
+			if( is_post_type_hierarchical($post_type) && !isset($args['tax_query']) )
 			{
-				$args['orderby'] = 'menu_order';
+				$args['sort_column'] = 'menu_order, post_title';
+				$args['sort_order'] = 'ASC';
+
+				$posts = get_pages( $args );
+			}
+			else
+			{
+				$posts = get_posts( $args );
 			}
 			
-			
-			// get posts
-			$posts = get_posts( $args );
 			
 			if($posts)
 			{

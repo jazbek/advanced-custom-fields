@@ -497,7 +497,7 @@
 		
 		// custom Publish metabox
 		$('#submitdiv #publish').attr('class', 'acf-button');
-		$('#submitdiv a.submitdelete').attr('class', 'acf-button grey').attr('id', 'submit-delete');
+		$('#submitdiv a.submitdelete').attr('class', 'delete-field-group').attr('id', 'submit-delete');
 		
 		// setup fields
 		setup_fields();

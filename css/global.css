@@ -130,30 +130,52 @@ input.ir { border: 0 none; background: none; }
 	height: auto !important;
 }
 
+.wp-box .footer-blue {
+	background-color: #8CC1E9;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#8CC1E9), to(#72A7CF)); /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient(top, #8CC1E9, #72A7CF); /* Chrome 10+, Saf5.1+, iOS 5+ */
+    background-image:    -moz-linear-gradient(top, #8CC1E9, #72A7CF); /* Firefox 3.6-15 */
+    background-image:      -o-linear-gradient(top, #8CC1E9, #72A7CF); /* Opera 11.10+ */
+    background-image:         linear-gradient(to bottom, #8CC1E9, #72A7CF); /* Firefox 16+ */
+    color: #FFFFFF;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
+    
+    overflow: hidden;
+    padding: 10px;
+    position: relative;
+}
+
+.wp-box .footer-blue a {
+	text-decoration: none;
+	text-shadow: none;
+}
+
 
 /*---------------------------------------------------------------------------------------------
 	Table
 ---------------------------------------------------------------------------------------------*/
 table.acf_input {
 	border: 0 none;
+	background: #fff;
 }
 
 table.acf_input tbody tr td {
 	padding: 10px;
-}
-
-table.acf_input tr.field_save {
-	
-}
-
-table.acf_input tbody tr:last-child td {
+	border-top: 1px solid #f5f5f5;
 	border-bottom: 0 none;
+}
+
+table.acf_input tbody tr:first-child td,
+table.acf_input tbody tr:first-child td.label {
+	border-top: 0 none;
 }
 
 table.acf_input tbody tr td.label {
 	width: 24%;
 	vertical-align: top;
-	border-right: #ebebeb solid 1px;
+	background: #F9F9F9;
+	border-top: 1px solid #f0f0f0;
+    border-right: 1px solid #E1E1E1;
 }
 
 table.acf_input td.label ul.hl {

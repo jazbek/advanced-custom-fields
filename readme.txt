@@ -85,6 +85,16 @@ http://support.advancedcustomfields.com/
 
 == Changelog ==
 
+= 3.1.7 =
+* [Added] Add new return value for image { image object
+* [Updated] Update Dutch translation (thanks to Derk Oosterveld - www.inpoint.nl)
+* [Updated] Update UI Styles
+* [Updated] Refresh settings page UI and fix exported PHP code indentation Styles
+* [Fixed] Fix post object hierarchy display bug - http://support.advancedcustomfields.com/discussion/2650/post_object-showing-posts-in-wrong-hierarchy
+* [Fixed] Fix metabox position from high to core - http://support.advancedcustomfields.com/discussion/comment/6846#Comment_6846
+* [Fixed] Fix flexible content field save layout with no fields - http://support.advancedcustomfields.com/discussion/2639/flexible-content-field-support-for-empty-layoutss
+* [Fixed] Text / Fix field group limit - http://support.advancedcustomfields.com/discussion/2675/admin-only-showing-20-fields-groups
+
 = 3.3.6 =
 * [Fixed] Fix IE regex issue (thanks to Ben Heller - http://spruce.it)
 * [Added] Check for more translatable strings (thanks to Derk Oosterveld - www.inpoint.nl)

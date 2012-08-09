@@ -194,7 +194,7 @@ class acf_input
 					array($this, 'meta_box_input'), 
 					$post_type, 
 					$acf['options']['position'], 
-					'high', 
+					'core', 
 					array( 'fields' => $acf['fields'], 'options' => $acf['options'], 'show' => $show, 'post_id' => $post->ID )
 				);
 			}
@@ -543,7 +543,7 @@ acf.text.gallery_tb_title_edit = "<?php _e("Edit Image",'acf'); ?>";
 </head>
 <body>
 	
-	<div class="updated" id="message"><p>Attachment updated.</div>
+	<div class="updated" id="message"><p><?php _e("Attachment updated",'acf'); ?>.</div>
 	
 </body>
 </html

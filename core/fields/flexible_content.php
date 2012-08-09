@@ -54,7 +54,9 @@ class acf_Flexible_content extends acf_Field
 			<?php foreach($layouts as $layout): $i++; ?>
 			
 				<div class="layout" data-layout="<?php echo $layout['name']; ?>">
-							
+					
+					<input type="hidden" name="<?php echo $field['name']; ?>[999][acf_fc_layout]" value="<?php echo $layout['name']; ?>" />
+					
 					<ul class="hl actions">
 						<li><a class="order" href="#"></a></li>
 						<li><a class="delete" href="#"></a></li>
@@ -71,47 +73,58 @@ class acf_Flexible_content extends acf_Field
 									?><td><?php 
 								endif; 
 								
-								$l = 0; 
-								foreach($layout['sub_fields'] as $sub_field):
+								if( $layout['sub_fields'] ):
+								
+									$l = 0; 
 									
-									$l++;
+									foreach($layout['sub_fields'] as $sub_field):
+										
+										$l++;
+										
+										if($layout['display'] == 'table'): 
+											?><td style="width:<?php echo 100/count($layout['sub_fields']); ?>%;"><?php
+										else:
+											?><div class="row-layout-field"><?php
+										endif;
+										
+										?><p class="label">
+											<label><?php echo $sub_field['label']; ?></label><?php 
+											
+											if(!isset($sub_field['instructions']))
+												$sub_field['instructions'] = "";
+											
+											echo $sub_field['instructions']; 
+											
+										?></p><?php 
+										
+										// add value
+										$sub_field['value'] = isset($sub_field['default_value']) ? $sub_field['default_value'] : false;
+										
+										// add name
+										$sub_field['name'] = $field['name'] . '[999][' . $sub_field['key'] . ']';
+										
+										// create field
+										$this->parent->create_field($sub_field);
+										
+										
+										if($layout['display'] == 'table'):
+											?></td><?php
+										else:
+											?></div><?php
+										endif;
+									
+									endforeach; 
+									// foreach($layout['sub_fields'] as $sub_field):
+								
+								else:
 									
 									if($layout['display'] == 'table'): 
-										?><td style="width:<?php echo 100/count($layout['sub_fields']); ?>%;"><?php
-									else:
-										?><div class="row-layout-field"><?php
+										?><td></td><?php
 									endif;
-									
-									?><p class="label">
-										<label><?php echo $sub_field['label']; ?></label><?php 
 										
-										if(!isset($sub_field['instructions']))
-											$sub_field['instructions'] = "";
-										
-										echo $sub_field['instructions']; 
-										
-									?></p>
-					
-									<input type="hidden" name="<?php echo $field['name']; ?>[999][acf_fc_layout]" value="<?php echo $layout['name']; ?>" />
-									<?php 
-									
-									// add value
-									$sub_field['value'] = isset($sub_field['default_value']) ? $sub_field['default_value'] : false;
-									
-									// add name
-									$sub_field['name'] = $field['name'] . '[999][' . $sub_field['key'] . ']';
-									
-									// create field
-									$this->parent->create_field($sub_field);
-									
-									
-									if($layout['display'] == 'table'):
-										?></td><?php
-									else:
-										?></div><?php
-									endif;
+								endif;
+								// if( $layout['sub_fields'] ):
 								
-								endforeach; 
 								
 								if($layout['display'] == 'row'):
 									?></td><?php 
@@ -125,15 +138,27 @@ class acf_Flexible_content extends acf_Field
 			<?php endforeach; ?>
 			</div>
 			<div class="values">
-				<?php if($field['value']): ?>
-					<?php foreach($field['value'] as $i => $value):?>
+				<?php 
+				
+				if($field['value']):
+					
+					foreach($field['value'] as $i => $value):
+						
+						// validate layout
+						if( !isset($layouts[$value['acf_fc_layout']]) )
+						{
+							continue;
+						}
 						
 						
-						<?php if(!isset($layouts[$value['acf_fc_layout']])) continue; ?>
-						<?php $layout = $layouts[$value['acf_fc_layout']]; ?>
-
+						// vars
+						$layout = $layouts[$value['acf_fc_layout']]; 
 						
+						
+						?>
 						<div class="layout" data-layout="<?php echo $layout['name']; ?>">
+							
+							<input type="hidden" name="<?php echo $field['name'] ?>[<?php echo $i ?>][acf_fc_layout]" value="<?php echo $layout['name']; ?>" />
 							
 							<ul class="hl actions">
 								<li><a class="order" href="#"></a></li>
@@ -143,54 +168,83 @@ class acf_Flexible_content extends acf_Field
 							<p class="layout-label"><?php echo $layout['label']; ?></p>
 							
 							<table class="widefat">
-
-								<tbody>
-									<tr>
-										<?php if($layout['display'] == 'row'): ?><td><?php endif; ?>
+							<tbody>
+								<tr><?php 
+								
+									if($layout['display'] == 'row'):
+										?><td><?php 
+									endif; 
+									
+									if( $layout['sub_fields'] ):
+									
+										$l = 0; 
 										
-										<?php $l = 0; foreach($layout['sub_fields'] as $sub_field): $l++; ?>
-										
-											<?php if($layout['display'] == 'table'): ?><td style="width:<?php echo 100/count($layout['sub_fields']); ?>%;"><?php endif; ?>	
+										foreach($layout['sub_fields'] as $sub_field):
 											
-											<p class="label">
-												<label><?php echo $sub_field['label']; ?></label>
-												<?php 
+											$l++;
+											
+											if($layout['display'] == 'table'): 
+												?><td style="width:<?php echo 100/count($layout['sub_fields']); ?>%;"><?php
+											else:
+												?><div class="row-layout-field"><?php
+											endif;
+											
+											?><p class="label">
+												<label><?php echo $sub_field['label']; ?></label><?php 
 												
 												if(!isset($sub_field['instructions']))
 													$sub_field['instructions'] = "";
 												
 												echo $sub_field['instructions']; 
 												
-												?>
-											</p>
-							
-											<input type="hidden" name="<?php echo $field['name'] ?>[<?php echo $i ?>][acf_fc_layout]" value="<?php echo $layout['name']; ?>" />
-											<?php 
+											?></p><?php 
+											
 											// add value
-											$sub_field['value'] = isset($value[$sub_field['name']]) ? $value[$sub_field['name']] : '';
+											$sub_field['value'] = isset($value[$sub_field['name']]) ? $value[$sub_field['name']] : false;
 											
 											// add name
 											$sub_field['name'] = $field['name'] . '[' . $i . '][' . $sub_field['key'] . ']';
 											
 											// create field
 											$this->parent->create_field($sub_field);
-											?>
 											
-											<?php if($layout['display'] == 'table'): ?></td><?php endif; ?>
-											
-										<?php endforeach; ?>
+	
+											if($layout['display'] == 'table'):
+												?></td><?php
+											else:
+												?></div><?php
+											endif;
 										
-										<?php if($layout['display'] == 'row'): ?></td><?php endif; ?>
-									</tr>
-								</tbody>
-								
+										endforeach; 
+										// foreach($layout['sub_fields'] as $sub_field):
+									
+									else:
+										
+										if($layout['display'] == 'table'): 
+											?><td></td><?php
+										endif;
+											
+									endif;
+									// if( $layout['sub_fields'] ):
+									
+									
+									if($layout['display'] == 'row'):
+										?></td><?php 
+									endif;
+									
+								?></tr>
+							</tbody>				
 							</table>
 						</div>
-						
-
-					<?php endforeach; ?>
-				<?php endif; ?>
-				<?php // values here ?>
+					<?php
+					
+					endforeach; 
+					// foreach($field['value'] as $i => $value)
+					
+				endif; 
+				// if($field['value']): 
+				
+				?>
 			</div>
 
 			<ul class="hl clearfix flexible-footer">
