@@ -85,7 +85,7 @@ http://support.advancedcustomfields.com/
 
 == Changelog ==
 
-= 3.1.7 =
+= 3.3.7 =
 * [Added] Add new return value for image { image object
 * [Updated] Update Dutch translation (thanks to Derk Oosterveld - www.inpoint.nl)
 * [Updated] Update UI Styles
