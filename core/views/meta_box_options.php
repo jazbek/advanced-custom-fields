@@ -21,7 +21,7 @@ $options = $this->parent->get_acf_options($post->ID);
 	<tr>
 		<td class="label">
 			<label for=""><?php _e("Order No.",'acf'); ?></label>
-			<p class="description"><?php _e("Field groups are created in order <br />from lowest to highest.",'acf'); ?></p>
+			<p class="description"><?php _e("Field groups are created in order <br />from lowest to highest",'acf'); ?></p>
 		</td>
 		<td>
 			<?php 

@@ -131,7 +131,7 @@ var acf = {
 			var validation = true;
 
 			// text / textarea
-			if($(this).find('input[type="text"], input[type="hidden"], textarea').val() == "")
+			if($(this).find('input[type="text"], input[type="number"], input[type="hidden"], textarea').val() == "")
 			{
 				validation = false;
 			}
@@ -1222,25 +1222,35 @@ var acf = {
 	*  @created: 4/03/2011
 	*/
 	
-	$('input.acf_datepicker').live('focus', function(){
-
-		var input = $(this);
+	$(document).live('acf/setup_fields', function(e, postbox){
 		
-		if(!input.hasClass('active'))
-		{
+		$(postbox).find('input.acf_datepicker').each(function(){
 			
 			// vars
-			var format = input.attr('data-date_format') ? input.attr('data-date_format') : 'dd/mm/yy';
+			var input = $(this),
+				alt_field = input.siblings('.acf-hidden-datepicker');
+				save_format = input.attr('data-save_format'),
+				display_format = input.attr('data-display_format');
+			
+			
+			// get and set value from alt field
+			input.val( alt_field.val() );
+			
 			
 			// add date picker and refocus
 			input.addClass('active').datepicker({ 
-				dateFormat: format 
-			})
+				dateFormat : save_format,
+				altField : alt_field,
+				altFormat :  save_format,
+				changeYear: true,
+				changeMonth: true,
+				showButtonPanel : true
+			});
 			
-			// set a timeout to re focus the input (after it has the datepicker!)
-			setTimeout(function(){
-				input.trigger('blur').trigger('focus');
-			}, 1);
+			
+			// now change the format back to how it should be.
+			input.datepicker( "option", "dateFormat", display_format );
+			
 			
 			// wrap the datepicker (only if it hasn't already been wrapped)
 			if($('body > #ui-datepicker-div').length > 0)
@@ -1248,7 +1258,7 @@ var acf = {
 				$('#ui-datepicker-div').wrap('<div class="ui-acf" />');
 			}
 			
-		}
+		});
 		
 	});
 	

@@ -35,7 +35,7 @@ class acf_input
 		add_action('admin_print_scripts', array($this,'admin_print_scripts'));
 		add_action('admin_print_styles', array($this,'admin_print_styles'));
 		add_action('admin_head', array($this,'admin_head'));
-		add_action('save_post', array($this, 'save_post'));
+		add_action('save_post', array($this, 'save_post'), 20); // save later to avoid issues with 3rd party plugins
 		
 		
 		// custom actions (added in 3.1.8)
@@ -592,7 +592,7 @@ acf.text.gallery_tb_title_edit = "<?php _e("Edit Image",'acf'); ?>";
 }
 
 #wpcontent {
-	margin-left: 0px;
+	margin-left: 0px !important;
 }
 
 .wrap {

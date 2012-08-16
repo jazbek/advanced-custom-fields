@@ -3,7 +3,7 @@
 Plugin Name: Advanced Custom Fields
 Plugin URI: http://www.advancedcustomfields.com/
 Description: Fully customise WordPress edit screens with powerful fields. Boasting a professional interface and a powerfull API, it’s a must have for any web developer working with WordPress. Field types include: Wysiwyg, text, textarea, image, file, select, checkbox, page link, post object, date picker, color picker, repeater, flexible content, gallery and more!
-Version: 3.3.7
+Version: 3.3.8
 Author: Elliot Condon
 Author URI: http://www.elliotcondon.com/
 License: GPL
@@ -47,7 +47,7 @@ class Acf
 		// vars
 		$this->path = plugin_dir_path(__FILE__);
 		$this->dir = plugins_url('',__FILE__);
-		$this->version = '3.3.7';
+		$this->version = '3.3.8';
 		$this->upgrade_version = '3.3.3'; // this is the latest version which requires an upgrade
 		$this->cache = array(); // basic array cache to hold data throughout the page load
 		
@@ -149,6 +149,7 @@ class Acf
 		include_once('core/fields/wysiwyg.php');
 		include_once('core/fields/image.php');
 		include_once('core/fields/file.php');
+		include_once('core/fields/number.php');
 		include_once('core/fields/select.php');
 		include_once('core/fields/checkbox.php');
 		include_once('core/fields/radio.php');
@@ -166,6 +167,7 @@ class Acf
 		$return['wysiwyg'] = new acf_Wysiwyg($this); 
 		$return['image'] = new acf_Image($this); 
 		$return['file'] = new acf_File($this); 
+		$return['number'] = new acf_Number($this); 
 		$return['select'] = new acf_Select($this); 
 		$return['checkbox'] = new acf_Checkbox($this);
 		$return['radio'] = new acf_Radio($this);

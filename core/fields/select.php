@@ -36,13 +36,17 @@ class acf_Select extends acf_Field
 	
 	function create_field($field)
 	{
-		// defaults
-		$field['value'] = isset($field['value']) ? $field['value'] : array();
-		$field['multiple'] = isset($field['multiple']) ? $field['multiple'] : false;
-		$field['allow_null'] = isset($field['allow_null']) ? $field['allow_null'] : false;
-		$field['choices'] = isset($field['choices']) ? $field['choices'] : array();
-		$field['optgroup'] = isset($field['optgroup']) ? $field['optgroup'] : false;
+		// vars
+		$defaults = array(
+			'value'			=>	array(),
+			'multiple' 		=>	'0',
+			'allow_null' 	=>	'0',
+			'choices'		=>	array(),
+			'optgroup'		=>	false,
+		);
 		
+		$field = array_merge($defaults, $field);
+
 		
 		// no choices
 		if(empty($field['choices']))
@@ -51,16 +55,22 @@ class acf_Select extends acf_Field
 			return false;
 		}
 		
+		
 		// multiple select
 		$multiple = '';
 		if($field['multiple'] == '1')
 		{
+			// create a hidden field to allow for no selections
+			echo '<input type="hidden" name="' . $field['name'] . '" />';
+			
 			$multiple = ' multiple="multiple" size="5" ';
 			$field['name'] .= '[]';
 		} 
 		
+		
 		// html
 		echo '<select id="' . $field['name'] . '" class="' . $field['class'] . '" name="' . $field['name'] . '" ' . $multiple . ' >';	
+		
 		
 		// null
 		if($field['allow_null'] == '1')

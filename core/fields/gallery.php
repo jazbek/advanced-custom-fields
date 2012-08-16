@@ -288,24 +288,6 @@ class acf_Gallery extends acf_Field
 </div>
 		<?php
 	}
-	
-	
-	/*--------------------------------------------------------------------------------------
-	*
-	*	admin_head
-	*	- this function is called in the admin_head of the edit screen where your field
-	*	is created. Use this function to create css and javascript to assist your 
-	*	create_field() function.
-	*
-	*	@author Elliot Condon
-	*	@since 2.2.0
-	* 
-	*-------------------------------------------------------------------------------------*/
-	
-	function admin_head()
-	{
-		
-	}
 
 	
 	/*--------------------------------------------------------------------------------------
@@ -555,18 +537,62 @@ class acf_Gallery extends acf_Field
 	.acf-message-wrapper .message {
 		margin: 2px 2px 0;
 	}
+	
+	#media-items .media-item.media-item-added {
+		background: #F9F9F9;
+	}
+	
+	#wpcontent {
+   		margin-left: 0 !important;
+    }
 
 </style>
 <script type="text/javascript">
 (function($){
 	
 	
-	// global vars
+	/*
+	*  Exists
+	*
+	*  @description: returns true / false		
+	*  @created: 1/03/2011
+	*/
+	
+	$.fn.exists = function()
+	{
+		return $(this).length>0;
+	};
+	
+	
+	/*
+	*  global vars
+	*
+	*  @description: 
+	*  @created: 16/08/12
+	*/
 	var gallery,
 		tmpl_thumbnail;
 	
 	
-
+	/*
+	*  Disable / Enable image
+	*
+	*  @description: 
+	*  @created: 16/08/12
+	*/
+	
+	function disable_image( div )
+	{
+		// add class
+		div.addClass('media-item-added');
+		
+		
+		// change button text
+		div.find('.acf-select').addClass('disabled').text("<?php _e("Added",'acf'); ?>");
+		
+	}
+	
+	
 	/*
 	*  Select Image
 	*
@@ -588,7 +614,8 @@ class acf_Gallery extends acf_Field
 		
 		
 		// show added message
-		self.parent.acf.add_message('<?php _e("Image Added",'acf'); ?>.', div);
+		//self.parent.acf.add_message('<?php _e("Image Added",'acf'); ?>.', div);
+		disable_image( div );
 		
 		
 		// add image
@@ -646,13 +673,34 @@ class acf_Gallery extends acf_Field
 
 			
 		});
+		
+		
+		// disable images
+		gallery.find('.thumbnails .thumbnail input[type="hidden"]').each(function(){
+			
+			var div = $('#media-item-' + $(this).val());
+			
+			if( div.exists() )
+			{
+				disable_image( div );
+			}
+			
+		});
 	}
 	<?php
 	
 	// run the acf_add_buttons ever 500ms when on the image upload tab
 	if($options['tab'] == 'type'): ?>
 	var acf_t = setInterval(function(){
+	
 		acf_add_buttons();
+		
+		// auto add images
+		$('#media-items .media-item:not(.media-item-added)').each(function(){
+			$(this).find('a.acf-select').trigger('click');
+		});
+		
+		
 	}, 500);
 	<?php endif; ?>
 	
@@ -660,8 +708,16 @@ class acf_Gallery extends acf_Field
 	// add acf input filters to allow for tab navigation
 	$(document).ready(function(){
 		
+		// vars
+		gallery = self.parent.acf_div;
+		tmpl_thumbnail = gallery.find('.tmpl-thumbnail').html();
+		
+		
+		// add buttins
 		setTimeout(function(){
+		
 			acf_add_buttons();
+			
 		}, 1);
 		
 		
@@ -679,6 +735,8 @@ class acf_Gallery extends acf_Field
 			$(this).attr('action', action);
 			
 		});
+		
+		
 	});
 	
 	
@@ -772,24 +830,7 @@ class acf_Gallery extends acf_Field
 		});
 		// $.ajax({
 	}
-	
-	
-	/*
-	*  Document Ready
-	*
-	*  @description: 
-	*  @created: 2/07/12
-	*/	
-	
-	$(document).ready(function(){
-		
-		
-		// vars
-		gallery = self.parent.acf_div;
-		tmpl_thumbnail = gallery.find('.tmpl-thumbnail').html();
-		
-		
-	});
+
 				
 })(jQuery);
 </script><?php

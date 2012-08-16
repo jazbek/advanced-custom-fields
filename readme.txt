@@ -85,6 +85,13 @@ http://support.advancedcustomfields.com/
 
 == Changelog ==
 
+= 3.3.8 =
+* [Added] Gallery field { auto add image on upload, new style to show already added images
+* [Fixed] Fix saving value issue with WP e-commerce http://support.advancedcustomfields.com/discussion/comment/7026#Comment_7026
+* [Updated] Date picker field { new display format option (different from save format), UI overhaul
+* [Added] Add new field - Number
+* [Fixed] Test post object / select based fields for saving empty value - http://support.advancedcustomfields.com/discussion/2759/post-object-and-conditional-statement
+
 = 3.3.7 =
 * [Added] Add new return value for image { image object
 * [Updated] Update Dutch translation (thanks to Derk Oosterveld - www.inpoint.nl)

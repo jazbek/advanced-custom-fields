@@ -52,11 +52,18 @@ class acf_Date_picker extends acf_Field
 	
 	function create_field($field)
 	{
-		// vars
-		$field['date_format'] = isset($field['date_format']) ? $field['date_format'] : 'dd/mm/yy';
+		// defaults
+		$defaults = array(
+			'date_format' 		=>	'yymmdd',
+			'display_format'	=>	'dd/mm/yy',
+		);
 		
+		$field = array_merge($defaults, $field);
+
+
 		// html
-		echo '<input type="text" value="' . $field['value'] . '" class="acf_datepicker" name="' . $field['name'] . '" data-date_format="' . $field['date_format'] . '" />';
+		echo '<input type="hidden" value="' . $field['value'] . '" name="' . $field['name'] . '" class="acf-hidden-datepicker" />';
+		echo '<input type="text" value="" class="acf_datepicker" data-save_format="' . $field['date_format'] . '" data-display_format="' . $field['display_format'] . '" />';
 
 	}
 	
@@ -74,19 +81,35 @@ class acf_Date_picker extends acf_Field
 	function create_options($key, $field)
 	{
 		// defaults
-		$field['date_format'] = isset($field['date_format']) ? $field['date_format'] : '';
+		$defaults = array(
+			'date_format' 		=>	'yymmdd',
+			'display_format'	=>	'dd/mm/yy',
+		);
 		
+		$field = array_merge($defaults, $field);
+
+
 		?>
 		<tr class="field_option field_option_<?php echo $this->name; ?>">
 			<td class="label">
-				<label><?php _e("Date format",'acf'); ?></label>
-				<p class="description"><?php _e("eg. dd/mm/yy. read more about",'acf'); ?> <a href="http://docs.jquery.com/UI/Datepicker/formatDate">formatDate</a></p>
+				<label><?php _e("Save format",'acf'); ?></label>
+				<p class="description"><?php _e("This format will determin the value saved to the database and returned via the API",'acf'); ?></p>
+				<p><?php _e("\"yymmdd\" is the most versatile save format. Read more about",'acf'); ?> <a href="http://docs.jquery.com/UI/Datepicker/formatDate"><?php _e("jQuery date formats",'acf'); ?></a></p>
 			</td>
 			<td>
 				<input type="text" name="fields[<?php echo $key; ?>][date_format]" value="<?php echo $field['date_format']; ?>" />
 			</td>
 		</tr>
-
+		<tr class="field_option field_option_<?php echo $this->name; ?>">
+			<td class="label">
+				<label><?php _e("Display format",'acf'); ?></label>
+				<p class="description"><?php _e("This format will be seen by the user when entering a value",'acf'); ?></p>
+				<p><?php _e("\"dd/mm/yy\" or \"mm/dd/yy\" are the most used display formats. Read more about",'acf'); ?> <a href="http://docs.jquery.com/UI/Datepicker/formatDate"><?php _e("jQuery date formats",'acf'); ?></a></p>
+			</td>
+			<td>
+				<input type="text" name="fields[<?php echo $key; ?>][display_format]" value="<?php echo $field['display_format']; ?>" />
+			</td>
+		</tr>
 		<?php
 	}
 		
