@@ -187,11 +187,11 @@ class acf_settings
 	function html_index()
 	{
 		// vars
-		$acfs = get_pages(array(
-			'numberposts' 	=> 	-1,
-			'post_type'		=>	'acf',
-			'sort_column' 	=> 'menu_order',
-			'order' 		=> 'ASC',
+		$acfs = get_posts(array(
+			'numberposts' 	=> -1,
+			'post_type' 	=> 'acf',
+			'orderby' 		=> 'menu_order title',
+			'order' 		=> 'asc',
 		));
 
 		// blank array to hold acfs
@@ -489,12 +489,12 @@ class acf_settings
 		
 		if(isset($_POST['acf_posts']))
 		{
-			$acfs = get_pages(array(
-				'numberposts' 	=> 	-1,
-				'post_type'		=>	'acf',
-				'sort_column' => 'menu_order',
-				'order' => 'ASC',
-				'include'	=>	$_POST['acf_posts']
+			$acfs = get_posts(array(
+				'numberposts' 	=> -1,
+				'post_type' 	=> 'acf',
+				'orderby' 		=> 'menu_order title',
+				'order' 		=> 'asc',
+				'include'		=>	$_POST['acf_posts'],
 			));
 		}
 		if($acfs)

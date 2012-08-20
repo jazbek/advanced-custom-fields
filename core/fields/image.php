@@ -612,8 +612,14 @@ class acf_Image extends acf_Field
 	{
 		// vars
 		$format = isset($field['save_format']) ? $field['save_format'] : 'url';
-		
 		$value = parent::get_value($post_id, $field);
+		
+		
+		// validate
+		if( !$value )
+		{
+			return false;
+		}
 		
 		
 		// format

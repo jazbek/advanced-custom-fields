@@ -66,8 +66,13 @@ class acf_Wysiwyg extends acf_Field
 	function create_options($key, $field)
 	{	
 		// vars
-		$field['toolbar'] = isset($field['toolbar']) ? $field['toolbar'] : 'full';
-		$field['media_upload'] = isset($field['media_upload']) ? $field['media_upload'] : 'yes';
+		$defaults = array(
+			'toolbar'		=>	'full',
+			'media_upload' 	=>	'yes',
+			'the_content' 	=>	'yes',
+		);
+		
+		$field = array_merge($defaults, $field);
 		
 		?>
 		<tr class="field_option field_option_<?php echo $this->name; ?>">
@@ -108,6 +113,27 @@ class acf_Wysiwyg extends acf_Field
 				?>
 			</td>
 		</tr>
+		<tr class="field_option field_option_<?php echo $this->name; ?>">
+			<td class="label">
+				<label><?php _e("Run filter \"the_content\"?",'acf'); ?></label>
+				<p class="description"><?php _e("Enable this filter to use shortcodes within the WYSIWYG field",'acf'); ?></p>
+				<p class="description"><?php _e("Disable this filter if you encounter recursive template problems with plugins / themes",'acf'); ?></p>
+			</td>
+			<td>
+				<?php 
+				$this->parent->create_field(array(
+					'type'	=>	'radio',
+					'name'	=>	'fields['.$key.'][the_content]',
+					'value'	=>	$field['the_content'],
+					'layout'	=>	'horizontal',
+					'choices' => array(
+						'yes'	=>	__("Yes",'acf'),
+						'no'	=>	__("No",'acf'),
+					)
+				));
+				?>
+			</td>
+		</tr>
 		<?php
 	}
 	
@@ -125,8 +151,11 @@ class acf_Wysiwyg extends acf_Field
 	function create_field($field)
 	{
 		// vars
-		$field['toolbar'] = isset($field['toolbar']) ? $field['toolbar'] : 'full';
-		$field['media_upload'] = isset($field['media_upload']) ? $field['media_upload'] : 'yes';
+		$defaults = array(
+			'toolbar'		=>	'full',
+			'media_upload' 	=>	'yes',
+		);
+		$field = array_merge($defaults, $field);
 		
 		$id = 'wysiwyg-' . $field['name'];
 		
@@ -170,9 +199,23 @@ class acf_Wysiwyg extends acf_Field
 	function get_value_for_api($post_id, $field)
 	{
 		// vars
+		$defaults = array(
+			'the_content' 	=>	'yes',
+		);
+		$field = array_merge($defaults, $field);
 		$value = parent::get_value($post_id, $field);
 		
-		$value = apply_filters('the_content',$value); 
+		
+		// filter
+		if( $field['the_content'] == 'yes' )
+		{
+			$value = apply_filters('the_content',$value); 
+		}
+		else
+		{
+			$value = wpautop( $value );
+		}
+
 		
 		return $value;
 	}

@@ -357,17 +357,24 @@ function acf_register_field_group($array)
 {
 	$array = array_merge($array, $GLOBALS['acf_register_field_group']);
 	
-	// order field groups based on menu_order
+	if( empty($GLOBALS['acf_register_field_group']) )
+	{
+		return $array;
+	}
+	
+	
+	// order field groups based on menu_order, title
 	// Obtain a list of columns
 	foreach ($array as $key => $row) {
 	    $menu_order[$key] = $row['menu_order'];
+	    $title[$key] = $row['title'];
 	}
 	
 	// Sort the array with menu_order ascending
 	// Add $array as the last parameter, to sort by the common key
 	if(isset($menu_order))
 	{
-		array_multisort($menu_order, SORT_ASC, $array);
+		array_multisort($menu_order, SORT_ASC, $title, SORT_ASC, $array);
 	}
 	
 	

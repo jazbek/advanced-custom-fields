@@ -51,10 +51,6 @@ class acf_field_groups
 		// validate page
 		if( ! $this->validate_page() ) return;
 		
-		
-		// actions
-		//add_filter('pre_get_posts', array($this, 'pre_get_posts'), 1); 
-		
 		add_action('admin_print_scripts', array($this,'admin_print_scripts'));
 		add_action('admin_print_styles', array($this,'admin_print_styles'));
 		add_action('admin_footer', array($this,'admin_footer'));
@@ -94,7 +90,7 @@ class acf_field_groups
 			}
 			
 			
-			if( isset($_GET['page']) && $_GET['page'] == 'acf-settings' )
+			if( isset($_GET['page']) )
 			{
 				$return = false;
 			}
@@ -117,9 +113,6 @@ class acf_field_groups
 	
 	function admin_print_scripts()
 	{
-		// validate page
-		if( ! $this->validate_page() ) return;
-		
 		wp_enqueue_script( 'jquery' );
     	wp_enqueue_script( 'thickbox' );
 	}
@@ -135,37 +128,7 @@ class acf_field_groups
 	
 	function admin_print_styles()
 	{
-		// validate page
-		if( ! $this->validate_page() ) return;
-		
 		wp_enqueue_style( 'thickbox' );
-	}
-	
-	
-	/*
-	*  pre_get_posts
-	*
-	*  @description: 
-	*  @since 3.0.6
-	*  @created: 23/06/12
-	*/
-
-	function pre_get_posts($query)
-	{
-		
-		switch ( $query->query_vars['post_type'] )
-	    {
-	        case 'acf':
-	        	
-	            //$query->set('posts_per_page', 1);
-	            //$query->set('paged', 1);
-	            break;
-	
-	        default:
-	            break;
-	    }
-	    
-	    return $query;
 	}
 	
 	
@@ -178,15 +141,6 @@ class acf_field_groups
 	
 	function acf_edit_columns( $columns )
 	{
-		/*
-		$columns = array(
-			'title' => __("Title", 'acf'),
-			'fields' => __("Fields", 'acf'),
-			//'order' => __("Order", 'acf'),
-			'position' => __("Position", 'acf'),
-			'style' => __("Style", 'acf'),
-		);*/
-		
 		$columns['fields'] = __("Fields", 'acf');
 		
 		return $columns;
@@ -270,9 +224,6 @@ class acf_field_groups
 	
 	function admin_footer()
 	{
-		// validate page
-		if( ! $this->validate_page() ) return;
-	
 		?>
 		<link rel="stylesheet" type="text/css" href="<?php echo $this->parent->dir; ?>/css/global.css" />
 		<link rel="stylesheet" type="text/css" href="<?php echo $this->parent->dir; ?>/css/acf.css" />

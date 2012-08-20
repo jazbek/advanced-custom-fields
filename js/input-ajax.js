@@ -44,7 +44,20 @@
 			post_format		:	false,
 			taxonomy		:	false
 		};
-	
+		
+		
+		// MPML
+		if( $('#icl-als-first').exists() )
+		{
+			var href = $('#icl-als-first').children('a').attr('href'),
+				regex = new RegExp( "lang=([^&#]*)" ),
+				results = regex.exec( href );
+			
+			// lang
+			acf.data.lang = results[1];
+			
+		}
+		
 	});
 	
 	
@@ -57,8 +70,7 @@
 	
 	function update_fields()
 	{
-		
-		//console.log('update_fields');
+
 		$.ajax({
 			url: ajaxurl,
 			data: acf.data,

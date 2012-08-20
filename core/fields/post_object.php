@@ -155,7 +155,12 @@ class acf_Post_object extends acf_Field
 					{
 						$title .= " ($post->post_status)";
 					}
-
+					
+					// WPML
+					if( defined('ICL_LANGUAGE_CODE') )
+					{
+						$title .= ' (' . ICL_LANGUAGE_CODE . ')';
+					}
 					
 					// add to choices
 					if( count($field['post_type']) == 1 )

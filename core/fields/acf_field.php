@@ -202,6 +202,10 @@ class acf_Field
 		 	}
 
 		}
+		
+		
+		// if value was duplicated, it may now be a serialized string!
+		$value = maybe_unserialize($value);
 
 		
 		return $value;

@@ -36,7 +36,6 @@ class acf_Relationship extends acf_Field
 	
    	function acf_get_relationship_results()
    	{
-
    		// vars
 		$options = array(
 			'post_type'	=>	'',
@@ -47,15 +46,25 @@ class acf_Relationship extends acf_Field
 			'order' => 'ASC',
 			'post_status' => array('publish', 'private', 'draft', 'inherit', 'future'),
 			'suppress_filters' => false,
-			's' => ''
+			's' => '',
+			'lang' => false,
 		);
 		$ajax = isset( $_POST['action'] ) ? true : false;
-		
+
 		
 		// override options with posted values
 		if( $ajax )
 		{
 			$options = array_merge($options, $_POST);
+		}
+		
+		
+		// WPML
+		if( $options['lang'] )
+		{
+			global $sitepress;
+			
+			$sitepress->switch_lang( $options['lang'] );
 		}
 		
 		
@@ -127,8 +136,21 @@ class acf_Relationship extends acf_Field
 		{
 			foreach( $posts  as $post )
 			{
+				// right aligned info
+				$title = '<span class="info">';
+				
+					$title .= $post->post_type;
+					
+					// WPML
+					if( $options['lang'] )
+					{
+						$title .= ' (' . $options['lang'] . ')';
+					}
+					
+				$title .= '</span>';
+				
 				// find title. Could use get_the_title, but that uses get_post(), so I think this uses less Memory
-				$title = apply_filters( 'the_title', $post->post_title, $post->ID );
+				$title .= apply_filters( 'the_title', $post->post_title, $post->ID );
 
 				// status
 				if($post->post_status != "publish")
@@ -136,7 +158,7 @@ class acf_Relationship extends acf_Field
 					$title .= " ($post->post_status)";
 				}
 				
-				echo '<li><a href="javascript:;" data-post_id="' . $post->ID . '">' . $title . '<span class="add"></span></a></li>';
+				echo '<li><a href="javascript:;" data-post_id="' . $post->ID . '">' . $title .  '<span class="add"></span></a></li>';
 			}
 		}
 		
@@ -213,7 +235,7 @@ class acf_Relationship extends acf_Field
 		
 		
 		?>
-<div class="acf_relationship" data-max="<?php echo $field['max']; ?>" data-s="" data-paged="1" data-post_type="<?php echo implode(',', $field['post_type']); ?>" data-taxonomy="<?php echo implode(',', $field['taxonomy']); ?>">
+<div class="acf_relationship" data-max="<?php echo $field['max']; ?>" data-s="" data-paged="1" data-post_type="<?php echo implode(',', $field['post_type']); ?>" data-taxonomy="<?php echo implode(',', $field['taxonomy']); ?>" <?php if( defined('ICL_LANGUAGE_CODE') ){ echo 'data-lang="' . ICL_LANGUAGE_CODE . '"';} ?>">
 	
 	<!-- Hidden Blank default value -->
 	<input type="hidden" name="<?php echo $field['name']; ?>" value="" />
@@ -257,13 +279,25 @@ class acf_Relationship extends acf_Field
 		{
 			foreach( $field['value'] as $post )
 			{
+			
+				// right aligned info
+				$title = '<span class="info">';
+				
+					$title .= $post->post_type;
+					
+					// WPML
+					if( defined('ICL_LANGUAGE_CODE') )
+					{
+						$title .= ' (' . ICL_LANGUAGE_CODE . ')';
+					}
+					
+				$title .= '</span>';
 				
 				// find title. Could use get_the_title, but that uses get_post(), so I think this uses less Memory
-				$title = apply_filters( 'the_title', $post->post_title, $post->ID );
-
+				$title .= apply_filters( 'the_title', $post->post_title, $post->ID );
 
 				// status
-				if($post->post_status == "private" || $post->post_status == "draft")
+				if($post->post_status != "publish")
 				{
 					$title .= " ($post->post_status)";
 				}
@@ -272,6 +306,8 @@ class acf_Relationship extends acf_Field
 					<a href="javascript:;" class="" data-post_id="' . $post->ID . '">' . $title . '<span class="remove"></span></a>
 					<input type="hidden" name="' . $field['name'] . '[]" value="' . $post->ID . '" />
 				</li>';
+				
+					
 			}
 		}
 			

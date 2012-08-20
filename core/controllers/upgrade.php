@@ -229,11 +229,12 @@ class acf_upgrade
 				// upgrade options first as "field_group_layout" will cause get_fields to fail!
 				
 				// get acf's
-				$acfs = get_pages(array(
-					'numberposts' 	=> 	-1,
-					'post_type'		=>	'acf',
-					'sort_column' => 'menu_order',
-					'order' => 'ASC',
+				$acfs = get_posts(array(
+					'numberposts' 	=> -1,
+					'post_type' 	=> 'acf',
+					'orderby' 		=> 'menu_order title',
+					'order' 		=> 'asc',
+					'suppress_filters' => false,
 				));
 				
 				if($acfs)
@@ -284,11 +285,12 @@ class acf_upgrade
 			case '3.0.0 (step 2)':
 				
 				// get acf's
-				$acfs = get_pages(array(
-					'numberposts' 	=> 	-1,
-					'post_type'		=>	'acf',
-					'sort_column' => 'menu_order',
-					'order' => 'ASC',
+				$acfs = get_posts(array(
+					'numberposts' 	=> -1,
+					'post_type' 	=> 'acf',
+					'orderby' 		=> 'menu_order title',
+					'order' 		=> 'asc',
+					'suppress_filters' => false,
 				));
 				
 				if($acfs)
@@ -599,11 +601,12 @@ class acf_upgrade
 				
 				
 				// get acf's
-				$result = get_pages(array(
-					'numberposts' 	=> 	-1,
-					'post_type'		=>	'acf',
-					'sort_column' => 'menu_order',
-					'order' => 'ASC',
+				$acfs = get_posts(array(
+					'numberposts' 	=> -1,
+					'post_type' 	=> 'acf',
+					'orderby' 		=> 'menu_order title',
+					'order' 		=> 'asc',
+					'suppress_filters' => false,
 				));
 				
 				
@@ -611,9 +614,9 @@ class acf_upgrade
 				
 				
 				// populate acfs
-				if($result)
+				if($acfs)
 				{
-					foreach($result as $acf)
+					foreach($acfs as $acf)
 					{
 						$show_on_page = get_post_meta($acf->ID, 'show_on_page', true) ? get_post_meta($acf->ID, 'show_on_page', true) : array();
 						
@@ -664,11 +667,12 @@ class acf_upgrade
 				
 				
 				// get acf's
-				$acfs = get_pages(array(
-					'numberposts' 	=> 	-1,
-					'post_type'		=>	'acf',
-					'sort_column' 	=>	'menu_order',
-					'order' 		=>	'ASC',
+				$acfs = get_posts(array(
+					'numberposts' 	=> -1,
+					'post_type' 	=> 'acf',
+					'orderby' 		=> 'menu_order title',
+					'order' 		=> 'asc',
+					'suppress_filters' => false,
 				));
 				
 				// populate acfs
@@ -690,7 +694,7 @@ class acf_upgrade
 						}
 						
 						
-						if( $field['taxonomy'] )
+						if( is_array($field['taxonomy']) )
 						{
 						foreach( $field['taxonomy'] as $k => $v )
 						{

@@ -628,6 +628,23 @@ ul.checkbox_list {
 	text-decoration: none;
 }
 
+.acf_relationship .relationship_list li a .info {
+	color: #CCC;
+	text-transform: uppercase;
+	float: right;
+	font-size: 11px;
+}
+
+.acf_relationship .relationship_list li:hover a .info {
+	padding-right: 24px;
+	color: #999;
+}
+
+.acf_relationship .relationship_list li.hide:hover a .info {
+	padding-right: 0;
+	color: #CCC;
+}
+
 .acf_relationship .relationship_list li a:hover,
 .acf_relationship .relationship_list li a:focus {
 	background: #eaf2fa;

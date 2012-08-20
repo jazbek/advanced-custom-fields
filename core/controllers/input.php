@@ -180,6 +180,7 @@ class acf_input
 		
 		// get acf's
 		$acfs = $this->parent->get_field_groups();
+		
 		if($acfs)
 		{
 			foreach($acfs as $acf)
