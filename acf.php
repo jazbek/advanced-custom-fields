@@ -922,7 +922,7 @@ class Acf
 		
 		
 		// WPML
-		if( $overrides['lang'] )
+		if( isset($overrides['lang']) )
 		{
 			global $sitepress;
 			$sitepress->switch_lang( $overrides['lang'] );
