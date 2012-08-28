@@ -59,7 +59,18 @@ class acf_Date_picker extends acf_Field
 		);
 		
 		$field = array_merge($defaults, $field);
-
+		
+		
+		// make sure it's not blank
+		if( !$field['date_format'] )
+		{
+			$field['date_format'] = 'yymmdd';
+		}
+		if( !$field['display_format'] )
+		{
+			$field['display_format'] = 'dd/mm/yy';
+		}
+		
 
 		// html
 		echo '<input type="hidden" value="' . $field['value'] . '" name="' . $field['name'] . '" class="acf-hidden-datepicker" />';
