@@ -146,8 +146,32 @@ class acf_field_group
 		
 		// add metaboxes
 		add_meta_box('acf_fields', __("Fields",'acf'), array($this, 'meta_box_fields'), 'acf', 'normal', 'high');
-		add_meta_box('acf_location', __("Location",'acf') . ' </span><span class="description">- ' . __("Add Fields to Edit Screens",'acf'), array($this, 'meta_box_location'), 'acf', 'normal', 'high');
-		add_meta_box('acf_options', __("Options",'acf') . '</span><span class="description">- ' . __("Customise the edit page",'acf'), array($this, 'meta_box_options'), 'acf', 'normal', 'high');
+		add_meta_box('acf_location', __("Location",'acf'), array($this, 'meta_box_location'), 'acf', 'normal', 'high');
+		add_meta_box('acf_options', __("Options",'acf'), array($this, 'meta_box_options'), 'acf', 'normal', 'high');
+		
+		
+		// add screen settings
+		add_filter('screen_settings', array($this, 'screen_settings'), 10, 1);
+	}
+	
+	
+	/*
+	*  screen_settings
+	*
+	*  @description: 
+	*  @created: 4/09/12
+	*/
+	
+	function screen_settings( $current )
+	{
+	    $current .= '<h5>' . __("Fields",'acf') . '</h5>';
+	    
+	    $current .= '<div class="show-field_key">Show Field Key:';
+	    	 $current .= '<label class="show-field_key-no"><input checked="checked" type="radio" value="0" name="show-field_key" /> No</label>';
+	    	 $current .= '<label class="show-field_key-yes"><input type="radio" value="1" name="show-field_key" /> Yes</label>';
+		$current .= '</div>';
+	    
+	    return $current;
 	}
 	
 	

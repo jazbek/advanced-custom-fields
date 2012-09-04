@@ -634,6 +634,27 @@
 		}
 
 	});
-
+	
+	
+	/*
+	*  Screen Options
+	*
+	*  @description: 
+	*  @created: 4/09/12
+	*/
+	
+	$('#adv-settings input[name="show-field_key"]').live('change', function(){
+		
+		if( $(this).val() == 1 )
+		{
+			$('#acf_fields table.acf').addClass('show-field_key');
+		}
+		else
+		{
+			$('#acf_fields table.acf').removeClass('show-field_key');
+		}
+		
+	});
+	
 
 })(jQuery);

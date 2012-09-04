@@ -628,19 +628,19 @@ ul.checkbox_list {
 	text-decoration: none;
 }
 
-.acf_relationship .relationship_list li a .info {
+.acf_relationship .relationship_list li a .relationship-item-info {
 	color: #CCC;
 	text-transform: uppercase;
 	float: right;
 	font-size: 11px;
 }
 
-.acf_relationship .relationship_list li:hover a .info {
+.acf_relationship .relationship_list li:hover a .relationship-item-info {
 	padding-right: 24px;
 	color: #999;
 }
 
-.acf_relationship .relationship_list li.hide:hover a .info {
+.acf_relationship .relationship_list li.hide:hover a .relationship-item-info {
 	padding-right: 0;
 	color: #CCC;
 }

@@ -21,6 +21,27 @@
 		return $(this).length>0;
 	};
 	
+	
+	/*
+	*  Vars
+	*
+	*  @description: 
+	*  @created: 3/09/12
+	*/
+	
+	acf.data = {
+		action 			:	'get_input_metabox_ids',
+		post_id			:	acf.post_id,
+		page_template	:	false,
+		page_parent		:	false,
+		page_type		:	false,
+		page			:	acf.post_id,
+		post			:	acf.post_id,
+		post_category	:	false,
+		post_format		:	false,
+		taxonomy		:	false
+	};
+	
 		
 	/*
 	*  Document Ready
@@ -31,21 +52,6 @@
 	
 	$(document).ready(function(){
 	
-		// show metaboxes for this post
-		acf.data = {
-			action 			:	'get_input_metabox_ids',
-			post_id			:	acf.post_id,
-			page_template	:	false,
-			page_parent		:	false,
-			page_type		:	false,
-			page			:	acf.post_id,
-			post			:	acf.post_id,
-			post_category	:	false,
-			post_format		:	false,
-			taxonomy		:	false
-		};
-		
-		
 		// MPML
 		if( $('#icl-als-first').exists() )
 		{

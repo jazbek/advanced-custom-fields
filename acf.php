@@ -3,7 +3,7 @@
 Plugin Name: Advanced Custom Fields
 Plugin URI: http://www.advancedcustomfields.com/
 Description: Fully customise WordPress edit screens with powerful fields. Boasting a professional interface and a powerfull API, it’s a must have for any web developer working with WordPress. Field types include: Wysiwyg, text, textarea, image, file, select, checkbox, page link, post object, date picker, color picker, repeater, flexible content, gallery and more!
-Version: 3.3.9
+Version: 3.4.0
 Author: Elliot Condon
 Author URI: http://www.elliotcondon.com/
 License: GPL
@@ -47,7 +47,7 @@ class Acf
 		// vars
 		$this->path = plugin_dir_path(__FILE__);
 		$this->dir = plugins_url('',__FILE__);
-		$this->version = '3.3.9';
+		$this->version = '3.4.0';
 		$this->upgrade_version = '3.3.3'; // this is the latest version which requires an upgrade
 		$this->cache = array(); // basic array cache to hold data throughout the page load
 		
@@ -67,9 +67,13 @@ class Acf
 		
 		add_action('admin_menu', array($this,'admin_menu'));
 		add_action('admin_head', array($this,'admin_head'));
+		add_action('acf_save_post', array($this, 'acf_save_post'), 1); // save post, called from many places (api, input, everything, options)
 		
+		
+		// ajax
 		add_action('wp_ajax_get_input_metabox_ids', array($this, 'get_input_metabox_ids'));
-	
+		
+		
 		
 		return true;
 	}
@@ -908,16 +912,28 @@ class Acf
 		// overrides
 		if(isset($_POST))
 		{
-			if(isset($_POST['post_id']) && $_POST['post_id'] != 'false') $overrides['post_id'] = $_POST['post_id'];
-			if(isset($_POST['page_template']) && $_POST['page_template'] != 'false') $overrides['page_template'] = $_POST['page_template'];
-			if(isset($_POST['page_parent']) && $_POST['page_parent'] != 'false') $overrides['page_parent'] = $_POST['page_parent'];
-			if(isset($_POST['page_type']) && $_POST['page_type'] != 'false') $overrides['page_type'] = $_POST['page_type'];
-			if(isset($_POST['page']) && $_POST['page'] != 'false') $overrides['page'] = $_POST['page'];
-			if(isset($_POST['post']) && $_POST['post'] != 'false') $overrides['post'] = $_POST['post'];
-			if(isset($_POST['post_category']) && $_POST['post_category'] != 'false') $overrides['post_category'] = $_POST['post_category'];
-			if(isset($_POST['post_format']) && $_POST['post_format'] != 'false') $overrides['post_format'] = $_POST['post_format'];
-			if(isset($_POST['taxonomy']) && $_POST['taxonomy'] != 'false') $overrides['taxonomy'] = $_POST['taxonomy'];
-			if(isset($_POST['lang']) && $_POST['lang'] != 'false') $overrides['lang'] = $_POST['lang'];
+			$override_keys = array(
+				'post_id',
+				'post_type',
+				'page_template',
+				'page_parent',
+				'page_type',
+				'page',
+				'post',
+				'post_category',
+				'post_format',
+				'taxonomy',
+				'lang',
+			);
+
+			foreach( $override_keys as $override_key )
+			{
+				if( isset($_POST[ $override_key ]) && $_POST[ $override_key ] != 'false' )
+				{
+					$overrides[ $override_key ] = $_POST[ $override_key ];
+				}
+			}
+
 		}
 		
 		
@@ -1029,6 +1045,7 @@ class Acf
 				'ef_taxonomy',
 				'ef_user',
 				'ef_media',
+				'post_type',
 			);
 			
 			if( !in_array($rule['param'], $exceptions) )
@@ -1298,11 +1315,11 @@ class Acf
 				// value has changed in 3.2.6 to a sanitized string
 				if( strpos( $rule['value'] ,'options-') === false )
 				{
-					$rule['value'] = 'options-' . sanitize_title_with_dashes( $rule['value'] );
+					$rule['value'] = 'options-' . sanitize_title( $rule['value'] );
 				}
 				
 				// generate the page title to match against
-				$page_title = 'options-' . sanitize_title_with_dashes( get_admin_page_title() );
+				$page_title = 'options-' . sanitize_title( get_admin_page_title() );
 				
 		        if($rule['operator'] == "==")
 		        {
@@ -1675,6 +1692,42 @@ class Acf
 		
 		// return array
 		return $image_sizes;
+	}
+	
+	
+	/*
+	*  acf_save_post
+	*
+	*  @description: 
+	*  @created: 4/09/12
+	*/
+	
+	function acf_save_post( $post_id )
+	{
+		// vars
+		$fields = false;
+		
+		
+		// load from post
+		if( isset($_POST['fields']) )
+		{
+			$fields = $_POST['fields'];
+		}
+		
+		
+		// loop through and save
+		if($fields)
+		{
+			foreach($fields as $key => $value)
+			{
+				// get field
+				$field = $this->get_acf_field($key);
+				
+				$this->update_value($post_id, $field, $value);
+			}
+			// foreach($fields as $key => $value)
+		}
+		// if($fields)
 	}
 	
 	

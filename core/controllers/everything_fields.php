@@ -282,28 +282,10 @@ class acf_everything_fields
 	
 	function save_taxonomy( $term_id )
 	{
-		// validate
-		if( !isset( $_POST['fields'] ) )
-		{
-			return;
-		}
+		// $post_id to save against
+		$post_id = $_POST['taxonomy'] . '_' . $term_id;
 		
-		
-		// options name to save against
-		$option_name = $_POST['taxonomy'] . '_' . $term_id;
-		
-		
-		// save fields
-		$fields = $_POST['fields'];
-		
-		foreach($fields as $key => $value)
-		{
-			// get field
-			$field = $this->parent->get_acf_field($key);
-			
-			$this->parent->update_value( $option_name , $field, $value );
-		}
-		
+		do_action('acf_save_post', $post_id);
 	}
 		
 		
@@ -318,30 +300,10 @@ class acf_everything_fields
 	
 	function save_user( $user_id )
 	{
+		// $post_id to save against
+		$post_id = 'user_' . $user_id;
 		
-		// validate
-		if( !isset( $_POST['fields'] ) )
-		{
-			return;
-		}
-		
-		
-		// options name to save against
-		$option_name = 'user_' . $user_id;
-		
-		
-		// save fields
-		$fields = $_POST['fields'];
-		
-		foreach($fields as $key => $value)
-		{
-			// get field
-			$field = $this->parent->get_acf_field($key);
-			
-			$this->parent->update_value( $option_name , $field, $value );
-		}
-
-		
+		do_action('acf_save_post', $post_id);		
 	}
 	
 	
@@ -356,28 +318,12 @@ class acf_everything_fields
 	
 	function save_attachment( $post, $attachment )
 	{
-
-		// validate
-		if( !isset( $_POST['fields'] ) )
-		{
-			return $post;
-		}
-
+		// $post_id to save against
+		$post_id = $post['ID'];
 		
-		// save fields
-		$fields = $_POST['fields'];
-		
-		foreach($fields as $key => $value)
-		{
-			// get field
-			$field = $this->parent->get_acf_field($key);
-			
-			$this->parent->update_value( $post['ID'] , $field, $value );
-		}
+		do_action('acf_save_post', $post_id);
 		
 		return $post;
-
-		
 	}
 	
 	

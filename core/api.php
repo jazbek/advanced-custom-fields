@@ -398,7 +398,7 @@ function register_options_page($title = "")
 {
 	$GLOBALS['acf_register_options_page'][] =  array(
 		'title'	=> $title,
-		'slug' => 'options-' . sanitize_title_with_dashes( $title ),
+		'slug' => 'options-' . sanitize_title( $title ),
 	);
 }
 
@@ -489,22 +489,11 @@ function acf_form_head()
 	// run database save first
 	if(isset($_POST) && isset($_POST['acf_save']))
 	{
+		// $post_id to save against
 		$post_id = $_POST['post_id'];
 		
-		// save fields
-		$fields = $_POST['fields'];
-		
-		if($fields)
-		{
-			foreach($fields as $key => $value)
-			{
-				// get field
-				$field = $acf->get_acf_field($key);
+		do_action('acf_save_post', $post_id);	
 				
-				$acf->update_value($post_id, $field, $value);
-			}
-		}
-		
 		
 		// redirect
 		if(isset($_POST['return']))
@@ -676,10 +665,63 @@ function acf_form($options = null)
 * 
 *-------------------------------------------------------------------------------------*/
 
-function update_field($field_name, $value, $post_id = false)
+function update_field($field_key, $value, $post_id = false)
+{
+	// is $field_name a name? pre 3.4.0
+	if( strpos($field_key, "field_") === false )
+	{
+		global $post, $acf; 
+	 
+		if(!$post_id) 
+		{ 
+			$post_id = $post->ID; 
+		}
+		
+		
+		// allow for option == options
+		if( $post_id == "option" )
+		{
+			$post_id = "options";
+		}
+		 
+		 
+		// get field key
+		if( is_numeric($post_id) )
+		{
+			$field_key = get_post_meta($post_id, '_' . $field_key, true); 
+		}
+		else
+		{
+			$field_key = get_option('_' . $post_id . '_' . $field_key); 
+		}
+	}
+	
+	
+	// save value
+	$result = save_field($field_key, $value, $post_id);
+	
+	return $result;
+	
+}
+
+
+/*--------------------------------------------------------------------------------------
+*
+*	save_field
+*
+*	@description: correctly saves a value to the db with a reference to the field object.
+*	@created: 3/09/12
+*	@author Elliot Condon
+*	@since 3.4.0
+* 
+*-------------------------------------------------------------------------------------*/
+
+function save_field($field_key, $value, $post_id = false)
 {
 	global $post, $acf; 
-	 
+	
+	
+	// find post id
 	if(!$post_id) 
 	{ 
 		$post_id = $post->ID; 
@@ -691,31 +733,16 @@ function update_field($field_name, $value, $post_id = false)
 	{
 		$post_id = "options";
 	}
-	 
-	 
-	// get value
-	$field_key = "";
-	if( is_numeric($post_id) )
-	{
-		$field_key = get_post_meta($post_id, '_' . $field_name, true); 
-	}
-	else
-	{
-		$field_key = get_option('_' . $post_id . '_' . $field_name); 
-	}
 
 	
-	// create default field to save the data as plain text
-	$field = array(
-		'type' => 'text',
-		'name' => $field_name,
-		'key' => ''
-	);
+	// get field
+	$field = $acf->get_acf_field($field_key); 
 	
-	if($field_key != "") 
-	{ 
-		// we can load the field properly! 
-		$field = $acf->get_acf_field($field_key); 
+	
+	// backup if no field was found, save as a text field
+	if( !$field )
+	{
+		return false;
 	}
 	
 	
@@ -762,10 +789,105 @@ function update_field($field_name, $value, $post_id = false)
 
 	}
 	
-	
-	
-	
+
 	$acf->update_value($post_id, $field, $value);
+	return true;
+}
+
+
+/*--------------------------------------------------------------------------------------
+*
+*	get_field_object
+*
+*	@description: returns an array containing all the field data for a given field_name.
+*	@created: 3/09/12
+*	@author Elliot Condon
+*	@since 3.4.0
+*
+*	@return: Array in this format
+
+Array
+(
+    [key] => field_5043fe0e3c58f
+    [label] => Select
+    [name] => select
+    [type] => select
+    [instructions] => 
+    [required] => 1
+    [choices] => Array
+        (
+            [yes] => Yes
+            [no] => No
+            [maybe] => Maybe
+        )
+
+    [default_value] => 
+    [allow_null] => 1
+    [multiple] => 1
+    [order_no] => 4
+    [value] => Array
+        (
+            [0] => Yes
+            [1] => Maybe
+        )
+
+)
+	
+*-------------------------------------------------------------------------------------*/
+
+function get_field_object($field_name,$post_id = false)
+{
+	global $post, $acf; 
+	 
+	if(!$post_id) 
+	{ 
+		$post_id = $post->ID; 
+	}
+	
+	
+	// allow for option == options
+	if( $post_id == "option" )
+	{
+		$post_id = "options";
+	}
+	
+	
+	// return cache 
+	$cache = wp_cache_get('acf_get_field_object_' . $post_id . '_' . $field_name); 
+	if($cache) 
+	{ 
+		return $cache; 
+	} 
+	 
+	 
+	// get value
+	$field_key = "";
+	if( is_numeric($post_id) )
+	{
+		$field_key = get_post_meta($post_id, '_' . $field_name, true); 
+	}
+	else
+	{
+		$field_key = get_option('_' . $post_id . '_' . $field_name); 
+	}
+
+	
+	// default return vaue
+	$field = false;
+	
+	if($field_key != "") 
+	{ 
+		// we can load the field properly! 
+		$field = $acf->get_acf_field($field_key); 
+		$field['value'] = $acf->get_value_for_api($post_id, $field); 
+	} 
+	
+	 
+	// update cache 
+	wp_cache_set('acf_get_field_object_' . $post_id . '_' . $field_name, $field); 
+	 
+	return $field; 
+
 }
 
 

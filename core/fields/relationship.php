@@ -24,6 +24,25 @@ class acf_Relationship extends acf_Field
    	}
    	
    	
+   	/*
+   	*  my_posts_where
+   	*
+   	*  @description: 
+   	*  @created: 3/09/12
+   	*/
+   	function posts_where( $where, &$wp_query )
+	{
+	    global $wpdb;
+	    
+	    if ( $title = $wp_query->get('like_title') )
+	    {
+	        $where .= " AND " . $wpdb->posts . ".post_title LIKE '%" . esc_sql( like_escape(  $title ) ) . "%'";
+	    }
+	    
+	    return $where;
+	}
+	
+	
    	/*--------------------------------------------------------------------------------------
 	*
 	*	acf_get_relationship_results
@@ -129,6 +148,17 @@ class acf_Relationship extends acf_Field
 		unset( $options['taxonomy'] );
 		
 		
+		// search
+		if( $options['s'] )
+		{
+			$options['like_title'] = $options['s'];
+			
+			add_filter( 'posts_where', array($this, 'posts_where'), 10, 2 );
+		}
+		
+		unset( $options['s'] );
+		
+		
 		// load the posts
 		$posts = get_posts( $options );
 		
@@ -137,7 +167,7 @@ class acf_Relationship extends acf_Field
 			foreach( $posts  as $post )
 			{
 				// right aligned info
-				$title = '<span class="info">';
+				$title = '<span class="relationship-item-info">';
 				
 					$title .= $post->post_type;
 					
@@ -158,7 +188,7 @@ class acf_Relationship extends acf_Field
 					$title .= " ($post->post_status)";
 				}
 				
-				echo '<li><a href="javascript:;" data-post_id="' . $post->ID . '">' . $title .  '<span class="add"></span></a></li>';
+				echo '<li><a href="' . get_permalink($post->ID) . '" data-post_id="' . $post->ID . '">' . $title .  '<span class="add"></span></a></li>';
 			}
 		}
 		
@@ -281,7 +311,7 @@ class acf_Relationship extends acf_Field
 			{
 			
 				// right aligned info
-				$title = '<span class="info">';
+				$title = '<span class="relationship-item-info">';
 				
 					$title .= $post->post_type;
 					
@@ -303,7 +333,7 @@ class acf_Relationship extends acf_Field
 				}
 				
 				echo '<li>
-					<a href="javascript:;" class="" data-post_id="' . $post->ID . '">' . $title . '<span class="remove"></span></a>
+					<a href="' . get_permalink($post->ID) . '" class="" data-post_id="' . $post->ID . '">' . $title . '<span class="remove"></span></a>
 					<input type="hidden" name="' . $field['name'] . '[]" value="' . $post->ID . '" />
 				</li>';
 				

@@ -136,14 +136,17 @@ var acf = {
 				validation = false;
 			}
 			
+			
 			// select
 			if($(this).find('select').exists())
 			{
+				validation = true;
 				if($(this).find('select').val() == "null" || !$(this).find('select').val())
 				{
 					validation = false;
 				}
 			}
+
 			
 			// checkbox
 			if($(this).find('input[type="checkbox"]:checked').exists())
@@ -1263,7 +1266,7 @@ var acf = {
 	
 	acf.is_clone_field = function( input )
 	{
-		if( input.attr('name').indexOf('[999]') != -1 )
+		if( input.attr('name') && input.attr('name').indexOf('[999]') != -1 )
 		{
 			return true;
 		}

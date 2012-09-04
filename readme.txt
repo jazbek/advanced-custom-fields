@@ -85,6 +85,22 @@ http://support.advancedcustomfields.com/
 
 == Changelog ==
 
+= 3.4.0 =
+* [Fixed] Fix validation rules for multiple select - http://support.advancedcustomfields.com/discussion/2858/multiple-select-validation-doesnt-work
+* [Added] Add support for options page toggle open / close metabox
+* [Fixed] Fix special characters in registered options page - http://support.advancedcustomfields.com/discussion/comment/7500#Comment_7500
+* [Updated] CSS tweak for relationship field - http://support.advancedcustomfields.com/discussion/2877/relation-field-with-multiple-post-types-css-styling-problem-
+* [Fixed] Fix datepicker blank option bug - http://support.advancedcustomfields.com/discussion/2896/3-3-9-date-picker-not-popping-up
+* [Added] Add new function get_field_object to API - http://support.advancedcustomfields.com/discussion/290/field-label-on-frontend
+* [Fixed] Fix field groups not showing for Shopp add new product - http://support.advancedcustomfields.com/discussion/3005/acf-shopp
+* [Fixed] Move acf.data outside of the doc.ready in input-ajax.js
+* [Fixed] Fix IE7 JS bug - http://support.advancedcustomfields.com/discussion/3020/ie7-fix-on-is_clone_field-function
+* [Fixed] Fix relationship search - Only search title, not content
+* [Updated] Update function update_field to use field_key or field_name
+* [Added] Add function save_field
+* [Added] Add field group screen option to show field keys (to use in save_field / update field)
+* [Added] Add actions on all save events (action is called "acf_save_post", 1 param = $post_id)
+
 = 3.3.9 =
 * [Added] Add basic support for WPML - duplicate field groups, pages and posts for each language without corrupting ACF data!
 * [Fixed] Fix date picker save null - http://support.advancedcustomfields.com/discussion/2844/bug-with-the-date-picker

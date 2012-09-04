@@ -81,23 +81,38 @@ table.widefat.acf td {
 }
 
 .acf tr td.field_order,
-.acf tr th.field_order  {
-	width: 25%;
-}
-
+.acf tr th.field_order,
 .acf tr td.field_label,
-.acf tr th.field_label  {
-	width: 25%;
-}
-
+.acf tr th.field_label,
 .acf tr td.field_name,
-.acf tr th.field_name  {
+.acf tr th.field_name,
+.acf tr td.field_type,
+.acf tr th.field_type {
 	width: 25%;
 }
 
-.acf tr td.field_type,
-.acf tr th.field_type  {
-	width: 25%;
+
+.acf.show-field_key tr td.field_order,
+.acf.show-field_key tr th.field_order,
+.acf.show-field_key tr td.field_label,
+.acf.show-field_key tr th.field_label,
+.acf.show-field_key tr td.field_name,
+.acf.show-field_key tr th.field_name,
+.acf.show-field_key tr td.field_type,
+.acf.show-field_key tr th.field_type,
+.acf.show-field_key tr td.field_key,
+.acf.show-field_key tr th.field_key  {
+	width: 20%;
+}
+
+.acf tr td.field_key,
+.acf tr th.field_key  {
+	display: none;
+}
+
+.acf.show-field_key tr td.field_key,
+.acf.show-field_key tr th.field_key  {
+	display: table-cell;
 }
 
 .acf tr td {
@@ -108,6 +123,10 @@ table.widefat.acf td {
 }
 
 
+/* Screen Options */
+.show-field_key label {
+    padding: 0 2px 0 8px;
+}
 
 
 /*---------------------------------------------------------------------------------------------
