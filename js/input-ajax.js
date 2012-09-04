@@ -31,12 +31,12 @@
 	
 	acf.data = {
 		action 			:	'get_input_metabox_ids',
-		post_id			:	acf.post_id,
+		post_id			:	0,
 		page_template	:	false,
 		page_parent		:	false,
 		page_type		:	false,
-		page			:	acf.post_id,
-		post			:	acf.post_id,
+		page			:	0,
+		post			:	0,
 		post_category	:	false,
 		post_format		:	false,
 		taxonomy		:	false
@@ -51,7 +51,14 @@
 	*/
 	
 	$(document).ready(function(){
-	
+		
+		
+		// update post_id
+		acf.data.post_id = acf.post_id;
+		acf.data.page = acf.post_id;
+		acf.data.post = acf.post_id;
+		
+		
 		// MPML
 		if( $('#icl-als-first').exists() )
 		{
