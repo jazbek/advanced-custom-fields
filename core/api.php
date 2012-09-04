@@ -667,61 +667,8 @@ function acf_form($options = null)
 
 function update_field($field_key, $value, $post_id = false)
 {
-	// is $field_name a name? pre 3.4.0
-	if( strpos($field_key, "field_") === false )
-	{
-		global $post, $acf; 
-	 
-		if(!$post_id) 
-		{ 
-			$post_id = $post->ID; 
-		}
-		
-		
-		// allow for option == options
-		if( $post_id == "option" )
-		{
-			$post_id = "options";
-		}
-		 
-		 
-		// get field key
-		if( is_numeric($post_id) )
-		{
-			$field_key = get_post_meta($post_id, '_' . $field_key, true); 
-		}
-		else
-		{
-			$field_key = get_option('_' . $post_id . '_' . $field_key); 
-		}
-	}
-	
-	
-	// save value
-	$result = save_field($field_key, $value, $post_id);
-	
-	return $result;
-	
-}
-
-
-/*--------------------------------------------------------------------------------------
-*
-*	save_field
-*
-*	@description: correctly saves a value to the db with a reference to the field object.
-*	@created: 3/09/12
-*	@author Elliot Condon
-*	@since 3.4.0
-* 
-*-------------------------------------------------------------------------------------*/
-
-function save_field($field_key, $value, $post_id = false)
-{
 	global $post, $acf; 
-	
-	
-	// find post id
+	 
 	if(!$post_id) 
 	{ 
 		$post_id = $post->ID; 
@@ -733,7 +680,22 @@ function save_field($field_key, $value, $post_id = false)
 	{
 		$post_id = "options";
 	}
-
+	
+	
+	// is $field_name a name? pre 3.4.0
+	if( strpos($field_key, "field_") === false )
+	{
+		// get field key
+		if( is_numeric($post_id) )
+		{
+			$field_key = get_post_meta($post_id, '_' . $field_key, true); 
+		}
+		else
+		{
+			$field_key = get_option('_' . $post_id . '_' . $field_key); 
+		}
+	}
+	
 	
 	// get field
 	$field = $acf->get_acf_field($field_key); 
@@ -791,7 +753,9 @@ function save_field($field_key, $value, $post_id = false)
 	
 
 	$acf->update_value($post_id, $field, $value);
+	
 	return true;
+	
 }
 
 
