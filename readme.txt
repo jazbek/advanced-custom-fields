@@ -97,7 +97,6 @@ http://support.advancedcustomfields.com/
 * [Fixed] Fix IE7 JS bug - http://support.advancedcustomfields.com/discussion/3020/ie7-fix-on-is_clone_field-function
 * [Fixed] Fix relationship search - Only search title, not content
 * [Updated] Update function update_field to use field_key or field_name
-* [Added] Add function save_field
 * [Added] Add field group screen option to show field keys (to use in save_field / update field)
 * [Added] Add actions on all save events (action is called "acf_save_post", 1 param = $post_id)
 
