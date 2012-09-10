@@ -348,6 +348,7 @@ class acf_Image extends acf_Field
 		position: relative;
 		overflow: hidden;
 		display: none; /* default is hidden */
+		clear: both;
 	}
 	
 	#media-upload .acf-submit a {
@@ -590,6 +591,21 @@ class acf_Image extends acf_Field
 			$(this).attr('action', action);
 			
 		});
+		
+		
+		<?php
+	
+		// add support for media tags
+		
+		if($tab == 'mediatags'): ?>
+		$('#media-items .mediatag-item-count a').each(function(){
+			
+			var href = $(this).attr('href');
+			href += "&acf_type=image&acf_preview_size=<?php echo $preview_size; ?>";
+			$(this).attr('href', href);
+			
+		});
+		<?php endif; ?>
 	});
 				
 })(jQuery);

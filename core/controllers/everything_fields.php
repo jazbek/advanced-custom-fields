@@ -282,6 +282,12 @@ class acf_everything_fields
 	
 	function save_taxonomy( $term_id )
 	{
+		// for some weird reason, this is triggered by saving a menu... 
+		if( !isset($_POST['taxonomy']) )
+		{
+			return;
+		}
+		
 		// $post_id to save against
 		$post_id = $_POST['taxonomy'] . '_' . $term_id;
 		

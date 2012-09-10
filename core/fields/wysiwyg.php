@@ -70,11 +70,26 @@ class acf_Wysiwyg extends acf_Field
 			'toolbar'		=>	'full',
 			'media_upload' 	=>	'yes',
 			'the_content' 	=>	'yes',
+			'default_value'	=>	'',
 		);
 		
 		$field = array_merge($defaults, $field);
 		
 		?>
+		<tr class="field_option field_option_<?php echo $this->name; ?>">
+			<td class="label">
+				<label><?php _e("Default Value",'acf'); ?></label>
+			</td>
+			<td>
+				<?php 
+				$this->parent->create_field(array(
+					'type'	=>	'textarea',
+					'name'	=>	'fields['.$key.'][default_value]',
+					'value'	=>	$field['default_value'],
+				));
+				?>
+			</td>
+		</tr>
 		<tr class="field_option field_option_<?php echo $this->name; ?>">
 			<td class="label">
 				<label><?php _e("Toolbar",'acf'); ?></label>

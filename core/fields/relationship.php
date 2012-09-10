@@ -309,7 +309,13 @@ class acf_Relationship extends acf_Field
 		{
 			foreach( $field['value'] as $post )
 			{
-			
+				// check that post exists (my have been trashed)
+				if( !is_object($post) )
+				{
+					continue;
+				}
+				
+				
 				// right aligned info
 				$title = '<span class="relationship-item-info">';
 				
@@ -501,7 +507,11 @@ class acf_Relationship extends acf_Field
 		// override value array with attachments
 		foreach( $value as $k => $v)
 		{
-			$value[ $k ] = $ordered_posts[ $v ];
+			// check that post exists (my have been trashed)
+			if( isset($ordered_posts[ $v ]) )
+			{
+				$value[ $k ] = $ordered_posts[ $v ];
+			}
 		}
 		
 				

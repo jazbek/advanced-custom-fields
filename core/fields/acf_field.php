@@ -121,6 +121,12 @@ class acf_Field
 			update_post_meta($post_id, $field['name'], $value);
 			update_post_meta($post_id, '_' . $field['name'], $field['key']);
 		}
+		elseif( strpos($post_id, 'user_') !== false )
+		{
+			$post_id = str_replace('user_', '', $post_id);
+			update_user_meta($post_id, $field['name'], $value);
+			update_user_meta($post_id, '_' . $field['name'], $field['key']);
+		}
 		else
 		{
 			update_option( $post_id . '_' . $field['name'], $value );
@@ -185,10 +191,33 @@ class acf_Field
 			 	$value = $value[0];
 		 	}
 		}
+		elseif( strpos($post_id, 'user_') !== false )
+		{
+			$post_id = str_replace('user_', '', $post_id);
+			
+			$value = get_user_meta( $post_id, $field['name'], false );
+			
+			// value is an array, check and assign the real value / default value
+			if( empty($value) )
+			{
+				if( isset($field['default_value']) )
+				{
+					$value = $field['default_value'];
+				}
+				else
+				{
+					$value = false;
+				}
+		 	}
+		 	else
+		 	{
+			 	$value = $value[0];
+		 	}
+		}
 		else
 		{
 			$value = get_option( $post_id . '_' . $field['name'], null );
-
+			
 			if( is_null($value) )
 			{
 				if( isset($field['default_value']) )

@@ -85,6 +85,19 @@ http://support.advancedcustomfields.com/
 
 == Changelog ==
 
+= 3.4.1 =
+* [Added] Save user fields into wp_usermeta http://support.advancedcustomfields.com/discussion/2758/get_users-and-meta_key
+* [Added] Add compatibility with media tags plugin - http://support.advancedcustomfields.com/discussion/comment/7596#Comment_7596
+* [Added] Wysiwyg Field: Add Default value option
+* [Added] Number Field: Add Default value option
+* [Fixed] Validate relationship posts - http://support.advancedcustomfields.com/discussion/3033/relationship-field-throws-error-when-related-item-is-trashed
+* [Added] Allow "options" as post_id for get_fields - http://support.advancedcustomfields.com/discussion/1926/3-1-8-broke-get_fields-for-options
+* [Added] Repeater Field: Add sub field width option
+* [Added] Repeater Field: Add sub field description option
+* [Updated] Repeater Field: Update UI design
+* [Fixed] Fix missing ajax event on page parent - http://support.advancedcustomfields.com/discussion/3060/show-correct-box-based-on-page-parent
+* [Updated] Update french translation - http://support.advancedcustomfields.com/discussion/3088/french-translation-for-3-4-0
+
 = 3.4.0 =
 * [Fixed] Fix validation rules for multiple select - http://support.advancedcustomfields.com/discussion/2858/multiple-select-validation-doesnt-work
 * [Added] Add support for options page toggle open / close metabox

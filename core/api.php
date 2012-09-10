@@ -16,7 +16,7 @@ $GLOBALS['acf_field'] = array();
 function get_fields($post_id = false)
 {
 	// vars
-	global $post;
+	global $post, $wpdb;
 	
 	if(!$post_id)
 	{
@@ -24,21 +24,44 @@ function get_fields($post_id = false)
 	}
 	
 	
-	// default
+	// allow for option == options
+	if( $post_id == "option" )
+	{
+		$post_id = "options";
+	}
+	
+	
+	// vars
+	$field_key = "";
 	$value = array();
 	
-	$keys = get_post_custom_keys($post_id);
-		
+	
+	// get field_names
+	if( is_numeric($post_id) )
+	{
+		$keys = $wpdb->get_col($wpdb->prepare(
+			"SELECT meta_key FROM $wpdb->postmeta WHERE post_id = %d and meta_key NOT LIKE %s",
+			$post_id,
+			'\_%'
+		));
+	}
+	else
+	{
+		$keys = $wpdb->get_col($wpdb->prepare(
+			"SELECT option_name FROM $wpdb->options WHERE option_name LIKE %s",
+			$post_id . '\_%'
+		));
+	}
+
+
 	if($keys)
 	{
 		foreach($keys as $key)
 		{
-			if(substr($key, 0, 1) != "_")
-			{
-				$value[$key] = get_field($key, $post_id);
-			}
+			$value[$key] = get_field($key, $post_id);
 		}
  	}
+ 	
  	
 	// no value
 	if(empty($value))

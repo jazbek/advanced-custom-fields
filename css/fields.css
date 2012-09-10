@@ -348,9 +348,6 @@ table.widefat.acf td {
 	position: relative;
 }
 
-.field_options .field_option .repeater table {
-}
-
 table.acf_input tr td .acf tr td {
 	background: transparent;
     padding: 8px;
@@ -359,6 +356,9 @@ table.acf_input tr td .acf tr td {
     border: 0 none;
 }
 
+.field_column_width input[type="number"] {
+	width: 50%;
+}
 
 /*---------------------------------------------------------------------------------------------
 	Field Form

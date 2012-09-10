@@ -133,10 +133,6 @@ class acf_Post_object extends acf_Field
 			{
 				foreach( $posts as $post )
 				{
-					// find the post type title
-					
-					
-					
 					// find title. Could use get_the_title, but that uses get_post(), so I think this uses less Memory
 					$title = '';
 					$ancestors = get_ancestors( $post->ID, $post->post_type );
@@ -361,7 +357,11 @@ class acf_Post_object extends acf_Field
 			// override value array with attachments
 			foreach( $value as $k => $v)
 			{
-				$value[ $k ] = $ordered_posts[ $v ];
+				// check that post exists (my have been trashed)
+				if( isset($ordered_posts[ $v ]) )
+				{
+					$value[ $k ] = $ordered_posts[ $v ];
+				}
 			}
 			
 		}

@@ -174,15 +174,19 @@
 	
 	$('#parent_id').live('change', function(){
 		
-		var page_parent = $(this).val();
+		var val = $(this).val();
 		
-		if($(this).val() != "")
+		
+		// set page_type / page_parent
+		if( val != "" )
 		{
 			acf.data.page_type = 'child';
+			acf.data.page_parent = val;
 		}
 		else
 		{
 			acf.data.page_type = 'parent';
+			acf.data.page_parent = false;
 		}
 		
 		update_fields();
