@@ -117,6 +117,11 @@ function get_field($field_name, $post_id = false)
 	{
 		$field_key = get_post_meta($post_id, '_' . $field_name, true); 
 	}
+	elseif( strpos($post_id, 'user_') !== false )
+	{
+		$temp_post_id = str_replace('user_', '', $post_id);
+		$field_key = get_user_meta($temp_post_id, '_' . $field_name, true); 
+	}
 	else
 	{
 		$field_key = get_option('_' . $post_id . '_' . $field_name); 
@@ -135,6 +140,11 @@ function get_field($field_name, $post_id = false)
 		if( is_numeric($post_id) )
 		{
 			$value = get_post_meta($post_id, $field_name, true);
+		}
+		elseif( strpos($post_id, 'user_') !== false )
+		{
+			$temp_post_id = str_replace('user_', '', $post_id);
+			$value = get_post_meta($temp_post_id, $field_name, true);
 		}
 		else
 		{
@@ -713,6 +723,11 @@ function update_field($field_key, $value, $post_id = false)
 		{
 			$field_key = get_post_meta($post_id, '_' . $field_key, true); 
 		}
+		elseif( strpos($post_id, 'user_') !== false )
+		{
+			$temp_post_id = str_replace('user_', '', $post_id);
+			$field_key = get_user_meta($temp_post_id, '_' . $field_key, true); 
+		}
 		else
 		{
 			$field_key = get_option('_' . $post_id . '_' . $field_key); 
@@ -845,13 +860,18 @@ function get_field_object($field_name,$post_id = false)
 	{ 
 		return $cache; 
 	} 
-	 
-	 
+	
+	
 	// get value
 	$field_key = "";
 	if( is_numeric($post_id) )
 	{
 		$field_key = get_post_meta($post_id, '_' . $field_name, true); 
+	}
+	elseif( strpos($post_id, 'user_') !== false )
+	{
+		$temp_post_id = str_replace('user_', '', $post_id);
+		$field_key = get_user_meta($temp_post_id, '_' . $field_name, true); 
 	}
 	else
 	{
