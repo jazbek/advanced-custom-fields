@@ -837,8 +837,17 @@ Array
 	
 *-------------------------------------------------------------------------------------*/
 
-function get_field_object($field_name,$post_id = false)
+function get_field_object($field_key, $post_id = false, $options = array())
 {
+	// defaults for options
+	$defaults = array(
+		'load_value'	=>	true,
+	);
+	
+	$options = array_merge($defaults, $options);
+	
+	
+	// vars
 	global $post, $acf; 
 	 
 	if(!$post_id) 
@@ -854,45 +863,42 @@ function get_field_object($field_name,$post_id = false)
 	}
 	
 	
-	// return cache 
-	$cache = wp_cache_get('acf_get_field_object_' . $post_id . '_' . $field_name); 
-	if($cache) 
-	{ 
-		return $cache; 
-	} 
+	// is $field_name a name? pre 3.4.0
+	if( strpos($field_key, "field_") === false )
+	{
+		// get field key
+		if( is_numeric($post_id) )
+		{
+			$field_key = get_post_meta($post_id, '_' . $field_key, true); 
+		}
+		elseif( strpos($post_id, 'user_') !== false )
+		{
+			$temp_post_id = str_replace('user_', '', $post_id);
+			$field_key = get_user_meta($temp_post_id, '_' . $field_key, true); 
+		}
+		else
+		{
+			$field_key = get_option('_' . $post_id . '_' . $field_key); 
+		}
+	}
 	
 	
-	// get value
-	$field_key = "";
-	if( is_numeric($post_id) )
+	// get field
+	$field = $acf->get_acf_field($field_key); 
+	
+	
+	// backup if no field was found, save as a text field
+	if( !$field )
 	{
-		$field_key = get_post_meta($post_id, '_' . $field_name, true); 
+		return false;
 	}
-	elseif( strpos($post_id, 'user_') !== false )
+	
+	
+	if( $options['load_value'] )
 	{
-		$temp_post_id = str_replace('user_', '', $post_id);
-		$field_key = get_user_meta($temp_post_id, '_' . $field_name, true); 
-	}
-	else
-	{
-		$field_key = get_option('_' . $post_id . '_' . $field_name); 
+		$field['value'] = $acf->get_value_for_api($post_id, $field);
 	}
 
-	
-	// default return vaue
-	$field = false;
-	
-	if($field_key != "") 
-	{ 
-		// we can load the field properly! 
-		$field = $acf->get_acf_field($field_key); 
-		$field['value'] = $acf->get_value_for_api($post_id, $field); 
-	} 
-	
-	 
-	// update cache 
-	wp_cache_set('acf_get_field_object_' . $post_id . '_' . $field_name, $field); 
-	 
 	return $field; 
 
 }

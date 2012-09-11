@@ -90,6 +90,7 @@ http://support.advancedcustomfields.com/
 * [Added] Color Picker Field: Default Value
 * [Added] Add custom save action for all saves - http://support.advancedcustomfields.com/discussion/2954/hook-on-save-options
 * [Updated] Update Dutch translations
+* [Updated] Update get_field_object function to allow for field_key / field_name + option to load_value
 
 = 3.4.1 =
 * [Added] Save user fields into wp_usermeta http://support.advancedcustomfields.com/discussion/2758/get_users-and-meta_key
