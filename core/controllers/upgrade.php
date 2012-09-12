@@ -762,7 +762,7 @@ class acf_upgrade
 				{
 					foreach( $option_rows as $k => &$row)
 					{
-						preg_match('/user_([0-9])_(.*)/', $row['option_name'], $matches);
+						preg_match('/user_([0-9]+)_(.*)/', $row['option_name'], $matches);
 						
 						
 						// if no matches, this is not an acf value, ignore it
