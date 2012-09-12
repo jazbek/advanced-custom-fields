@@ -686,14 +686,7 @@ class acf_Flexible_content extends acf_Field
 		
 		
 		// get total rows
-		if( is_numeric($post_id) )
-		{
-			$layout_order = get_post_meta($post_id, $field['name'], true);
-		}
-		else
-		{
-			$layout_order = get_option( $post_id . '_' . $field['name'] );
-		}
+		$layout_order = parent::get_value($post_id, $field);
 		
 
 		if( !empty( $layout_order) )
@@ -754,14 +747,7 @@ class acf_Flexible_content extends acf_Field
 		
 		
 		// get total rows
-		if( is_numeric($post_id) )
-		{
-			$layout_order = get_post_meta($post_id, $field['name'], true);
-		}
-		else
-		{
-			$layout_order = get_option( $post_id . '_' . $field['name'] );
-		}
+		$layout_order = parent::get_value($post_id, $field);
 		
 
 		if($layout_order)

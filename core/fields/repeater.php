@@ -671,14 +671,7 @@ class acf_Repeater extends acf_Field
 		
 		
 		// get total rows
-		if( is_numeric($post_id) )
-		{
-			$total = (int) get_post_meta($post_id, $field['name'], true);
-		}
-		else
-		{
-			$total = (int) get_option( $post_id . '_' . $field['name'] );
-		}
+		$total = (int) parent::get_value($post_id, $field);
 		
 		
 		if($total > 0)
@@ -721,14 +714,8 @@ class acf_Repeater extends acf_Field
 		
 		
 		// get total rows
-		if( is_numeric($post_id) )
-		{
-			$total = (int) get_post_meta($post_id, $field['name'], true);
-		}
-		else
-		{
-			$total = (int) get_option( $post_id . '_' . $field['name'] );
-		}
+		$total = (int) parent::get_value($post_id, $field);
+		
 		
 		if($total > 0)
 		{
