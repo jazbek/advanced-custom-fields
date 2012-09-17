@@ -2,6 +2,7 @@
 
 class acf_File extends acf_Field
 {
+
 	/*--------------------------------------------------------------------------------------
 	*
 	*	Constructor
@@ -20,8 +21,8 @@ class acf_File extends acf_Field
 		$this->title = __('File','acf');
 		
 		add_action('admin_head-media-upload-popup', array($this, 'popup_head'));
-		add_action('wp_ajax_acf_select_file', array($this, 'ajax_select_file'));
 		add_filter('get_media_item_args', array($this, 'allow_file_insertion'));
+		add_action('wp_ajax_acf_select_file', array($this, 'ajax_select_file'));
 		add_action('acf_head-update_attachment-file', array($this, 'acf_head_update_attachment'));
    	}
    	
@@ -216,8 +217,12 @@ class acf_File extends acf_Field
 	function create_options($key, $field)
 	{
 		// vars
-		$field['save_format'] = isset($field['save_format']) ? $field['save_format'] : 'url';
+		$defaults = array(
+			'save_format'	=>	'object',
+		);
 		
+		$field = array_merge($defaults, $field);
+
 		?>
 		<tr class="field_option field_option_<?php echo $this->name; ?>">
 			<td class="label">
@@ -231,14 +236,14 @@ class acf_File extends acf_Field
 					'value'	=>	$field['save_format'],
 					'layout'	=>	'horizontal',
 					'choices' => array(
-						'url'	=>	__("File URL",'acf'),
-						'id'	=>	__("Attachment ID",'acf')
+						'object'	=>	__("File Object",'acf'),
+						'url'		=>	__("File URL",'acf'),
+						'id'		=>	__("File ID",'acf')
 					)
 				));
 				?>
 			</td>
 		</tr>
-
 		<?php
 	}
 	
@@ -432,7 +437,7 @@ class acf_File extends acf_Field
 	 				self.parent.acf_div.closest('.repeater').find('.add-row-end').trigger('click'); 
 	 			 
 	 				// set acf_div to new row file 
-	 				self.parent.acf_div = self.parent.acf_div.closest('.repeater').find('> table > tbody > tr:last-child .acf-file-uploader'); 
+	 				self.parent.acf_div = self.parent.acf_div.closest('.repeater').find('> table > tbody > tr.row:last .acf-file-uploader'); 
 	 			} 
 	 			else 
 	 			{ 
@@ -574,13 +579,40 @@ class acf_File extends acf_Field
 	function get_value_for_api($post_id, $field)
 	{
 		// vars
-		$format = isset($field['save_format']) ? $field['save_format'] : 'url';
+		$defaults = array(
+			'save_format'	=>	'object',
+		);
+		
+		$field = array_merge($defaults, $field);
 		
 		$value = parent::get_value($post_id, $field);
 		
-		if($format == 'url')
+		
+		// validate
+		if( !$value )
+		{
+			return false;
+		}
+		
+		
+		// format
+		if( $field['save_format'] == 'url' )
 		{
 			$value = wp_get_attachment_url($value);
+		}
+		elseif( $field['save_format'] == 'object' )
+		{
+			$attachment = get_post( $value );
+			
+			// create array to hold value data
+			$value = array(
+				'id' => $attachment->ID,
+				'alt' => get_post_meta($attachment->ID, '_wp_attachment_image_alt', true),
+				'title' => $attachment->post_title,
+				'caption' => $attachment->post_excerpt,
+				'description' => $attachment->post_content,
+				'url' => wp_get_attachment_url( $attachment->ID ),
+			);
 		}
 		
 		return $value;

@@ -3,7 +3,7 @@
 Plugin Name: Advanced Custom Fields
 Plugin URI: http://www.advancedcustomfields.com/
 Description: Fully customise WordPress edit screens with powerful fields. Boasting a professional interface and a powerfull API, it’s a must have for any web developer working with WordPress. Field types include: Wysiwyg, text, textarea, image, file, select, checkbox, page link, post object, date picker, color picker, repeater, flexible content, gallery and more!
-Version: 3.4.2
+Version: 3.4.3
 Author: Elliot Condon
 Author URI: http://www.elliotcondon.com/
 License: GPL
@@ -47,7 +47,7 @@ class Acf
 		// vars
 		$this->path = plugin_dir_path(__FILE__);
 		$this->dir = plugins_url('',__FILE__);
-		$this->version = '3.4.2';
+		$this->version = '3.4.3';
 		$this->upgrade_version = '3.4.1'; // this is the latest version which requires an upgrade
 		$this->cache = array(); // basic array cache to hold data throughout the page load
 		
@@ -67,7 +67,7 @@ class Acf
 		
 		add_action('admin_menu', array($this,'admin_menu'));
 		add_action('admin_head', array($this,'admin_head'));
-		add_action('acf_save_post', array($this, 'acf_save_post'), 1); // save post, called from many places (api, input, everything, options)
+		add_action('acf_save_post', array($this, 'acf_save_post'), 10); // save post, called from many places (api, input, everything, options)
 		
 		
 		// ajax
@@ -490,6 +490,29 @@ class Acf
 
 	function get_acf_fields($post_id)
 	{
+		// registered or db
+		if( ! is_numeric($post_id) )
+		{
+			$acfs = apply_filters('acf_register_field_group', array());
+			
+			if($acfs)
+			{
+				// loop through acfs
+				foreach($acfs as $acf)
+				{
+					if( $acf['id'] != $post_id)
+					{
+						continue;
+					}
+					
+					return $acf['fields'];
+				}
+				// foreach($acfs as $acf)
+			}
+			// if($acfs)
+		}
+		
+		
 		// vars
 		$return = array();
 		$keys = get_post_custom_keys($post_id);
@@ -528,8 +551,8 @@ class Acf
 	{
 		// vars
 		$post_id = $post_id ? $post_id : $this->get_post_meta_post_id($field_name);
-		$field = false;
 		
+
 		// if this acf ($post_id) is trashed don't use it's fields
 		if(get_post_status($post_id) != "trash")
 		{
@@ -538,38 +561,37 @@ class Acf
 			
 			// if field group was duplicated, it may now be a serialized string!
 			$field = maybe_unserialize($field);
+			
+			return $field;
 		}
- 		
- 		// field could be registered via php, and not in db at all!
- 		if(!$field)
- 		{ 			
- 			// hook to load in registered field groups
-			$acfs = apply_filters('acf_register_field_group', array());
-			if($acfs)
+
+
+		// hook to load in registered field groups
+		$acfs = apply_filters('acf_register_field_group', array());
+		if($acfs)
+		{
+			// loop through acfs
+			foreach($acfs as $acf)
 			{
-				// loop through acfs
-				foreach($acfs as $acf)
+				// loop through fields
+				if($acf['fields'])
 				{
-					// loop through fields
-					if($acf['fields'])
+					foreach($acf['fields'] as $field)
 					{
-						foreach($acf['fields'] as $field)
+						if($field['key'] == $field_name)
 						{
-							if($field['key'] == $field_name)
-							{
-								return $field;
-							}
+							return $field;
 						}
 					}
-					// if($acf['fields'])
 				}
-				// foreach($acfs as $acf)
+				// if($acf['fields'])
 			}
-			// if($acfs)
- 		}
- 		// if(!$field)
+			// foreach($acfs as $acf)
+		}
+		// if($acfs)
+
  		
- 		return $field;
+ 		return null;
 		
 	}
 	

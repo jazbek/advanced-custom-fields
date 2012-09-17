@@ -254,11 +254,24 @@ class acf_Select extends acf_Field
 	
 	function pre_save_field($field)
 	{
-		// defaults
-		$field['choices'] = isset($field['choices']) ? $field['choices'] : '';
+		// vars
+		$defaults = array(
+			'choices'	=>	'',
+		);
+		
+		$field = array_merge($defaults, $field);
+		
+		
+		// check if is array. Normal back end edit posts a textarea, but a user might use update_field from the front end
+		if( is_array( $field['choices'] ))
+		{
+		    return $field;
+		}
+
 		
 		// vars
 		$new_choices = array();
+		
 		
 		// explode choices from each line
 		if(strpos($field['choices'], "\n") !== false)
@@ -271,6 +284,7 @@ class acf_Select extends acf_Field
 			// no multiple lines! 
 			$field['choices'] = array($field['choices']);
 		}
+		
 		
 		// key => value
 		foreach($field['choices'] as $choice)
@@ -286,8 +300,10 @@ class acf_Select extends acf_Field
 			}
 		}
 		
+		
 		// update choices
 		$field['choices'] = $new_choices;
+		
 		
 		// return updated field
 		return $field;

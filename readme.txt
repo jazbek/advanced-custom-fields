@@ -85,6 +85,13 @@ http://support.advancedcustomfields.com/
 
 == Changelog ==
 
+= 3.4.3 =
+* [Fixed] Fix PHP registered field groups not showing via AJAX - http://support.advancedcustomfields.com/discussion/3143/exported-php-code-doesnt-work-with-post-formats
+* [Added] Add new return value for file { file object
+* [Fixed] Test / Fix save_post priority with WPML + events + shopp plugin
+* [Fixed] Fix bug where field groups don't appear on shopp product edit screens
+* [Fixed] Fix bug with image field { selecting multiple images puts first image into the .row-clone tr - http://support.advancedcustomfields.com/discussion/3157/image-field-repeater
+
 = 3.4.2 =
 * [Fixed] Fix API functions for 'user_$ID' post ID parameter
 * [Added] Color Picker Field: Default Value

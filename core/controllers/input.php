@@ -35,7 +35,16 @@ class acf_input
 		add_action('admin_print_scripts', array($this,'admin_print_scripts'));
 		add_action('admin_print_styles', array($this,'admin_print_styles'));
 		add_action('admin_head', array($this,'admin_head'));
-		add_action('save_post', array($this, 'save_post'), 20); // save later to avoid issues with 3rd party plugins
+		
+		
+		// save
+		$save_priority = 20;
+		
+		if( isset($_POST['post_type']) )
+		{
+			if( $_POST['post_type'] == "tribe_events" ){ $save_priority = 15; }
+		}
+		add_action('save_post', array($this, 'save_post'), $save_priority); // save later to avoid issues with 3rd party plugins
 		
 		
 		// custom actions (added in 3.1.8)
@@ -153,7 +162,7 @@ class acf_input
 		
 		
 		// shopp
-		if( $pagenow == "admin.php" && isset( $_GET['page'] ) && $_GET['page'] == "shopp-products" && isset( $_GET['id'] ) && $_GET['id'] == "new" )
+		if( $pagenow == "admin.php" && isset( $_GET['page'] ) && $_GET['page'] == "shopp-products" && isset( $_GET['id'] ) )
 		{
 			$typenow = "shopp_product";
 		}

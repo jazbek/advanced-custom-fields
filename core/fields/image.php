@@ -473,7 +473,7 @@ class acf_Image extends acf_Field
 	 				self.parent.acf_div.closest('.repeater').find('.add-row-end').trigger('click'); 
 	 			 
 	 				// set acf_div to new row image 
-	 				self.parent.acf_div = self.parent.acf_div.closest('.repeater').find('> table > tbody > tr:last-child .acf-image-uploader'); 
+	 				self.parent.acf_div = self.parent.acf_div.closest('.repeater').find('> table > tbody > tr.row:last .acf-image-uploader'); 
 	 			} 
 	 			else 
 	 			{ 
