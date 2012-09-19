@@ -562,7 +562,12 @@ class Acf
 			// if field group was duplicated, it may now be a serialized string!
 			$field = maybe_unserialize($field);
 			
-			return $field;
+			
+			if( $field )
+			{
+				return $field;
+			}
+			
 		}
 
 
