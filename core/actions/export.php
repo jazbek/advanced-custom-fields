@@ -8,13 +8,20 @@
 * 
 *-------------------------------------------------------------------------------------*/
 
-// includes
-require_once('../../../../../wp-load.php');
-require_once('../../../../../wp-admin/admin.php');
+// vars
+$defaults = array(
+	'acf_abspath' => '../../../../..',
+	'acf_posts' => array()
+);
+$options = array_merge( $defaults, $_POST );
+
+
+require_once( $options['acf_abspath'] . '/wp-load.php');
+require_once( $options['acf_abspath'] . '/wp-admin/admin.php');
 		
 
 // check for posts
-if(!isset($_POST['acf_posts']))
+if( !$options['acf_posts'] )
 {
 	wp_die(__("No ACF groups selected",'acf'));
 }
@@ -206,7 +213,10 @@ echo '<?xml version="1.0" encoding="' . get_bloginfo('charset') . "\" ?>\n";
 		<wp:post_type><?php echo $post->post_type; ?></wp:post_type>
 		<wp:post_password><?php echo $post->post_password; ?></wp:post_password>
 <?php	$postmeta = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->postmeta WHERE post_id = %d", $post->ID ) );
-		foreach( $postmeta as $meta ) : if ( $meta->meta_key != '_edit_lock' ) : ?>
+		foreach( $postmeta as $meta ) : if ( $meta->meta_key != '_edit_lock' ) : 
+			$meta->meta_value = str_replace("\r\n", "\n", $meta->meta_value);
+			$meta->meta_value = str_replace("\r", "\n", $meta->meta_value);
+		?>
 		<wp:postmeta>
 			<wp:meta_key><?php echo $meta->meta_key; ?></wp:meta_key>
 			<wp:meta_value><?php echo wxr_cdata( $meta->meta_value ); ?></wp:meta_value>

@@ -3,7 +3,7 @@
 Plugin Name: Advanced Custom Fields
 Plugin URI: http://www.advancedcustomfields.com/
 Description: Fully customise WordPress edit screens with powerful fields. Boasting a professional interface and a powerfull API, it’s a must have for any web developer working with WordPress. Field types include: Wysiwyg, text, textarea, image, file, select, checkbox, page link, post object, date picker, color picker, repeater, flexible content, gallery and more!
-Version: 3.4.3
+Version: 3.5.0
 Author: Elliot Condon
 Author URI: http://www.elliotcondon.com/
 License: GPL
@@ -47,7 +47,7 @@ class Acf
 		// vars
 		$this->path = plugin_dir_path(__FILE__);
 		$this->dir = plugins_url('',__FILE__);
-		$this->version = '3.4.3';
+		$this->version = '3.5.0';
 		$this->upgrade_version = '3.4.1'; // this is the latest version which requires an upgrade
 		$this->cache = array(); // basic array cache to hold data throughout the page load
 		
@@ -72,7 +72,6 @@ class Acf
 		
 		// ajax
 		add_action('wp_ajax_get_input_metabox_ids', array($this, 'get_input_metabox_ids'));
-		
 		
 		
 		return true;
@@ -490,48 +489,29 @@ class Acf
 
 	function get_acf_fields($post_id)
 	{
-		// registered or db
-		if( ! is_numeric($post_id) )
-		{
-			$acfs = apply_filters('acf_register_field_group', array());
-			
-			if($acfs)
-			{
-				// loop through acfs
-				foreach($acfs as $acf)
-				{
-					if( $acf['id'] != $post_id)
-					{
-						continue;
-					}
-					
-					return $acf['fields'];
-				}
-				// foreach($acfs as $acf)
-			}
-			// if($acfs)
-		}
-		
-		
 		// vars
-		$return = array();
-		$keys = get_post_custom_keys($post_id);
+		global $wpdb;
 		
-		if($keys)
+		$return = array();
+		
+		
+		// get field from postmeta
+		$rows = $wpdb->get_results( $wpdb->prepare("SELECT meta_key FROM $wpdb->postmeta WHERE post_id = %d AND meta_key LIKE %s", $post_id, 'field\_%'), ARRAY_A);
+		
+		if( $rows )
 		{
-			foreach($keys as $key)
+			foreach( $rows as $row )
 			{
-				if(strpos($key, 'field_') !== false)
-				{
-					$field = $this->get_acf_field($key, $post_id);
+				$field = $this->get_acf_field( $row['meta_key'], $post_id );
 	
-			 		$return[$field['order_no']] = $field;
-				}
+			 	$return[ $field['order_no'] ] = $field;
 			}
 		 	
 		 	ksort($return);
 	 	}
-	 	// return fields
+	 	
+	 	
+	 	// return
 		return $return;
 		
 	}
@@ -541,34 +521,58 @@ class Acf
 	*
 	*	get_acf_field
 	*	- returns a field
+	*	- $post_id can be passed to make sure the correct field is loaded. Eg: a duplicated
+	*	field group may have the same field_key, but a different post_id
 	*
 	*	@author Elliot Condon
 	*	@since 1.0.0
 	* 
 	*-------------------------------------------------------------------------------------*/
 
-	function get_acf_field($field_name, $post_id = false)
+	function get_acf_field( $field_key, $post_id = false )
 	{
-		// vars
-		$post_id = $post_id ? $post_id : $this->get_post_meta_post_id($field_name);
-		
-
-		// if this acf ($post_id) is trashed don't use it's fields
-		if(get_post_status($post_id) != "trash")
+		// return cache
+		$cache = $this->get_cache('acf_field_' . $field_key);
+		if($cache != false)
 		{
-			$field = get_post_meta($post_id, $field_name, true);
-			
-			
-			// if field group was duplicated, it may now be a serialized string!
-			$field = maybe_unserialize($field);
-			
-			
-			if( $field )
-			{
-				return $field;
-			}
-			
+			return $cache;
 		}
+		
+		
+		// vars
+		global $wpdb;
+		
+		
+		// get field from postmeta
+		$sql = $wpdb->prepare("SELECT post_id, meta_value FROM $wpdb->postmeta WHERE meta_key = %s", $field_key);
+		
+		if( $post_id )
+		{
+			$sql .= $wpdb->prepare("AND post_id = %d", $post_id);
+		}
+
+		$row = $wpdb->get_results( $sql, ARRAY_A );
+		
+		
+		if( $row )
+		{
+			$row = $row[0];
+			
+			
+			// return field if it is not in a trashed field group
+			if( get_post_status( $row['post_id'] ) != "trash" )
+			{
+				$row['meta_value'] = maybe_unserialize( $row['meta_value'] );
+				$row['meta_value'] = maybe_unserialize( $row['meta_value'] ); // run again for WPML
+				
+			
+				// set cache
+				$this->set_cache('acf_field_' . $field_key, $row['meta_value']);
+				
+				return $row['meta_value'];
+			}
+		}
+		
 
 
 		// hook to load in registered field groups
@@ -583,8 +587,11 @@ class Acf
 				{
 					foreach($acf['fields'] as $field)
 					{
-						if($field['key'] == $field_name)
+						if($field['key'] == $field_key)
 						{
+							// set cache
+							$this->set_cache('acf_field_' . $field_key, $field);
+			
 							return $field;
 						}
 					}
@@ -597,28 +604,6 @@ class Acf
 
  		
  		return null;
-		
-	}
-	
-	
-	/*--------------------------------------------------------------------------------------
-	*
-	*	get_post_meta_post_id
-	*	- returns the post_id for a meta_key
-	*
-	*	@author Elliot Condon
-	*	@since 1.0.0
-	* 
-	*-------------------------------------------------------------------------------------*/
-
-	function get_post_meta_post_id($field_name)
-	{
-		global $wpdb;
-		$post_id = $wpdb->get_var( $wpdb->prepare("SELECT post_id FROM $wpdb->postmeta WHERE meta_key = %s", $field_name) );
-		
-		if($post_id) return (int)$post_id;
-		 
-		return false;
 	}
 	
 	
@@ -639,10 +624,15 @@ class Acf
 			return false;
 		}
 		
-		// defaults
-		if(!isset($field['class'])) $field['class'] = $field['type'];
 		
-		$this->fields[$field['type']]->create_field($field);
+		// defaults
+		if( !isset($field['class']) )
+		{
+			$field['class'] = $field['type'];
+		}
+		
+		
+		$this->fields[ $field['type'] ]->create_field($field);
 	}
 	
 	
@@ -715,7 +705,7 @@ class Acf
 		// defaults
 	 	$options = array(
 	 		'position'			=>	'normal',
-	 		'layout'			=>	'default',
+	 		'layout'			=>	'no_box',
 	 		'hide_on_screen'	=>	array(),
 	 	);
 	 	
@@ -778,7 +768,7 @@ class Acf
 	
 	function get_value_for_api($post_id, $field)
 	{
-		if(!isset($this->fields[$field['type']]) || !is_object($this->fields[$field['type']]))
+		if( !isset($field['type'], $this->fields[ $field['type'] ]) )
 		{
 			return '';
 		}
@@ -798,7 +788,10 @@ class Acf
 	
 	function update_value($post_id, $field, $value)
 	{
-		$this->fields[$field['type']]->update_value($post_id, $field, $value);
+		if( isset($field['type'], $this->fields[ $field['type'] ]) )
+		{
+			$this->fields[$field['type']]->update_value($post_id, $field, $value);
+		}
 	}
 	
 	
@@ -975,7 +968,7 @@ class Acf
 
 		}
 		
-		
+
 		// WPML
 		if( isset($overrides['lang']) )
 		{
@@ -985,7 +978,8 @@ class Acf
 		
 		
 		// create post object to match against
-		$post = isset($overrides['post_id']) ? get_post($_POST['post_id']) : false;
+		$post = isset($overrides['post_id']) ? get_post($overrides['post_id']) : false;
+		
 		
 		// find all acf objects
 		$acfs = $this->get_field_groups();
@@ -1734,7 +1728,6 @@ class Acf
 	}
 	
 	
-	
 	/*
 	*  acf_save_post
 	*
@@ -1769,6 +1762,7 @@ class Acf
 		
 		return true;
 	}
+	
 	
 	
 	/*

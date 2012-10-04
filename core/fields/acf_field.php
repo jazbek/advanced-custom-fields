@@ -175,7 +175,7 @@ class acf_Field
 			$value = get_post_meta( $post_id, $field['name'], false );
 			
 			// value is an array, check and assign the real value / default value
-			if( empty($value) )
+			if( !isset($value[0]) )
 			{
 				if( isset($field['default_value']) )
 				{
@@ -198,7 +198,7 @@ class acf_Field
 			$value = get_user_meta( $post_id, $field['name'], false );
 			
 			// value is an array, check and assign the real value / default value
-			if( empty($value) )
+			if( !isset($value[0]) )
 			{
 				if( isset($field['default_value']) )
 				{

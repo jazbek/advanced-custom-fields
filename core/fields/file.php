@@ -352,6 +352,15 @@ class acf_File extends acf_Field
 		
 		var id = $(this).attr('href');
 		
+		
+		// IE7 Fix
+		if( id.indexOf("/") != -1 )
+		{
+			var split = id.split("/");
+			id = split[split.length-1];
+		}
+		
+
 		var data = {
 			action: 'acf_select_file',
 			id: id
@@ -365,7 +374,7 @@ class acf_File extends acf_Field
 				return false;
 			}
 			
-			self.parent.acf_div.find('input.value').val(id);
+			self.parent.acf_div.find('input.value').val(id).trigger('change');
 			self.parent.acf_div.find('.has-file').html(html);
  			self.parent.acf_div.addClass('active');
  	
@@ -423,7 +432,7 @@ class acf_File extends acf_Field
 					return false;
 				}
 				
-				self.parent.acf_div.find('input.value').val(this_id);
+				self.parent.acf_div.find('input.value').val(this_id).trigger('change');
 				self.parent.acf_div.find('.has-file').html(html);
 	 			self.parent.acf_div.addClass('active');
 	 	

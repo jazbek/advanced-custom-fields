@@ -139,10 +139,17 @@ body.custom-fields_page_acf-settings .wp-pointer-arrow {
     margin-left: 1.5em;
 }
 
-.acf-form-table pre {
+.acf-form-table pre,
+.acf-form-table .pre {
 	padding: 10px;
 	margin: 0;
 	font-family: Monaco,"Andale Mono","Courier New",monospace !important;
+	resize: none;
+	height: auto;
+	width: 100%;
+	padding: 0;
+	border: 0 none;
+	border-radius: 0;
 }
 
 /*--------------------------------------------------------------------------------------------

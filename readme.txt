@@ -1,9 +1,10 @@
 === Advanced Custom Fields ===
 Contributors: Elliot Condon
 Tags: custom, field, custom field, advanced, simple fields, magic fields, more fields, repeater, matrix, post, type, text, textarea, file, image, edit, admin
-Requires at least: 3.0
+Requires at least: 3.0.0
 Tested up to: 3.4.2
-Stable tag: 3.4.3
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Fully customise WordPress edit screens with powerful fields. Boasting a professional interface and a powerfull API, it’s a must have for any web developer working with WordPress.Field types include: Wysiwyg, text, textarea, image, file, select, checkbox, page link, post object, date picker, color picker and more!
 
@@ -74,6 +75,7 @@ http://support.advancedcustomfields.com/
 
 
 == Screenshots ==
+
 1. Creating the Advanced Custom Fields
 
 2. Adding the Custom Fields to a page and hiding the default meta boxes
@@ -84,6 +86,20 @@ http://support.advancedcustomfields.com/
 
 
 == Changelog ==
+
+= 3.5.0 =
+* [Fixed] Fix missing title of PHP registered field groups on the media edit page
+* [Added] Add revision support
+* [Added] Allow save draft to bypass validation
+* [Updated] Update Czech translation
+* [Fixed] Fix XML export issue with line break - http://support.advancedcustomfields.com/discussion/3219/export-and-import-problem-mixed-line-endings
+* [Fixed] Fix export to XML abspath issue - http://support.advancedcustomfields.com/discussion/2641/require-paths-in-export-php
+* Update location rules for post_type - http://support.advancedcustomfields.com/discussion/3251/fields-on-a-non-public-post-type 
+* Add "revisions" to list of hide-able options
+* [Fixed] Fix bug with custom post_id param in acf_form - http://support.advancedcustomfields.com/discussion/2991/acf_form-outside-loop
+* [Fixed] Fix bug in has_sub_field function where new values are not loaded for different posts if the field name is the same - http://support.advancedcustomfields.com/discussion/3331/repeater-field-templating-help-categories
+* [Updated] Allow get_field to use field_key or field_name
+* [Fixed] Fix update_field bug with nested repeaters
 
 = 3.4.3 =
 * [Fixed] Fix PHP registered field groups not showing via AJAX - http://support.advancedcustomfields.com/discussion/3143/exported-php-code-doesnt-work-with-post-formats

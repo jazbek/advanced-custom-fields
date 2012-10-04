@@ -82,6 +82,20 @@ var acf = {
 	
 	
 	/*
+	*  Save Draft
+	*
+	*  @description: 
+	*  @created: 18/09/12
+	*/
+	var save_post = false;
+	$('#save-post').live('click', function(){
+		
+		save_post = true;
+		
+	});
+	
+	
+	/*
 	*  Submit form
 	*
 	*  @description: does validation, deletes all hidden metaboxes (otherwise, post data will be overriden by hidden inputs)
@@ -90,24 +104,30 @@ var acf = {
 	
 	$('form#post').live("submit", function(){
 		
-		// do validation
-		do_validation();
-		
-		if(acf.validation == false)
+		if( !save_post )
 		{
-			// show message
-			$(this).siblings('#message').remove();
-			$(this).before('<div id="message" class="error"><p>' + acf.text.validation_error + '</p></div>');
+			// do validation
+			do_validation();
 			
 			
-			// hide ajax stuff on submit button
-			$('#publish').removeClass('button-primary-disabled');
-			$('#ajax-loading').attr('style','');
-			
-			return false;
+			if(acf.validation == false)
+			{
+				// show message
+				$(this).siblings('#message').remove();
+				$(this).before('<div id="message" class="error"><p>' + acf.text.validation_error + '</p></div>');
+				
+				
+				// hide ajax stuff on submit button
+				$('#publish').removeClass('button-primary-disabled');
+				$('#ajax-loading').attr('style','');
+				
+				return false;
+			}
 		}
-		
+
+
 		$('.acf_postbox:hidden').remove();
+		
 		
 		// submit the form
 		return true;
@@ -376,7 +396,7 @@ var acf = {
 		// vars
 		var div = $(this).closest('.acf-file-uploader');
 		
-		div.removeClass('active').find('input.value').val('');
+		div.removeClass('active').find('input.value').val('').trigger('change');
 		
 		return false;
 		
@@ -433,7 +453,7 @@ var acf = {
 		var div = $(this).closest('.acf-image-uploader');
 		
 		div.removeClass('active');
-		div.find('input.value').val('');
+		div.find('input.value').val('').trigger('change');
 		div.find('img').attr('src', '');
 		
 		return false;
