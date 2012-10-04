@@ -100,6 +100,7 @@ http://support.advancedcustomfields.com/
 * [Fixed] Fix bug in has_sub_field function where new values are not loaded for different posts if the field name is the same - http://support.advancedcustomfields.com/discussion/3331/repeater-field-templating-help-categories
 * [Updated] Allow get_field to use field_key or field_name
 * [Fixed] Fix update_field bug with nested repeaters
+* [Updated] Update German translation files - thanks to Martin Lettner
 
 = 3.4.3 =
 * [Fixed] Fix PHP registered field groups not showing via AJAX - http://support.advancedcustomfields.com/discussion/3143/exported-php-code-doesnt-work-with-post-formats
