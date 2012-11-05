@@ -120,7 +120,7 @@ class acf_Textarea extends acf_Field
 		elseif($format == 'html')
 		{
 			//$value = html_entity_decode($value);
-			$value = nl2br($value);
+			//$value = nl2br($value);
 		}
 		elseif($format == 'br')
 		{
