@@ -1455,16 +1455,16 @@ class Acf
 				
 				
 				// value has changed in 3.2.6 to a sanitized string
-				if( substr($rule['value'], 0, 7) != 'options' )
-				{
-					$rule['value'] = 'options-' . sanitize_title( $rule['value'] );
-				}
+				//if( substr($rule['value'], 0, 7) != 'options' )
+				//{
+				//	$rule['value'] = 'options-' . sanitize_title( $rule['value'] );
+				//}
 				
 				
 				// value has changed in 3.5.1 to a acf-options-$title
-				if( substr($rule['value'], 0, 3) != 'acf' )
+				if( substr($rule['value'], 0, 12) != 'acf-options-' )
 				{
-					$rule['value'] = 'acf-' . $rule['value'];
+					$rule['value'] = 'acf-options-' . $rule['value'];
 				}
 				
 				
