@@ -1464,7 +1464,7 @@ class Acf
 				// value has changed in 3.5.1 to a acf-options-$title
 				if( substr($rule['value'], 0, 12) != 'acf-options-' )
 				{
-					$rule['value'] = 'acf-options-' . $rule['value'];
+					$rule['value'] = 'acf-options-' . sanitize_title( $rule['value'] );
 				}
 				
 				
