@@ -259,10 +259,10 @@ class acf_Gallery extends acf_Field
 
 	<div class="toolbar">
 		<ul class="hl clearfix">
-			<li class="add-image-li"><a class="add-image" href="#"><?php _e("Add Image",'acf'); ?></a><div class="divider"></div></li>
-			<li class="view-grid-li active"><div class="divider divider-left"></div><a class="ir view-grid" href="#"><?php _e("Grid",'acf'); ?></a><div class="divider"></div></li>
-			<li class="view-list-li"><a class="ir view-list" href="#"><?php _e("List",'acf'); ?></a><div class="divider"></div></li>
-			<li class="count-li right">
+			<li class="add-image-li"><a class="acf-button add-image" href="#"><?php _e("Add Image",'acf'); ?></a></li>
+			<li class="gallery-li view-grid-li active"><div class="divider divider-left"></div><a class="ir view-grid" href="#"><?php _e("Grid",'acf'); ?></a><div class="divider"></div></li>
+			<li class="gallery-li view-list-li"><a class="ir view-list" href="#"><?php _e("List",'acf'); ?></a><div class="divider"></div></li>
+			<li class="gallery-li count-li right">
 				<span class="count" data-0="<?php _e("No images selected",'acf'); ?>" data-1="<?php _e("1 image selected",'acf'); ?>" data-2="<?php _e("{count} images selected",'acf'); ?>"></span>
 			</li>
 		</ul>

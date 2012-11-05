@@ -21,7 +21,8 @@ var acf = {
 		'gallery_tb_title_edit' : "Edit Image",
 		'repeater_min_alert' : "Minimum rows reached ( {min} rows )",
 		'repeater_max_alert' : "Maximum rows reached ( {max} rows )"
-	}
+	},
+	conditional_logic : {}
 };
 
 (function($){
@@ -54,7 +55,7 @@ var acf = {
 		$('#adv-settings label[for*="acf_"]').addClass('acf_hide_label');
 		
 		// hide acf stuff
-		$('#poststuff .acf_postbox').hide();
+		$('#poststuff .acf_postbox').addClass('acf-hidden');
 		$('#adv-settings .acf_hide_label').hide();
 		
 		// loop through acf metaboxes
@@ -72,7 +73,7 @@ var acf = {
 			// show / hide
 			if(show == 'true')
 			{
-				$(this).show();
+				$(this).removeClass('acf-hidden');
 				$('#adv-settings .acf_hide_label[for="acf_' + id + '-hide"]').show();
 			}
 			
@@ -772,9 +773,11 @@ var acf = {
 	// create wysiwyg
 	$.fn.acf_activate_wysiwyg = function(){
 		
-
+		
+		
 		// add tinymce to all wysiwyg fields
 		$(this).find('.acf_wysiwyg textarea').each(function(){
+			
 			
 			// is clone field?
 			if( acf.is_clone_field($(this)) )
@@ -844,6 +847,8 @@ var acf = {
 			acf_wysiwyg_buttons.theme_advanced_buttons2 = tinyMCE.settings.theme_advanced_buttons2;
 		}
 		
+		$(document).trigger('acf/setup_fields', $('#poststuff'));
+		
 	});
 	
 	$(window).load(function(){
@@ -858,11 +863,19 @@ var acf = {
 		
 	});
 	
+	
+	
 	// Sortable: Start
 	$('.repeater > table > tbody, .acf_flexible_content > .values').live( "sortstart", function(event, ui) {
 		
 		$(ui.item).find('.acf_wysiwyg textarea').each(function(){
+			
+			var val = tinymce.get( $(this).attr('id') ).getContent();
+
 			tinyMCE.execCommand("mceRemoveControl", false, $(this).attr('id'));
+			
+			$(this).val( val );
+			
 		});
 		
 	});
@@ -1353,6 +1366,7 @@ var acf = {
 				altField : alt_field,
 				altFormat :  save_format,
 				changeYear: true,
+				yearRange: "-100:+100",
 				changeMonth: true,
 				showButtonPanel : true
 			});
@@ -1544,7 +1558,6 @@ var acf = {
 			// is clone field?
 			if( acf.is_clone_field($(this).children('input[type="hidden"]')) )
 			{
-				//console.log('Clone Field: Gallery');
 				return;
 			}
 			
@@ -1577,6 +1590,64 @@ var acf = {
 		});
 	
 	});
+	
+	
+	/*
+	*  Conditional Logic Calculate
+	*
+	*  @description: 
+	*  @since 3.5.1
+	*  @created: 15/10/12
+	*/
+	
+	acf.conditional_logic.calculate = function( options )
+	{
+		// vars
+		var field = $('.field-' + options.field),
+			toggle = $('.field-' + options.toggle),
+			r = false;
+		
+		
+		// compare values
+		if( toggle.hasClass('field-true_false') || toggle.hasClass('field-checkbox') || toggle.hasClass('field-radio') )
+		{
+			if( options.operator == "==" )
+			{
+				if( toggle.find('input[value="' + options.value + '"]:checked').exists() )
+				{
+					r = true;
+				}
+			}
+			else
+			{
+				if( !toggle.find('input[value="' + options.value + '"]:checked').exists() )
+				{
+					r = true;
+				}
+			}
+			
+		}
+		else
+		{
+			if( options.operator == "==" )
+			{
+				if( toggle.find('*[name]').val() == options.value )
+				{
+					r = true;
+				}
+			}
+			else
+			{
+				if( toggle.find('*[name]').val() != options.value )
+				{
+					r = true;
+				}
+			}
+			
+		}
+		
+		return r;
+	}
 	
 	
 })(jQuery);

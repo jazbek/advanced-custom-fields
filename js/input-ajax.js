@@ -92,7 +92,7 @@
 			success: function(result){
 				
 				// hide all metaboxes
-				$('#poststuff .acf_postbox').hide();
+				$('#poststuff .acf_postbox').addClass('acf-hidden');
 				$('#adv-settings .acf_hide_label').hide();
 				
 				
@@ -108,7 +108,8 @@
 					
 					
 					var postbox = $('#poststuff #acf_' + v);
-					postbox.show();
+					
+					postbox.removeClass('acf-hidden');
 					$('#adv-settings .acf_hide_label[for="acf_' + v + '-hide"]').show();
 					
 					// load fields if needed
@@ -221,7 +222,8 @@
 
 		update_fields();
 		
-	});	
+	});
+	
 	
 	
 })(jQuery);

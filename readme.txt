@@ -87,6 +87,24 @@ http://support.advancedcustomfields.com/
 
 == Changelog ==
 
+= 3.5.1 =
+* [Added] Add Conditional logic for fields (toggle fields are select, checkbox, radio and true / false)
+* [Added] More hooks + filters - acf_options_page_title, acf_load_field, acf_update_value - http://support.advancedcustomfields.com/discussion/3454/more-hooks-filters-ability-for-inheritance
+* [Removed] Remove public param from post types list - http://support.advancedcustomfields.com/discussion/3251/fields-on-a-non-public-post-type
+* [Added] Add field group headings into the acf_form function
+* [Updated] Update button design to match WP 3.5
+* [Fixed] Test / Fix XML export issue - http://support.advancedcustomfields.com/discussion/3415/can039t-export-xml-since-upgrade-to-3-5-0
+* [Added] Add more options to the "hide on screen" - http://support.advancedcustomfields.com/discussion/3418/screen-options
+* [Added] Add compatibility for Tabify plugin - http://wordpress.org/support/topic/plugin-tabify-edit-screen-compatibility-with-other-custom-fields-plugins/page/2?replies=36#post-3238051
+* [Added] Add compatibility for Duplicate Post plugin
+* [Added] Add new params to acf_form function - http://support.advancedcustomfields.com/discussion/3445/issue-with-the-acf_form-array
+* [Updated] Increase date picker range to 100
+* [Fixed] WYSIWYG looses formatting when it's row gets reordered (in a repeater / flexible content field)
+* [Fixed] Fix has_sub_field break issue - http://support.advancedcustomfields.com/discussion/3528/ability-to-reset-has_sub_field
+* [Fixed] Fix Textarea / Text encoding bugs - http://support.advancedcustomfields.com/discussion/comment/5147#Comment_5147
+* [Added] Add publish status for field groups - http://support.advancedcustomfields.com/discussion/3695/draft-status-for-field-groups
+* [Updated] General tidy up & improvement of HTML / CSS / Javascript
+
 = 3.5.0 =
 * [Fixed] Fix missing title of PHP registered field groups on the media edit page
 * [Added] Add revision support

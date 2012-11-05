@@ -3,7 +3,7 @@
 Plugin Name: Advanced Custom Fields
 Plugin URI: http://www.advancedcustomfields.com/
 Description: Fully customise WordPress edit screens with powerful fields. Boasting a professional interface and a powerfull API, it’s a must have for any web developer working with WordPress. Field types include: Wysiwyg, text, textarea, image, file, select, checkbox, page link, post object, date picker, color picker, repeater, flexible content, gallery and more!
-Version: 3.5.0
+Version: 3.5.1
 Author: Elliot Condon
 Author URI: http://www.elliotcondon.com/
 License: GPL
@@ -30,7 +30,8 @@ class Acf
 		$field_group,
 		$input,
 		$options_page,
-		$everything_fields;
+		$everything_fields,
+		$third_party;
 	
 	
 	/*
@@ -47,7 +48,7 @@ class Acf
 		// vars
 		$this->path = plugin_dir_path(__FILE__);
 		$this->dir = plugins_url('',__FILE__);
-		$this->version = '3.5.0';
+		$this->version = '3.5.1';
 		$this->upgrade_version = '3.4.1'; // this is the latest version which requires an upgrade
 		$this->cache = array(); // basic array cache to hold data throughout the page load
 		
@@ -69,6 +70,7 @@ class Acf
 		add_action('admin_head', array($this,'admin_head'));
 		add_action('acf_save_post', array($this, 'acf_save_post'), 10); // save post, called from many places (api, input, everything, options)
 		
+		add_filter('acf_load_field', array($this, 'acf_load_field_defaults'), 5);
 		
 		// ajax
 		add_action('wp_ajax_get_input_metabox_ids', array($this, 'get_input_metabox_ids'));
@@ -269,6 +271,11 @@ class Acf
 		// everthing fields
 		include_once('core/controllers/everything_fields.php');
 		$this->everything_fields = new acf_everything_fields($this);
+		
+		
+		// Third Party Compatibility
+		include_once('core/controllers/third_party.php');
+		$this->third_party = new acf_third_party($this);
 	}
 	
 	
@@ -531,6 +538,8 @@ class Acf
 
 	function get_acf_field( $field_key, $post_id = false )
 	{
+		
+		
 		// return cache
 		$cache = $this->get_cache('acf_field_' . $field_key);
 		if($cache != false)
@@ -554,6 +563,7 @@ class Acf
 		$row = $wpdb->get_results( $sql, ARRAY_A );
 		
 		
+		
 		if( $row )
 		{
 			$row = $row[0];
@@ -565,11 +575,18 @@ class Acf
 				$row['meta_value'] = maybe_unserialize( $row['meta_value'] );
 				$row['meta_value'] = maybe_unserialize( $row['meta_value'] ); // run again for WPML
 				
+				
+				// run filters
+				$field = $row['meta_value'];
+				$field = apply_filters('acf_load_field', $field);
+				$field = apply_filters('acf_load_field-' . $field['name'], $field);
+				$field = apply_filters('acf_load_field-' . $field['key'], $field);
+			
 			
 				// set cache
-				$this->set_cache('acf_field_' . $field_key, $row['meta_value']);
+				$this->set_cache('acf_field_' . $field_key, $field);
 				
-				return $row['meta_value'];
+				return $field;
 			}
 		}
 		
@@ -577,6 +594,7 @@ class Acf
 
 		// hook to load in registered field groups
 		$acfs = apply_filters('acf_register_field_group', array());
+		
 		if($acfs)
 		{
 			// loop through acfs
@@ -589,9 +607,14 @@ class Acf
 					{
 						if($field['key'] == $field_key)
 						{
+							// run filters
+							$field = apply_filters('acf_load_field', $field);
+							$field = apply_filters('acf_load_field-' . $field['name'], $field);
+							$field = apply_filters('acf_load_field-' . $field['key'], $field);
+							
 							// set cache
 							$this->set_cache('acf_field_' . $field_key, $field);
-			
+							
 							return $field;
 						}
 					}
@@ -607,6 +630,36 @@ class Acf
 	}
 	
 	
+	/*
+	*  acf_load_field_defaults
+	*
+	*  @description: 
+	*  @since 3.5.1
+	*  @created: 14/10/12
+	*/
+	
+	function acf_load_field_defaults( $field )
+	{
+		$defaults = array(
+			'key' => '',
+			'label' => '',
+			'name' => '',
+			'type' => 'text',
+			'order_no' =>	'1',
+			'instructions' =>	'',
+			'required' => '0',
+			'conditional_logic' => array(
+				'status' => '0',
+				'allorany' => 'all',
+				'rules' => false
+			),
+		);
+		
+		$field = array_merge($defaults, $field);
+		
+		return $field;
+	}
+	
 	/*--------------------------------------------------------------------------------------
 	*
 	*	create_field
@@ -618,6 +671,7 @@ class Acf
 	
 	function create_field($field)
 	{
+		
 		if(!isset($this->fields[$field['type']]) || !is_object($this->fields[$field['type']]))
 		{
 			_e('Error: Field Type does not exist!','acf');
@@ -625,14 +679,85 @@ class Acf
 		}
 		
 		
-		// defaults
+		// defaults - class
 		if( !isset($field['class']) )
 		{
 			$field['class'] = $field['type'];
 		}
 		
 		
+		// defaults - id
+		// - isset is needed for the edit field group page where fields are created without many parameters
+		if( !isset($field['id']) )
+		{
+			if( isset($field['key']) )
+			{
+				$field['id'] = 'acf-' . $field['key'];
+			}
+			else
+			{
+				$field['id'] = 'acf-' . $field['name'];
+			}
+		}
+		
+		
 		$this->fields[ $field['type'] ]->create_field($field);
+		
+
+		// conditional logic
+		// - isset is needed for the edit field group page where fields are created without many parameters
+		if( isset($field['conditional_logic']) && $field['conditional_logic']['status'] == '1' ):
+		
+			$join = ' && ';
+			if( $field['conditional_logic']['allorany'] == "any" )
+			{
+				$join = ' || ';
+			}
+			
+			?>
+<script type="text/javascript">
+(function($){
+	
+	// create the conditional function
+	$(document).live('acf/conditional_logic/<?php echo $field['key']; ?>', function(){
+		
+		var field = $('.field-<?php echo $field['key']; ?>');		
+<?php
+
+		$if = array();
+		foreach( $field['conditional_logic']['rules'] as $rule )
+		{
+			$if[] = 'acf.conditional_logic.calculate({ field : "'. $field['key'] .'", toggle : "' . $rule['field'] . '", operator : "' . $rule['operator'] .'", value : "' . $rule['value'] . '"})' ;
+		}
+		
+?>
+		if(<?php echo implode( $join, $if ); ?>)
+		{
+			field.show();
+		}
+		else
+		{
+			field.hide();
+		}
+		
+	});
+	
+	
+	// add change events to all fields
+<?php foreach( $field['conditional_logic']['rules'] as $rule ): ?>
+	$('.field-<?php echo $rule['field']; ?> *[name]').live('change', function(){
+		$(document).trigger('acf/conditional_logic/<?php echo $field['key']; ?>');
+	});
+<?php endforeach; ?>
+	
+	$(document).live('acf/setup_fields', function(e, postbox){
+		$(document).trigger('acf/conditional_logic/<?php echo $field['key']; ?>');
+	});
+		
+})(jQuery);
+</script>
+			<?php
+		endif;
 	}
 	
 	
@@ -870,29 +995,12 @@ class Acf
 	
 	function render_fields_for_input($fields, $post_id)
 	{
-		// vars
-		$defaults = array(
-			'key'	=>	'',
-			'label'	=>	'',
-			'name'	=>	'',
-			'type'	=>	'',
-			'instructions'	=>	'',
-			'required'	=>	'0',
-			'order_no'	=>	'0',
-			'value'	=>	'',
-		);
-		
 			
 		// create fields
 		if($fields)
 		{
 			foreach($fields as $field)
 			{
-				// give defaults
-				
-				$field = array_merge($defaults, $field);
-				
-				
 				// if they didn't select a type, skip this field
 				if(!$field['type'] || $field['type'] == 'null') continue;
 				
@@ -909,7 +1017,7 @@ class Acf
 					$required_label = ' <span class="required">*</span>';
 				}
 				
-				echo '<div id="acf-' . $field['name'] . '" class="field field-' . $field['type'] . $required_class . '">';
+				echo '<div id="acf-' . $field['name'] . '" class="field field-' . $field['type'] . ' field-'.$field['key'] . $required_class . '">';
 
 					echo '<p class="label">';
 						echo '<label for="fields[' . $field['key'] . ']">' . $field['label'] . $required_label . '</label>';
@@ -1345,14 +1453,24 @@ class Acf
 					return false;
 				}
 				
+				
 				// value has changed in 3.2.6 to a sanitized string
-				if( strpos( $rule['value'] ,'options-') === false )
+				if( substr($rule['value'], 0, 7) != 'options' )
 				{
 					$rule['value'] = 'options-' . sanitize_title( $rule['value'] );
 				}
 				
+				
+				// value has changed in 3.5.1 to a acf-options-$title
+				if( substr($rule['value'], 0, 3) != 'acf' )
+				{
+					$rule['value'] = 'acf-' . $rule['value'];
+				}
+				
+				
 				// generate the page title to match against
-				$page_title = 'options-' . sanitize_title( get_admin_page_title() );
+				$page_title = 'acf-options-' . sanitize_title( get_admin_page_title() );
+				
 				
 		        if($rule['operator'] == "==")
 		        {

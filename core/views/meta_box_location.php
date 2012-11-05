@@ -37,10 +37,10 @@ if( empty($location['rules']) )
 		</td>
 		<td>
 			<div class="location_rules">
-				<table class="acf_input widefat" id="location_rules">
+				<table class="acf_input widefat acf-rules <?php if( count($location['rules']) == 1) echo 'remove-disabled'; ?>" id="location_rules">
 					<tbody>
 						<?php foreach($location['rules'] as $k => $rule): ?>
-						<tr>
+						<tr data-i="<?php echo $k; ?>">
 						<td class="param"><?php 
 							
 							$choices = array(

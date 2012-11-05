@@ -36,8 +36,10 @@ class acf_Textarea extends acf_Field
 	function create_field($field)
 	{
 		// remove unwanted <br /> tags
-		$field['value'] = str_replace('<br />','',$field['value']);
-		echo '<textarea id="' . $field['name'] . '" rows="4" class="' . $field['class'] . '" name="' . $field['name'] . '" >' . $field['value'] . '</textarea>';
+		//$field['value'] = str_replace('<br />','',$field['value']);
+		$field['value'] = esc_textarea($field['value']);
+		
+		echo '<textarea id="' . $field['id'] . '" rows="4" class="' . $field['class'] . '" name="' . $field['name'] . '" >' . $field['value'] . '</textarea>';
 	}
 	
 	
@@ -117,7 +119,8 @@ class acf_Textarea extends acf_Field
 		}
 		elseif($format == 'html')
 		{
-			$value = html_entity_decode($value);
+			//$value = html_entity_decode($value);
+			$value = nl2br($value);
 		}
 		elseif($format == 'br')
 		{

@@ -98,7 +98,10 @@ $options = $this->parent->get_acf_options($post->ID);
 					'slug'				=>	__("Slug"),
 					'author'			=>	__("Author"),
 					'format'			=>	__("Format"),
-					'featured_image'	=>	__("Featured Image")
+					'featured_image'	=>	__("Featured Image"),
+					'categories'		=>	__("Categories"),
+					'tags'				=>	__("Tags"),
+					'send-trackbacks'	=>	__("Send Trackbacks"),
 				)
 			));
 			

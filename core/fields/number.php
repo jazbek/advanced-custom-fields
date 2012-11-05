@@ -35,7 +35,7 @@ class acf_Number extends acf_Field
 	
 	function create_field($field)
 	{
-		echo '<input type="number" step="any" value="' . $field['value'] . '" id="' . $field['name'] . '" class="' . $field['class'] . '" name="' . $field['name'] . '" />';
+		echo '<input type="number" step="any" value="' . $field['value'] . '" id="' . $field['id'] . '" class="' . $field['class'] . '" name="' . $field['name'] . '" />';
 	}
 	
 	

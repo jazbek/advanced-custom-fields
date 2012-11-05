@@ -69,7 +69,7 @@ class acf_Select extends acf_Field
 		
 		
 		// html
-		echo '<select id="' . $field['name'] . '" class="' . $field['class'] . '" name="' . $field['name'] . '" ' . $multiple . ' >';	
+		echo '<select id="' . $field['id'] . '" class="' . $field['class'] . '" name="' . $field['name'] . '" ' . $multiple . ' >';	
 		
 		
 		// null
@@ -182,7 +182,7 @@ class acf_Select extends acf_Field
 				</p>
 			</td>
 			<td>
-				<textarea rows="5" name="fields[<?php echo $key; ?>][choices]" id=""><?php echo $field['choices']; ?></textarea>
+				<textarea class="texarea field_option-choices" rows="5" name="fields[<?php echo $key; ?>][choices]" id=""><?php echo $field['choices']; ?></textarea>
 			</td>
 		</tr>
 		<tr class="field_option field_option_<?php echo $this->name; ?>">
@@ -274,31 +274,35 @@ class acf_Select extends acf_Field
 		
 		
 		// explode choices from each line
-		if(strpos($field['choices'], "\n") !== false)
+		if( $field['choices'] )
 		{
-			// found multiple lines, explode it
-			$field['choices'] = explode("\n", $field['choices']);
-		}
-		else
-		{
-			// no multiple lines! 
-			$field['choices'] = array($field['choices']);
-		}
-		
-		
-		// key => value
-		foreach($field['choices'] as $choice)
-		{
-			if(strpos($choice, ' : ') !== false)
+			if(strpos($field['choices'], "\n") !== false)
 			{
-				$choice = explode(' : ', $choice);
-				$new_choices[trim($choice[0])] = trim($choice[1]);
+				// found multiple lines, explode it
+				$field['choices'] = explode("\n", $field['choices']);
 			}
 			else
 			{
-				$new_choices[trim($choice)] = trim($choice);
+				// no multiple lines! 
+				$field['choices'] = array($field['choices']);
+			}
+			
+			
+			// key => value
+			foreach($field['choices'] as $choice)
+			{
+				if(strpos($choice, ' : ') !== false)
+				{
+					$choice = explode(' : ', $choice);
+					$new_choices[trim($choice[0])] = trim($choice[1]);
+				}
+				else
+				{
+					$new_choices[trim($choice)] = trim($choice);
+				}
 			}
 		}
+		
 		
 		
 		// update choices

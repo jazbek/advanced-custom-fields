@@ -302,10 +302,10 @@ class acf_field_group
 			case "post_type":
 				
 				$choices = get_post_types(array(
-					'public' => true
+					//'public' => true
 				));
 				
-				unset($choices['attachment']);
+				unset( $choices['attachment'], $choices['revision'] , $choices['nav_menu_item']  );
 		
 				break;
 			
@@ -423,8 +423,10 @@ class acf_field_group
 			
 			case "options_page" :
 				
+				$parent_title = apply_filters('acf_options_page_title', __('Options','acf'));
+		
 				$choices = array(
-					__('Options','acf') => __('Options','acf'), 
+					$parent_title => $parent_title, 
 				);
 					
 				$custom = apply_filters('acf_register_options_page',array());
@@ -535,7 +537,7 @@ class acf_field_group
 		
 		
 		// only for save acf
-		if( ! isset($_POST['save_fields']) || $_POST['save_fields'] != 'true')
+		if( ! isset($_POST['acf_save_post']) || $_POST['acf_save_post'] != 'field_group')
 		{
 			return $post_id;
 		}
@@ -552,31 +554,29 @@ class acf_field_group
 		*  save fields
 		*/
 		
-		$fields = $_POST['fields'];
-		
+
 		// get all keys to find fields
 		$dont_delete = array();
 		
-		if($fields)
+		if( $_POST['fields'] )
 		{
 			$i = -1;
 			
-			// remove dummy field
-			unset($fields['999']);
+			// remove clone field
+			unset( $_POST['fields']['field_clone'] );
 			
 			// loop through and save fields
-			foreach($fields as $field)
+			foreach( $_POST['fields'] as $key => $field )
 			{
 				$i++;
 				
-				// each field has a unique id!
-				if(!isset($field['key'])) $field['key'] = 'field_' . uniqid();
-				
 				// add to dont delete array
-				$dont_delete[] = $field['key'];
+				$dont_delete[] = $key;
 				
 				// order
 				$field['order_no'] = $i;
+				$field['key'] = $key;
+				
 				
 				// update field
 				$this->parent->update_field($post_id, $field);
@@ -584,9 +584,10 @@ class acf_field_group
 		}
 		
 		// delete all other field
-		foreach(get_post_custom_keys($post_id) as $key)
+		$keys = get_post_custom_keys($post_id);
+		foreach( $keys as $key )
 		{
-			if(strpos($key, 'field_') !== false && !in_array($key, $dont_delete))
+			if( strpos($key, 'field_') !== false && !in_array($key, $dont_delete) )
 			{
 				// this is a field, and it wasn't found in the dont_delete array
 				delete_post_meta($post_id, $key);
@@ -635,6 +636,8 @@ class acf_field_group
 		
 	}
 	
+	
+
 }
 
 ?>

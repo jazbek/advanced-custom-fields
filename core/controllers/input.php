@@ -296,6 +296,18 @@ class acf_input
 				{
 					$html .= '#revisionsdiv, #screen-meta label[for=revisionsdiv-hide] {display: none;} ';
 				}
+				if( in_array('categories',$acf['options']['hide_on_screen']) )
+				{
+					$html .= '#categorydiv, #screen-meta label[for=categorydiv-hide] {display: none;} ';
+				}
+				if( in_array('tags',$acf['options']['hide_on_screen']) )
+				{
+					$html .= '#tagsdiv-post_tag, #screen-meta label[for=tagsdiv-post_tag-hide] {display: none;} ';
+				}
+				if( in_array('send-trackbacks',$acf['options']['hide_on_screen']) )
+				{
+					$html .= '#trackbacksdiv, #screen-meta label[for=trackbacksdiv-hide] {display: none;} ';
+				}
 				
 				
 				break;
@@ -447,9 +459,11 @@ class acf_input
 		{
 			$this->save_post_revision( $parent_id, $post_id );
         }
+        else
+        {
+	        do_action('acf_save_post', $post_id);
+        }
         
-		
-		do_action('acf_save_post', $post_id);
 	}
 	
 	

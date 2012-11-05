@@ -61,7 +61,7 @@ class acf_Color_picker extends acf_Field
 	function create_field($field)
 	{		
 		// html
-		echo '<input type="text" value="' . $field['value'] . '" class="acf_color_picker" name="' . $field['name'] . '" id="' . $field['name'] . '" />';
+		echo '<input type="text" value="' . $field['value'] . '" class="acf_color_picker" name="' . $field['name'] . '" id="' . $field['id'] . '" />';
 
 	}
 	

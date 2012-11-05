@@ -35,7 +35,7 @@ class acf_Text extends acf_Field
 	
 	function create_field($field)
 	{
-		echo '<input type="text" value="' . $field['value'] . '" id="' . $field['name'] . '" class="' . $field['class'] . '" name="' . $field['name'] . '" />';
+		echo '<input type="text" value="' . $field['value'] . '" id="' . $field['id'] . '" class="' . $field['class'] . '" name="' . $field['name'] . '" />';
 	}
 	
 	
@@ -137,7 +137,9 @@ class acf_Text extends acf_Field
 		}
 		elseif($format == 'html')
 		{
-			$value = html_entity_decode($value);
+			//$value = html_entity_decode($value);
+			$value = nl2br($value);
+
 		}
 		
 		return $value;

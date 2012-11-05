@@ -58,20 +58,21 @@ class acf_options_page
 			return true;
 		}
 		
+		$parent_title = apply_filters('acf_options_page_title', __('Options','acf'));
 		$parent_slug = 'acf-options';
-		$parent_title = __('Options','acf');
+		
 		
 		// set parent slug
 		$custom = apply_filters('acf_register_options_page',array());
-		if(!empty($custom))
+		if( !empty($custom) )
 		{	
 			$parent_slug = $custom[0]['slug'];
-			$parent_title = $custom[0]['title'];
+			//$parent_title = $custom[0]['title'];
 		}
 		
 		
 		// Parent
-		$parent_page = add_menu_page($parent_title, __('Options','acf'), 'edit_posts', $parent_slug, array($this, 'html'));	
+		$parent_page = add_menu_page($parent_title, $parent_title, 'edit_posts', $parent_slug, array($this, 'html'));	
 		
 		// some fields require js + css
 		add_action('admin_print_scripts-'.$parent_page, array($this, 'admin_print_scripts'));

@@ -10,18 +10,17 @@
 
 // vars
 $defaults = array(
-	'acf_abspath' => '../../../../..',
+	'acf_abspath' => '../../../../../',
 	'acf_posts' => array()
 );
-$options = array_merge( $defaults, $_POST );
+$my_options = array_merge( $defaults, $_POST );
 
-
-require_once( $options['acf_abspath'] . '/wp-load.php');
-require_once( $options['acf_abspath'] . '/wp-admin/admin.php');
+require_once( $my_options['acf_abspath'] . 'wp-load.php');
+require_once( $my_options['acf_abspath'] . 'wp-admin/admin.php');
 		
 
 // check for posts
-if( !$options['acf_posts'] )
+if( !$my_options['acf_posts'] )
 {
 	wp_die(__("No ACF groups selected",'acf'));
 }
@@ -183,12 +182,12 @@ echo '<?xml version="1.0" encoding="' . get_bloginfo('charset') . "\" ?>\n";
 	<wp:base_site_url><?php echo wxr_site_url(); ?></wp:base_site_url>
 	<wp:base_blog_url><?php bloginfo_rss( 'url' ); ?></wp:base_blog_url>
 <?php wxr_authors_list(); ?>
-<?php if ( $_POST['acf_posts'] ) {
+<?php if ( $my_options['acf_posts'] ) {
 
 	global $wp_query;
 	$wp_query->in_the_loop = true; // Fake being in the loop.
 
-	$where = 'WHERE ID IN (' . join( ',', $_POST['acf_posts'] ) . ')';
+	$where = 'WHERE ID IN (' . join( ',', $my_options['acf_posts'] ) . ')';
 	$posts = $wpdb->get_results( "SELECT * FROM {$wpdb->posts} $where" );
 
 	// Begin Loop

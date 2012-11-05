@@ -221,8 +221,8 @@ class acf_everything_fields
 				type: 'post',
 				dataType: 'html',
 				success: function(html){
-					<?php 
 					
+<?php 
 					if($this->data['page_type'] == "user")
 					{
 						if($this->data['page_action'] == "add")
@@ -256,10 +256,12 @@ class acf_everything_fields
 							echo "$('#media-single-form table tbody tr.submit').before( html );";
 						}
 					}
-										
-					echo "setTimeout( function(){ $(document).trigger('acf/setup_fields', $('#wpbody') ); }, 200);";
+?>
+
+					setTimeout( function(){ 
+						$(document).trigger('acf/setup_fields', $('#wpbody') ); 
+					}, 200);
 					
-					?>
 				}
 			});
 		
@@ -426,7 +428,7 @@ class acf_everything_fields
 					
 					if( $options['page_type'] == "taxonomy" && $options['page_action'] == "add")
 					{
-						echo '<div id="acf-' . $field['name'] . '" class="form-field' . $required_class . '">';
+						echo '<div id="acf-' . $field['name'] . '" class="form-field field field-' . $field['type'] . ' field-'.$field['key'] . $required_class . '">';
 							echo '<label for="fields[' . $field['key'] . ']">' . $field['label'] . $required_label . '</label>';	
 							$field['name'] = 'fields[' . $field['key'] . ']';
 							$this->parent->create_field($field);
@@ -435,11 +437,12 @@ class acf_everything_fields
 					}
 					else
 					{
-						echo '<tr id="acf-' . $field['name'] . '" class="field form-field' . $required_class . '">';
+						echo '<tr id="acf-' . $field['name'] . '" class="form-field field field-' . $field['type'] . ' field-'.$field['key'] . $required_class . '">';
 							echo '<th valign="top" scope="row"><label for="fields[' . $field['key'] . ']">' . $field['label'] . $required_label . '</label></th>';	
 							echo '<td>';
 								$field['name'] = 'fields[' . $field['key'] . ']';
 								$this->parent->create_field($field);
+								
 								if($field['instructions']) echo '<span class="description">' . $field['instructions'] . '</span>';
 							echo '</td>';
 						echo '</tr>';

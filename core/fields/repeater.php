@@ -297,15 +297,16 @@ class acf_Repeater extends acf_Field
 		$field['row_min'] = (int) $field['row_min'];
 		
 		
-		// add clone field
-		$field['sub_fields'][999] = array(
-				'label'		=>	__("New Field",'acf'),
-				'name'		=>	'new_field',
-				'type'		=>	'text',
-				'order_no'	=>	'1',
-				'instructions'	=>	'',
-				'column_width'	=>	''
+		// add clone
+		$field['sub_fields'][] = array(
+			'key' => 'field_clone',
+			'label' => __("New Field",'acf'),
+			'name' => __("new_field",'acf'),
+			'type' => 'text',
+			'order_no' =>	'1',
+			'instructions' =>	'',
 		);
+
 		
 		// get name of all fields for use in field type
 		foreach($this->parent->fields as $f)
@@ -338,16 +339,12 @@ class acf_Repeater extends acf_Field
 				<?php _e("No fields. Click the \"+ Add Sub Field button\" to create your first field.",'acf'); ?>
 			</div>
 	
-			<?php foreach($field['sub_fields'] as $key2 => $sub_field): ?>
-				<div class="<?php if($key2 == 999){echo "field_clone";}else{echo "field";} ?> sub_field" data-id="<?php echo $key2; ?>">
-					
-					<?php if(isset($sub_field['key'])): ?>
-						<input type="hidden" name="fields[<?php echo $key; ?>][sub_fields][<?php echo $key2; ?>][key]" value="<?php echo $sub_field['key']; ?>" />
-					<?php endif; ?>
+			<?php foreach($field['sub_fields'] as $sub_field): ?>
+				<div class="field field-<?php echo $sub_field['key']; ?> sub_field" data-id="<?php echo $sub_field['key']; ?>">
 					<div class="field_meta">
 					<table class="acf widefat">
 						<tr>
-							<td class="field_order"><span class="circle"><?php echo ($key2+1); ?></span></td>
+							<td class="field_order"><span class="circle"><?php echo (int)$sub_field['order_no'] + 1; ?></span></td>
 							<td class="field_label">
 								<strong>
 									<a class="acf_edit_field" title="<?php _e("Edit this Field",'acf'); ?>" href="javascript:;"><?php echo $sub_field['label']; ?></a>
@@ -379,7 +376,7 @@ class acf_Repeater extends acf_Field
 										<?php 
 										$this->parent->create_field(array(
 											'type'	=>	'text',
-											'name'	=>	'fields['.$key.'][sub_fields]['.$key2.'][label]',
+											'name'	=>	'fields['.$key.'][sub_fields]['.$sub_field['key'].'][label]',
 											'value'	=>	$sub_field['label'],
 											'class'	=>	'label',
 										));
@@ -395,7 +392,7 @@ class acf_Repeater extends acf_Field
 										<?php 
 										$this->parent->create_field(array(
 											'type'	=>	'text',
-											'name'	=>	'fields['.$key.'][sub_fields]['.$key2.'][name]',
+											'name'	=>	'fields['.$key.'][sub_fields]['.$sub_field['key'].'][name]',
 											'value'	=>	$sub_field['name'],
 											'class'	=>	'name',
 										));
@@ -408,7 +405,7 @@ class acf_Repeater extends acf_Field
 										<?php 
 										$this->parent->create_field(array(
 											'type'	=>	'select',
-											'name'	=>	'fields['.$key.'][sub_fields]['.$key2.'][type]',
+											'name'	=>	'fields['.$key.'][sub_fields]['.$sub_field['key'].'][type]',
 											'value'	=>	$sub_field['type'],
 											'class'	=>	'type',
 											'choices'	=>	$fields_names
@@ -428,7 +425,7 @@ class acf_Repeater extends acf_Field
 										
 										$this->parent->create_field(array(
 											'type'	=>	'text',
-											'name'	=>	'fields['.$key.'][sub_fields]['.$key2.'][instructions]',
+											'name'	=>	'fields['.$key.'][sub_fields]['.$sub_field['key'].'][instructions]',
 											'value'	=>	$sub_field['instructions'],
 											'class'	=>	'instructions',
 										));
@@ -450,7 +447,7 @@ class acf_Repeater extends acf_Field
 										
 										$this->parent->create_field(array(
 											'type'	=>	'number',
-											'name'	=>	'fields['.$key.'][sub_fields]['.$key2.'][column_width]',
+											'name'	=>	'fields['.$key.'][sub_fields]['.$sub_field['key'].'][column_width]',
 											'value'	=>	$sub_field['column_width'],
 											'class'	=>	'column_width',
 										));
@@ -459,7 +456,7 @@ class acf_Repeater extends acf_Field
 								</tr>
 								<?php 
 								
-								$this->parent->fields[$sub_field['type']]->create_options($key.'][sub_fields]['.$key2, $sub_field);
+								$this->parent->fields[$sub_field['type']]->create_options($key.'][sub_fields]['.$sub_field['key'], $sub_field);
 								
 								?>
 								<tr class="field_save">
@@ -568,33 +565,27 @@ class acf_Repeater extends acf_Field
 	function pre_save_field($field)
 	{
 		// format sub_fields
-		if($field['sub_fields'])
+		if( $field['sub_fields'] )
 		{
 			// remove dummy field
-			unset($field['sub_fields'][999]);
+			unset( $field['sub_fields']['field_clone'] );
 			
 			// loop through and save fields
 			$i = -1;
-			
-			$sub_fields = array();
-			
-			foreach($field['sub_fields'] as $f)
+
+			foreach( $field['sub_fields'] as $key => $f )
 			{
 				$i++;
 				
-				// each field has a unique id!
-				if(!isset($f['key'])) $f['key'] = 'field_' . uniqid();
-
 				// order
 				$f['order_no'] = $i;
+				$f['key'] = $key;
 				
 				// format
 				$f = $this->parent->pre_save_field($f);
 				
-				$sub_fields[] = $f;
+				$field['sub_fields'][ $key ] = $f;
 			}
-			
-			$field['sub_fields'] = $sub_fields;
 		}
 		
 		// return updated repeater field

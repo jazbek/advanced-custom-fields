@@ -2,6 +2,15 @@
 	Post Box
 ---------------------------------------------------------------------------------------------*/
 
+
+#poststuff .acf_postbox {
+	display: block;
+}
+
+#poststuff .acf_postbox.acf-hidden {
+	display: none !important;
+}
+
 #poststuff .acf_postbox .widefat th, 
 #poststuff .acf_postbox .widefat td {
 	overflow: visible;
@@ -1096,10 +1105,13 @@ ul.checkbox_list {
 	font-size: 12px;
 	line-height: 1em;
 	position: relative;
+	min-height: 36px;
 }
 
-.acf-gallery .toolbar li:hover,
-.acf-gallery .toolbar li.active {
+.acf-gallery .toolbar li.view-grid-li:hover,
+.acf-gallery .toolbar li.view-grid-li.active,
+.acf-gallery .toolbar li.view-list-li:hover,
+.acf-gallery .toolbar li.view-list-li.active {
 	background-color: #F9F9F9;
     background-image: -webkit-gradient(linear, left top, left bottom, from(#ECECEC), to(#F9F9F9)); /* Saf4+, Chrome */
     background-image: -webkit-linear-gradient(top, #ECECEC, #F9F9F9); /* Chrome 10+, Saf5.1+, iOS 5+ */
@@ -1108,12 +1120,8 @@ ul.checkbox_list {
     background-image:         linear-gradient(to bottom, #ECECEC, #F9F9F9);
 }
 
-.acf-gallery .toolbar li.count-li:hover {
-	background: transparent;
-}
-
-.acf-gallery .toolbar li a,
-.acf-gallery .toolbar li span {
+.acf-gallery .toolbar li.gallery-li a,
+.acf-gallery .toolbar li.gallery-li span {
 	display: block;
 	padding: 1em;	
 	
@@ -1123,7 +1131,7 @@ ul.checkbox_list {
 	text-decoration: none;
 }
 
-.acf-gallery .toolbar li span {
+.acf-gallery .toolbar li.gallery-li span {
 	color: #8d8d8d;
 }
 
@@ -1167,6 +1175,10 @@ ul.checkbox_list {
 
 .acf-gallery .toolbar .view-grid-li {
 	margin-left: -36px;
+}
+
+.acf-gallery .toolbar .acf-button {
+	margin: 4px 0 0 4px;
 }
 
 
