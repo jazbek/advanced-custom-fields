@@ -647,6 +647,14 @@ class acf_Image extends acf_Field
 		{
 			$attachment = get_post( $value );
 			
+			
+			// validate
+			if( !$attachment )
+			{
+				return false;	
+			}
+			
+			
 			// create array to hold value data
 			$value = array(
 				'id' => $attachment->ID,

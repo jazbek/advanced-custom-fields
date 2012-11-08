@@ -645,8 +645,9 @@ var acf = {
 	$('#acf_fields .acf_fc_add').live('click', function(){
 		
 		// vars
-		var tr = $(this).closest('tr.field_option_flexible_content');
-		var new_tr = $(this).closest('.field_form').find('tr.field_option_flexible_content:first').clone(false);
+		var tr = $(this).closest('tr.field_option_flexible_content'),
+			new_tr = tr.clone(false),
+			id = new_tr.attr('data-id');
 		
 		
 		// remove sub fields
@@ -664,11 +665,14 @@ var acf = {
 		
 		new_tr.find('[name]').each(function(){
 		
-			var name = $(this).attr('name').replace('[layouts][0]','[layouts]['+new_id+']');
+			var name = $(this).attr('name').replace('[layouts]['+id+']','[layouts]['+new_id+']');
 			$(this).attr('name', name);
 			$(this).attr('id', name);
 			
 		});
+		
+		// update data-id
+		new_tr.attr('data-id', new_id);
 		
 		// add new tr
 		tr.after(new_tr);

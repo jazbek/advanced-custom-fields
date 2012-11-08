@@ -324,7 +324,7 @@ class acf_Flexible_content extends acf_Field
 			);
 			
 ?>
-<tr class="field_option field_option_<?php echo $this->name; ?>">
+<tr class="field_option field_option_<?php echo $this->name; ?>" data-id="<?php echo $layout_key; ?>">
 	<td class="label">
 		<label><?php _e("Layout",'acf'); ?></label>
 		<p class="desription">

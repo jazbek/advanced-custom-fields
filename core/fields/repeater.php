@@ -142,7 +142,7 @@ class acf_Repeater extends acf_Field
 					}
 					
 					?>
-					<th class="<?php echo $sub_field['name']; ?>" <?php echo $attr; ?>>
+					<th class="acf-th-<?php echo $sub_field['name']; ?>" <?php echo $attr; ?>>
 						<span><?php echo $sub_field['label']; ?></span>
 						<?php if( isset($sub_field['instructions']) ): ?>
 							<span class="sub-field-instructions"><?php echo $sub_field['instructions']; ?></span>
