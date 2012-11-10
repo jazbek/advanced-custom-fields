@@ -337,7 +337,7 @@ class acf_Flexible_content extends acf_Field
 	<div class="repeater">
 		
 		<table class="acf_cf_meta">
-			<body>
+			<tbody>
 				<tr>
 					<td class="acf_fc_label" style="padding-left:0;">
 						<label><?php _e('Label','acf'); ?></label>
@@ -374,7 +374,7 @@ class acf_Flexible_content extends acf_Field
 						?>
 					</td>
 				</tr>
-			</body>
+			</tbody>
 		</table>
 					
 		<div class="fields_header">

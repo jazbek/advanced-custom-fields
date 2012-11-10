@@ -22,7 +22,8 @@ var acf = {
 		'repeater_min_alert' : "Minimum rows reached ( {min} rows )",
 		'repeater_max_alert' : "Maximum rows reached ( {max} rows )"
 	},
-	conditional_logic : {}
+	conditional_logic : {},
+	sortable_helper : null
 };
 
 (function($){
@@ -864,27 +865,79 @@ var acf = {
 	});
 	
 	
+	/*
+	*  Sortable Helper
+	*
+	*  @description: keeps widths of td's inside a tr
+	*  @since 3.5.1
+	*  @created: 10/11/12
+	*/
 	
-	// Sortable: Start
-	$('.repeater > table > tbody, .acf_flexible_content > .values').live( "sortstart", function(event, ui) {
-		
-		$(ui.item).find('.acf_wysiwyg textarea').each(function(){
-			
-			var val = tinymce.get( $(this).attr('id') ).getContent();
+	acf.sortable_helper = function(e, ui)
+	{
+		ui.children().each(function(){
+			$(this).width($(this).width());
+		});
+		return ui;
+	};
 
-			tinyMCE.execCommand("mceRemoveControl", false, $(this).attr('id'));
+
+	/*
+	*  acf/sortable_start
+	*
+	*  @description:
+	*  @since 3.5.1
+	*  @created: 10/11/12
+	*/
+	
+	$(document).live('acf/sortable_start', function(e, div) {
+		
+		//console.log( 'sortstart' );
+		
+		$(div).find('.acf_wysiwyg textarea').each(function(){
 			
-			$(this).val( val );
+			// vars
+			var textarea = $(this),
+				id = textarea.attr('id'),
+				wysiwyg = tinymce.get( id );
+			
+			
+			// if wysiwyg was found (should be always...), remove its functionality and set the value (to keep line breaks)
+			if( wysiwyg )
+			{
+				var val = wysiwyg.getContent();
+				
+				tinyMCE.execCommand("mceRemoveControl", false, id);
+			
+				textarea.val( val );
+			}
 			
 		});
+
 		
 	});
 	
-	// Sortable: End
-	$('.repeater > table > tbody, .acf_flexible_content > .values').live( "sortstop", function(event, ui) {
+	
+	/*
+	*  acf/sortable_stop
+	*
+	*  @description:
+	*  @since 3.5.1
+	*  @created: 10/11/12
+	*/
+	
+	$(document).live('acf/sortable_stop', function(e, div) {
 		
-		$(ui.item).find('.acf_wysiwyg textarea').each(function(){
-			tinyMCE.execCommand("mceAddControl", false, $(this).attr('id'));
+		//console.log( 'sortstop' );
+		
+		$(div).find('.acf_wysiwyg textarea').each(function(){
+			
+			// vars
+			var textarea = $(this),
+				id = textarea.attr('id');
+			
+			// add functionality back in
+			tinyMCE.execCommand("mceAddControl", false, id);
 		});
 		
 	});
@@ -918,28 +971,29 @@ var acf = {
 	// make sortable
 	function repeater_add_sortable( repeater ){
 		
-		var fixHelper = function(e, ui) {
-			ui.children().each(function() {
-				$(this).width($(this).width());
-			});
-			return ui;
-		};
-		
 		repeater.find('> table > tbody').unbind('sortable').sortable({
 			update: function(event, ui){
 				repeater_update_order( repeater );
 			},
 			items : '> tr.row',
-			handle: '> td.order',
-			helper: fixHelper,
-			forceHelperSize: true,
-			forcePlaceholderSize: true,
-			scroll: true,
-			start: function (event, ui) {
-				
+			handle : '> td.order',
+			helper : acf.sortable_helper,
+			forceHelperSize : true,
+			forcePlaceholderSize : true,
+			scroll : true,
+			start : function (event, ui) {
+			
+				$(document).trigger('acf/sortable_start', ui.item);
+
 				// add markup to the placeholder
 				var td_count = ui.item.children('td').length;
         		ui.placeholder.html('<td colspan="' + td_count + '"></td>');
+        		
+   			},
+   			stop : function (event, ui) {
+			
+				$(document).trigger('acf/sortable_stop', ui.item);
+				
    			}
 		});
 	};
@@ -1194,7 +1248,20 @@ var acf = {
 		// remove (if clone) and add sortable
 		div.children('.values').unbind('sortable').sortable({
 			items : '> .layout',
-			handle: '> .actions .order'
+			handle : '> .actions .order',
+			forceHelperSize : true,
+			forcePlaceholderSize : true,
+			scroll : true,
+			start : function (event, ui) {
+			
+				$(document).trigger('acf/sortable_start', ui.item);
+        		
+   			},
+   			stop : function (event, ui) {
+			
+				$(document).trigger('acf/sortable_stop', ui.item);
+				
+   			}
 		});
 		
 	};
