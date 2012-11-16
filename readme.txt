@@ -87,6 +87,9 @@ http://support.advancedcustomfields.com/
 
 == Changelog ==
 
+= 3.5.2 =
+* Security update
+
 = 3.5.1 =
 * [Added] Add Conditional logic for fields (toggle fields are select, checkbox, radio and true / false)
 * [Added] More hooks + filters - acf_options_page_title, acf_load_field, acf_update_value - http://support.advancedcustomfields.com/discussion/3454/more-hooks-filters-ability-for-inheritance

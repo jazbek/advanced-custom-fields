@@ -3,7 +3,7 @@
 Plugin Name: Advanced Custom Fields
 Plugin URI: http://www.advancedcustomfields.com/
 Description: Fully customise WordPress edit screens with powerful fields. Boasting a professional interface and a powerfull API, it’s a must have for any web developer working with WordPress. Field types include: Wysiwyg, text, textarea, image, file, select, checkbox, page link, post object, date picker, color picker, repeater, flexible content, gallery and more!
-Version: 3.5.1
+Version: 3.5.2
 Author: Elliot Condon
 Author URI: http://www.elliotcondon.com/
 License: GPL
@@ -48,7 +48,7 @@ class Acf
 		// vars
 		$this->path = plugin_dir_path(__FILE__);
 		$this->dir = plugins_url('',__FILE__);
-		$this->version = '3.5.1';
+		$this->version = '3.5.2';
 		$this->upgrade_version = '3.4.1'; // this is the latest version which requires an upgrade
 		$this->cache = array(); // basic array cache to hold data throughout the page load
 		
@@ -640,6 +640,11 @@ class Acf
 	
 	function acf_load_field_defaults( $field )
 	{
+		if( !is_array($field) )
+		{
+			return $field;	
+		}
+		
 		$defaults = array(
 			'key' => '',
 			'label' => '',
@@ -873,11 +878,16 @@ class Acf
 	
 	function get_value($post_id, $field)
 	{
-		if(!isset($this->fields[$field['type']]) || !is_object($this->fields[$field['type']]))
+		if( empty($this->fields) )
+		{
+			$this->setup_fields();
+		}
+		
+		if( !isset($field['type'], $this->fields[ $field['type'] ]) )
 		{
 			return false;
 		}
-		
+				
 		return $this->fields[$field['type']]->get_value($post_id, $field);
 	}
 	
@@ -893,9 +903,14 @@ class Acf
 	
 	function get_value_for_api($post_id, $field)
 	{
+		if( empty($this->fields) )
+		{
+			$this->setup_fields();
+		}
+		
 		if( !isset($field['type'], $this->fields[ $field['type'] ]) )
 		{
-			return '';
+			return false;
 		}
 		
 		return $this->fields[$field['type']]->get_value_for_api($post_id, $field);

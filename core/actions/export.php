@@ -10,14 +10,10 @@
 
 // vars
 $defaults = array(
-	'acf_abspath' => '../../../../../',
 	'acf_posts' => array()
 );
 $my_options = array_merge( $defaults, $_POST );
 
-require_once( $my_options['acf_abspath'] . 'wp-load.php');
-require_once( $my_options['acf_abspath'] . 'wp-admin/admin.php');
-		
 
 // check for posts
 if( !$my_options['acf_posts'] )
@@ -184,7 +180,7 @@ echo '<?xml version="1.0" encoding="' . get_bloginfo('charset') . "\" ?>\n";
 <?php wxr_authors_list(); ?>
 <?php if ( $my_options['acf_posts'] ) {
 
-	global $wp_query;
+	global $wp_query, $wpdb;
 	$wp_query->in_the_loop = true; // Fake being in the loop.
 
 	$where = 'WHERE ID IN (' . join( ',', $my_options['acf_posts'] ) . ')';
