@@ -87,6 +87,9 @@ http://support.advancedcustomfields.com/
 
 == Changelog ==
 
+= 3.5.3.1 =
+* Minor bug fixes for 3.5.3
+
 = 3.5.3 =
 * [Updated] Update / overhaul flexible content field UI
 * [Added] Add Show / Hide for flexible content layouts

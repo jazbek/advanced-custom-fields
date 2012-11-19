@@ -231,9 +231,22 @@ class acf_Field
 		
 		// apply filters
 		$value = apply_filters('acf_load_value', $value, $field, $post_id );
-		$value = apply_filters('acf_load_value-' . $field['type'], $value, $field, $post_id);
-		$value = apply_filters('acf_load_value-' . $field['name'], $value, $field, $post_id);
-		$value = apply_filters('acf_load_value-' . $field['key'], $value, $field, $post_id);
+
+		if( isset($field['type']) )
+		{
+			$value = apply_filters('acf_load_value-' . $field['type'], $value, $field, $post_id);
+		}
+		
+		if( isset($field['name']) )
+		{
+			$value = apply_filters('acf_load_value-' . $field['name'], $value, $field, $post_id);
+		}
+		
+		if( isset($field['key']) )
+		{
+			$value = apply_filters('acf_load_value-' . $field['key'], $value, $field, $post_id);
+		}
+		
 		
 		
 		return $value;
