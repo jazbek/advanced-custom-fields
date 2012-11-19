@@ -948,8 +948,8 @@ class Acf
 	function update_field($post_id, $field)
 	{
 		// apply filters
-		$field = apply_filters('acf_save_field', $field, $post_id );
-		$field = apply_filters('acf_save_field-' . $field['type'], $field, $post_id );
+		$field = apply_filters('acf_save_field', $field );
+		$field = apply_filters('acf_save_field-' . $field['type'], $field );
 		
 		// format the field (select, repeater, etc)
 		//$field = $this->pre_save_field($field);

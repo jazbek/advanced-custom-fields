@@ -264,7 +264,7 @@ class acf_Select extends acf_Field
 	* 
 	*-------------------------------------------------------------------------------------*/
 	
-	function acf_save_field( $field, $post_id )
+	function acf_save_field( $field )
 	{
 		// vars
 		$defaults = array(

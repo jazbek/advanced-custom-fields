@@ -553,7 +553,7 @@ class acf_Repeater extends acf_Field
 	* 
 	*-------------------------------------------------------------------------------------*/
 	
-	function acf_save_field($field, $post_id)
+	function acf_save_field($field)
 	{
 		// format sub_fields
 		if( $field['sub_fields'] )
@@ -573,8 +573,8 @@ class acf_Repeater extends acf_Field
 				$f['key'] = $key;
 				
 				// apply filters
-				$f = apply_filters('acf_save_field', $f, $post_id );
-				$f = apply_filters('acf_save_field-' . $f['type'], $f, $post_id );
+				$f = apply_filters('acf_save_field', $f );
+				$f = apply_filters('acf_save_field-' . $f['type'], $f );
 				
 				$field['sub_fields'][ $key ] = $f;
 			}
