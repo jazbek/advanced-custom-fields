@@ -1246,7 +1246,7 @@ var acf = {
 			
 			
 			// update classes based on row count
-			repeater_check_rows( repeater );
+			repeater_update_classes( repeater );
 			
 		}, 400);
 		
