@@ -957,45 +957,14 @@ var acf = {
     	return newDate.getTime();
     }
     
-    
-	// update order numbers
+	
+	// update order
 	function repeater_update_order( repeater )
 	{
 		repeater.find('> table > tbody > tr.row').each(function(i){
-			$(this).children('td.order').html(i+1);
+			$(this).children('td.order').html( i+1 );
 		});
 	
-	};
-	
-	
-	// make sortable
-	function repeater_add_sortable( repeater ){
-		
-		repeater.find('> table > tbody').unbind('sortable').sortable({
-			update: function(event, ui){
-				repeater_update_order( repeater );
-			},
-			items : '> tr.row',
-			handle : '> td.order',
-			helper : acf.sortable_helper,
-			forceHelperSize : true,
-			forcePlaceholderSize : true,
-			scroll : true,
-			start : function (event, ui) {
-			
-				$(document).trigger('acf/sortable_start', ui.item);
-
-				// add markup to the placeholder
-				var td_count = ui.item.children('td').length;
-        		ui.placeholder.html('<td colspan="' + td_count + '"></td>');
-        		
-   			},
-   			stop : function (event, ui) {
-			
-				$(document).trigger('acf/sortable_stop', ui.item);
-				
-   			}
-		});
 	};
 	
 	
@@ -1004,64 +973,90 @@ var acf = {
 		
 		$(postbox).find('.repeater').each(function(){
 			
-			var repeater = $(this),
-				min_rows = parseInt( repeater.attr('data-min_rows') ),
-				max_rows = parseInt( repeater.attr('data-max_rows') );	
+			var repeater = $(this)
 			
 			
 			// set column widths
-			if( ! repeater.find('> table').hasClass('row_layout') )
-			{
-				// accomodate for order / remove th widths
-				var column_width = 93;
-				
-				// find columns that already have a width and remove these amounts from the column_width var
-				repeater.find('> table > thead > tr > th[width]').each(function( i ){
-					
-					column_width -= parseInt( $(this).attr('width') );
-				});
-
-				
-				var ths = repeater.find('> table > thead > tr th').not('[width]').has('span');
-				if( ths.length > 1 )
-				{
-					column_width = column_width / ths.length;
-					
-					ths.each(function( i ){
-						
-						// dont add width to last th
-						if( (i+1) == ths.length  )
-						{
-							return;
-						}
-						
-						$(this).attr('width', column_width + '%');
-						
-					});
-				}
-				
-			}
+			repeater_set_column_widths( repeater );
 			
 			
 			// update classes based on row count
-			repeater_check_rows( repeater );
+			repeater_update_classes( repeater );
 			
 			
-			// sortable
-			if( max_rows > 1 ){
-				repeater_add_sortable( repeater );
-			}
-			
+			// add sortable
+			repeater_add_sortable( repeater );
+						
 		});
 			
 	});
 	
 	
-	// repeater_check_rows
-	function repeater_check_rows( repeater )
+	/*
+	*  repeater_set_column_widths
+	*
+	*  @description: 
+	*  @since 3.5.1
+	*  @created: 11/11/12
+	*/
+	
+	function repeater_set_column_widths( repeater )
+	{
+		// validate
+		if( repeater.children('.acf-input-table').hasClass('row_layout') )
+		{
+			return;
+		}
+		
+
+		// accomodate for order / remove
+		var column_width = 100;
+		if( repeater.find('> .acf-input-table > thead > tr > th.order').exists() )
+		{
+			column_width = 93;
+		}
+		
+		
+		// find columns that already have a width and remove these amounts from the column_width var
+		repeater.find('> .acf-input-table  > thead > tr > th[width]').each(function( i ){
+			
+			column_width -= parseInt( $(this).attr('width') );
+		});
+
+		
+		var ths = repeater.find('> .acf-input-table > thead > tr > th').not('[width]').has('span');
+		if( ths.length > 1 )
+		{
+			column_width = column_width / ths.length;
+			
+			ths.each(function( i ){
+				
+				// dont add width to last th
+				if( (i+1) == ths.length  )
+				{
+					return;
+				}
+				
+				$(this).attr('width', column_width + '%');
+				
+			});
+		}
+				
+	}
+	
+	
+	/*
+	*  repeater_update_classes
+	*
+	*  @description: 
+	*  @since 3.5.2
+	*  @created: 11/11/12
+	*/
+	
+	function repeater_update_classes( repeater )
 	{
 		// vars
-		var max_rows = parseInt( repeater.attr('data-max_rows') ),
+		var max_rows = parseFloat( repeater.attr('data-max_rows') ),
 			row_count = repeater.find('> table > tbody > tr.row').length;	
 
 		
@@ -1086,6 +1081,56 @@ var acf = {
 			repeater.removeClass('disabled');
 		}
 	}
+	
+	
+	/*
+	*  repeater_add_sortable
+	*
+	*  @description: 
+	*  @since 3.5.2
+	*  @created: 11/11/12
+	*/
+	
+	function repeater_add_sortable( repeater ){
+		
+		// vars
+		var max_rows = parseFloat( repeater.attr('data-max_rows') );
+		
+		
+		// validate
+		if( max_rows <= 1 )
+		{
+			return;
+		}
+			
+		repeater.find('> table > tbody').unbind('sortable').sortable({
+			items : '> tr.row',
+			handle : '> td.order',
+			helper : acf.sortable_helper,
+			forceHelperSize : true,
+			forcePlaceholderSize : true,
+			scroll : true,
+			start : function (event, ui) {
+			
+				$(document).trigger('acf/sortable_start', ui.item);
+				$(document).trigger('acf/sortable_start_repeater', ui.item);
+
+				// add markup to the placeholder
+				var td_count = ui.item.children('td').length;
+        		ui.placeholder.html('<td colspan="' + td_count + '"></td>');
+        		
+   			},
+   			stop : function (event, ui) {
+			
+				$(document).trigger('acf/sortable_stop', ui.item);
+				$(document).trigger('acf/sortable_stop_repeater', ui.item);
+				
+				// update order numbers	
+				repeater_update_order( repeater );		
+				
+   			}
+		});
+	};
 	
 	
 	// add field
@@ -1128,7 +1173,7 @@ var acf = {
 		
 		
 		// update classes based on row count
-		repeater_check_rows( repeater );
+		repeater_update_classes( repeater );
 		
 		
 		// setup fields
@@ -1248,19 +1293,23 @@ var acf = {
 		// remove (if clone) and add sortable
 		div.children('.values').unbind('sortable').sortable({
 			items : '> .layout',
-			handle : '> .actions .order',
+			handle : '> .menu-item-handle',
 			forceHelperSize : true,
 			forcePlaceholderSize : true,
 			scroll : true,
 			start : function (event, ui) {
 			
 				$(document).trigger('acf/sortable_start', ui.item);
+				$(document).trigger('acf/sortable_start_flexible_content', ui.item);
         		
    			},
    			stop : function (event, ui) {
 			
 				$(document).trigger('acf/sortable_stop', ui.item);
+				$(document).trigger('acf/sortable_stop_flexible_content', ui.item);
 				
+				// update order numbers				
+				flexible_content_update_order( div );
    			}
 		});
 		
@@ -1326,11 +1375,22 @@ var acf = {
 	}
 	
 	
-	$('.acf_flexible_content .actions .delete').live('click', function(){
+	$('.acf_flexible_content .fc-delete-layout').live('click', function(){
 		var layout = $(this).closest('.layout');
 		flexible_content_remove_layout( layout );
 		return false;
 	});
+		
+	
+	
+	// update order
+	function flexible_content_update_order( div )
+	{
+		div.find('> .values .layout').each(function(i){
+			$(this).find('> .menu-item-handle .fc-layout-order').html(i+1);
+		});
+	
+	};
 	
 	
 	// add layout
@@ -1359,6 +1419,10 @@ var acf = {
 		$(document).trigger('acf/setup_fields',new_field);
 		
 		
+		// update order numbers
+		flexible_content_update_order( div );
+		
+		
 		// validation
 		div.closest('.field').removeClass('error');
 		
@@ -1375,8 +1439,44 @@ var acf = {
 
 			// sortable
 			flexible_content_add_sortable( div );
+			
+			
+			// set column widths
+			$(div).find('.layout').each(function(){
+				repeater_set_column_widths( $(this) );
+			});
+			
+			
 		});
 		
+	});
+
+	
+	/*
+	*  Hide Show Flexible Content
+	*
+	*  @description: 
+	*  @since 3.5.2
+	*  @created: 11/11/12
+	*/
+	
+	$('.acf_flexible_content .layout .menu-item-handle').live('click', function(){
+		
+		// vars
+		var layout = $(this).closest('.layout');
+		
+		
+		if( layout.attr('data-toggle') == 'closed' )
+		{
+			layout.attr('data-toggle', 'open');
+			layout.children('.acf-input-table').show();
+		}
+		else
+		{
+			layout.attr('data-toggle', 'closed');
+			layout.children('.acf-input-table').hide();
+		}
+			
 	});
 	
 	

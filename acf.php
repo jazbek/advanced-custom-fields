@@ -3,7 +3,7 @@
 Plugin Name: Advanced Custom Fields
 Plugin URI: http://www.advancedcustomfields.com/
 Description: Fully customise WordPress edit screens with powerful fields. Boasting a professional interface and a powerfull API, it’s a must have for any web developer working with WordPress. Field types include: Wysiwyg, text, textarea, image, file, select, checkbox, page link, post object, date picker, color picker, repeater, flexible content, gallery and more!
-Version: 3.5.2
+Version: 3.5.3
 Author: Elliot Condon
 Author URI: http://www.elliotcondon.com/
 License: GPL
@@ -48,7 +48,7 @@ class Acf
 		// vars
 		$this->path = plugin_dir_path(__FILE__);
 		$this->dir = plugins_url('',__FILE__);
-		$this->version = '3.5.2';
+		$this->version = '3.5.3';
 		$this->upgrade_version = '3.4.1'; // this is the latest version which requires an upgrade
 		$this->cache = array(); // basic array cache to hold data throughout the page load
 		
@@ -167,6 +167,7 @@ class Acf
 		
 		
 		// add child fields
+		$return['none'] = new acf_Field($this); 
 		$return['text'] = new acf_Text($this); 
 		$return['textarea'] = new acf_Textarea($this); 
 		$return['wysiwyg'] = new acf_Wysiwyg($this); 
@@ -946,27 +947,15 @@ class Acf
 	
 	function update_field($post_id, $field)
 	{
+		// apply filters
+		$field = apply_filters('acf_save_field', $field, $post_id );
+		$field = apply_filters('acf_save_field-' . $field['type'], $field, $post_id );
+		
 		// format the field (select, repeater, etc)
-		$field = $this->pre_save_field($field);
+		//$field = $this->pre_save_field($field);
 		
 		// save it!
 		update_post_meta($post_id, $field['key'], $field);
-	}
-	
-	
-	/*--------------------------------------------------------------------------------------
-	*
-	*	pre_save_field
-	*
-	*	@author Elliot Condon
-	*	@since 3.0.0
-	* 
-	*-------------------------------------------------------------------------------------*/
-	
-	function pre_save_field($field)
-	{
-		// format the field (select, repeater, etc)
-		return $this->fields[$field['type']]->pre_save_field($field);
 	}
 	
 	
@@ -1274,37 +1263,108 @@ class Acf
 			// PAGE
 		    case "page_type":
 		        
-		        $page_type = isset($overrides['page_type']) ? $overrides['page_type'] : $post->post_parent;
+		        $page = isset($overrides['page']) ? $overrides['page'] : $post->ID;
 		        
-		        if($rule['operator'] == "==")
+		        if( $rule['value'] == 'front_page')
 		        {
-		        	if($rule['value'] == "parent" && $page_type == "0")
-		        	{
-		        		return true; 
-		        	}
-		        	
-		        	if($rule['value'] == "child" && $page_type != "0")
-		        	{
-		        		return true; 
-		        	}
-		        	
-		        	return false;
-		        }
-		        elseif($rule['operator'] == "!=")
-		        {
-		        	if($rule['value'] == "parent" && $page_type != "0")
-		        	{
-		        		return true; 
-		        	}
-		        	
-		        	if($rule['value'] == "child" && $page_type == "0")
-		        	{
-		        		return true; 
-		        	}
-		        	
-		        	return false;
+			        $front_page = (int) get_option('page_on_front');
+			        
+			        if( $rule['operator'] == "==" )
+			        {
+			        	if( $front_page == $page )
+			        	{
+				        	return true;
+			        	}
+			        }
+			        elseif( $rule['operator'] == "!=" )
+			        {
+			        	if( $front_page != $page )
+			        	{
+				        	return true;
+			        	}
+			        }
+			        
+			        return false;
 		        }
 		        
+		        
+		        if( $rule['value'] == 'posts_page')
+		        {
+			        $posts_page = (int) get_option('page_for_posts');
+			        
+			        if( $rule['operator'] == "==" )
+			        {
+			        	if( $posts_page == $page )
+			        	{
+				        	return true;
+			        	}
+			        }
+			        elseif( $rule['operator'] == "!=" )
+			        {
+			        	if( $posts_page != $page )
+			        	{
+				        	return true;
+			        	}
+			        }
+			        
+			        return false;
+		        }
+		        
+		        
+		        if( $rule['value'] == 'parent')
+		        {
+		        	$post_parent = $post->post_parent;
+		        	if( isset($overrides['page_parent']) )
+		        	{
+			        	$post_parent = (int) $overrides['page_parent'];
+		        	}
+			        
+			        if( $rule['operator'] == "==" )
+			        {
+			        	if( $post_parent == 0 )
+			        	{
+				        	return true;
+			        	}
+			        }
+			        elseif( $rule['operator'] == "!=" )
+			        {
+			        	if( $post_parent != 0 )
+			        	{
+				        	return true;
+			        	}
+			        }
+			        
+			        return false;
+		        }
+		        
+		        
+		        if( $rule['value'] == 'child')
+		        {
+		        	$post_parent = $post->post_parent;
+		        	if( isset($overrides['page_parent']) )
+		        	{
+			        	$post_parent = (int) $overrides['page_parent'];
+		        	}
+			        
+			        if( $rule['operator'] == "==" )
+			        {
+			        	if( $post_parent != 0 )
+			        	{
+				        	return true;
+			        	}
+			        }
+			        elseif( $rule['operator'] == "!=" )
+			        {
+			        	if( $post_parent == 0 )
+			        	{
+				        	return true;
+			        	}
+			        }
+			        
+			        return false;
+		        }
+		        
+		        		        
 		        break;
 		        
 		    // PAGE PARENT
@@ -1462,34 +1522,26 @@ class Acf
 		    
 		    // Options Page
 		    case "options_page":
-	
-				if(!function_exists('get_admin_page_title'))
-				{
-					return false;
-				}
-				
-				
-				// value has changed in 3.2.6 to a sanitized string
-				//if( substr($rule['value'], 0, 7) != 'options' )
-				//{
-				//	$rule['value'] = 'options-' . sanitize_title( $rule['value'] );
-				//}
-				
-				
+		    	
+		    	global $plugin_page;
+		    	
+		    	
 				// value has changed in 3.5.1 to a acf-options-$title
-				if( substr($rule['value'], 0, 12) != 'acf-options-' )
+				if( substr($rule['value'], 0, 11) != 'acf-options' )
 				{
 					$rule['value'] = 'acf-options-' . sanitize_title( $rule['value'] );
+					
+					// value may now be wrong (acf-options-options)
+					if( $rule['value'] == 'acf-options-options' )
+					{
+						$rule['value'] = 'acf-options';
+					}
 				}
-				
-				
-				// generate the page title to match against
-				$page_title = 'acf-options-' . sanitize_title( get_admin_page_title() );
 				
 				
 		        if($rule['operator'] == "==")
 		        {
-		        	if( $page_title == $rule['value'] )
+		        	if( $plugin_page == $rule['value'] )
 		        	{
 		        		return true;
 		        	}
@@ -1498,7 +1550,7 @@ class Acf
 		        }
 		        elseif($rule['operator'] == "!=")
 		        {
-		        	if( $page_title == $rule['value'] )
+		        	if( $plugin_page == $rule['value'] )
 		        	{
 		        		return true;
 		        	}

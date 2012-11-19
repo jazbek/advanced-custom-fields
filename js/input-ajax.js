@@ -33,7 +33,7 @@
 		action 			:	'get_input_metabox_ids',
 		post_id			:	0,
 		page_template	:	false,
-		page_parent		:	false,
+		page_parent		:	0,
 		page_type		:	false,
 		page			:	0,
 		post			:	0,
@@ -187,7 +187,7 @@
 		else
 		{
 			acf.data.page_type = 'parent';
-			acf.data.page_parent = false;
+			acf.data.page_parent = 0;
 		}
 		
 		update_fields();

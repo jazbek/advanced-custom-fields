@@ -48,17 +48,17 @@ if( empty($location['rules']) )
 									'post_type'		=>	__("Post Type",'acf'),
 									'user_type'		=>	__("Logged in User Type",'acf'),
 								),
-								__("Page Specific",'acf') => array(
+								__("Page",'acf') => array(
 									'page'			=>	__("Page",'acf'),
-									'page_type'		=>	__("Page Type",'acf'),
-									'page_parent'	=>	__("Page Parent",'acf'),
-									'page_template'	=>	__("Page Template",'acf'),
+									'page_type'		=>	__("Type",'acf'),
+									'page_parent'	=>	__("Parent",'acf'),
+									'page_template'	=>	__("Template",'acf'),
 								),
-								__("Post Specific",'acf') => array(
+								__("Post",'acf') => array(
 									'post'			=>	__("Post",'acf'),
-									'post_category'	=>	__("Post Category",'acf'),
-									'post_format'	=>	__("Post Format",'acf'),
-									'taxonomy'		=>	__("Post Taxonomy",'acf'),
+									'post_category'	=>	__("Category",'acf'),
+									'post_format'	=>	__("Format",'acf'),
+									'taxonomy'		=>	__("Taxonomy",'acf'),
 								),
 								__("Other",'acf') => array(
 									'ef_taxonomy'	=>	__("Taxonomy (Add / Edit)",'acf'),

@@ -1,7 +1,8 @@
 /*---------------------------------------------------------------------------------------------
-	Post Box
----------------------------------------------------------------------------------------------*/
-
+*
+*  Post Box
+*
+*---------------------------------------------------------------------------------------------*/
 
 #poststuff .acf_postbox {
 	display: block;
@@ -22,12 +23,26 @@
 	padding: 0;
 }
 
+#poststuff .acf_postbox.no_box {
+	border: 0 none;
+	background: transparent;
+}
 
-/* Field */
+#poststuff .acf_postbox.no_box > h3,
+#poststuff .acf_postbox.no_box > .handlediv {
+	display: none;
+}
+
+
+/*---------------------------------------------------------------------------------------------
+*
+*  Field
+*
+*---------------------------------------------------------------------------------------------*/
+
 #poststuff .acf_postbox .field {
 	position: relative;
 	padding: 15px 10px;
-	border-top: 1px solid #fff;
 	border-bottom: #e8e8e8 solid 1px;
 }
 
@@ -38,7 +53,8 @@
 #poststuff .acf_postbox.no_box .field { 
     border-top: 0 none;
     border-bottom: 0 none;
-    padding: 15px 0;
+    padding-left: 0;
+    padding-right: 0;
 } 
 
 
@@ -68,7 +84,7 @@
 }
 
 
-
+/* Field Label */
 #poststuff .acf_postbox p.label {
 	font-size: 11px;
 	line-height: 1.1em;
@@ -97,22 +113,11 @@
 }
 
 
-/* no box style */
-#poststuff .acf_postbox.no_box {
-	border: 0 none;
-	background: transparent;
-}
-
-#poststuff .acf_postbox.no_box > h3,
-#poststuff .acf_postbox.no_box > .handlediv {
-	display: none;
-}
-
-
-
 /*---------------------------------------------------------------------------------------------
-	Basic Field Styles
----------------------------------------------------------------------------------------------*/
+*
+*  Basic Field Styles
+*
+*---------------------------------------------------------------------------------------------*/
 
 .acf_postbox .field input[type="text"],
 .acf_postbox .field input[type="number"],
@@ -134,36 +139,42 @@
 	resize: none;
 }
 
-
-#poststuff .acf_postbox .field select optgroup {
+.acf_postbox .field select optgroup {
 	padding: 5px;
 	background: #fff;
 	border-top: #DFDFDF solid 1px;
 }
 
-#poststuff .acf_postbox .field select option {
+.acf_postbox .field select option {
 	padding: 3px;
 }
 
-#poststuff .acf_postbox .field select optgroup option {
+.acf_postbox .field select optgroup option {
 	padding-left: 6px;
 }
 
-#poststuff .acf_postbox .field select optgroup:nth-child(2n) {
+.acf_postbox .field select optgroup:nth-child(2n) {
     background: #F9F9F9;
 }
 
-#poststuff .acf_postbox .field select[multiple] {
+.acf_postbox .field select[multiple] {
 	padding: 0;
 }
 
-#poststuff .acf_postbox .field select[multiple] > optgroup:first-child {
+.acf_postbox .field select[multiple] > optgroup:first-child {
 	border-top: 0 none;
 }
 
+
 /*---------------------------------------------------------------------------------------------
-	Field: WYSIWYG
----------------------------------------------------------------------------------------------*/
+*
+*  Field: WYSIWYG
+*
+*---------------------------------------------------------------------------------------------*/
+
+.acf_wysiwyg {
+	
+}
 
 .acf_wysiwyg .wp_themeSkin table.mceToolbarRow1 {
     margin-top: 2px !important;
@@ -177,10 +188,6 @@
 	top: -2px !important;
 }
 
-/*.acf_wysiwyg .editor-toolbar {
-	display: none;
-}*/
-
 .acf_wysiwyg .wp-editor-container {
 	background: #fff;
 	border-color: #CCCCCC #CCCCCC #DFDFDF;
@@ -192,10 +199,9 @@
 
 /*---------------------------------------------------------------------------------------------
 *
-*  Image Upload
+*  Field: Image
 *
 *---------------------------------------------------------------------------------------------*/
-
 
 .acf-image-uploader {
 	position: relative;
@@ -300,8 +306,11 @@
 
 
 /*---------------------------------------------------------------------------------------------
-	File Upload
----------------------------------------------------------------------------------------------*/
+*
+*  Field: File
+*
+*---------------------------------------------------------------------------------------------*/
+
 .acf-file-uploader {
 	position: relative;
 	line-height: 1.5em;
@@ -331,49 +340,46 @@
 	width: auto;
 }
 
+
 /*---------------------------------------------------------------------------------------------
-	Repeater
----------------------------------------------------------------------------------------------*/
-.repeater {
-	
-	
+*
+*  Field: Select
+*
+*---------------------------------------------------------------------------------------------*/
+
+#wpcontent select[multiple] {
+	height: auto;
 }
 
-.repeater > table {
+#wpcontent select optgroup {
+	padding: 0 2px
+}
+
+#wpcontent select optgroup option {
+	padding-left: 6px;
+}
+
+ul.checkbox_list {
+	background: transparent !important;
+}
+
+
+/*---------------------------------------------------------------------------------------------
+*
+*  Field: Repeater / Flexible Content (.acf-input-table)
+*
+*---------------------------------------------------------------------------------------------*/
+
+.acf-input-table {
 	border-radius: 0 0 0 0;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.repeater > table > tbody > tr > td {
-	background: transparent;
-	border: 0 none;
-    border-right: 1px solid #ededed;
-    border-top: 1px solid #ededed;
-    padding: 8px !important;
-    position: relative;
-}
-
-.repeater > table.row_layout > tbody > tr > td {
-	border-top-color: #DFDFDF;
-}
-
-.repeater > table > tbody > tr:first-child > td {
-	border-top: 0 none;
-}
-
-.repeater > table > tbody > tr > td:last-child {
-	border-right: 0 none;
-}
-
-.repeater > table > tbody > tr:nth-child(even) {
-	background: #fff;
-}
-
-.repeater > table > tbody > tr:nth-child(odd) {
-	background: #FCFCFC;
-}
-
-.repeater > table > thead > tr > th {
+.acf-input-table > thead { }
+.acf-input-table > thead > tr > th { 
+	padding: 8px;
+	position: relative;
+	
 	vertical-align: top;
 	border-right: 1px solid #e1e1e1;
 }
@@ -382,8 +388,55 @@
 	border-right: 0 none;
 }
 
-.repeater > table > tbody > tr:hover > td.remove > a.remove-row,
-.repeater > table > tbody > tr:hover > td.remove > a.add-row {
+.acf-input-table > tbody {}
+
+.acf-input-table > tbody > tr {
+	background: #fff;
+}
+
+.acf-input-table > tbody > tr > td {
+	background: transparent;
+	border: 0 none;
+   
+    border-top: 1px solid #ededed;
+    border-right: 1px solid #ededed;
+     
+    padding: 8px;
+    position: relative;
+}
+
+.acf-input-table > tbody > tr > td {
+	background: transparent;
+	border: 0 none;
+   
+    border-top: 1px solid #ededed;
+    border-right: 1px solid #ededed;
+     
+    padding: 8px;
+    position: relative;
+}
+
+.acf-input-table.row_layout > tbody > tr > td {
+	border-top-color: #DFDFDF;
+}
+
+.acf-input-table > tbody > tr:first-child > td {
+	border-top: 0 none;
+}
+
+.acf-input-table > tbody > tr > td:last-child {
+	border-right: 0 none;
+}
+
+
+/*---------------------------------------------------------------------------------------------
+*
+*  Field: Repeater
+*
+*---------------------------------------------------------------------------------------------*/
+
+.repeater > .acf-input-table > tbody > tr:hover > td.remove > a.remove-row,
+.repeater > .acf-input-table > tbody > tr:hover > td.remove > a.add-row {
 
 	-webkit-transition-delay:0s;
 	-moz-transition-delay:0s;
@@ -394,13 +447,10 @@
 	opacity: 1;
 }
 
-.repeater.disabled > table > tbody > tr:hover > td.remove > a.add-row {
+.repeater.disabled > .acf-input-table > tbody > tr:hover > td.remove > a.add-row {
 	visibility: hidden !important;
 }
 
-.repeater > table.row_layout > tbody > tr > td > label:first-child {
-	padding-top: 0;
-}
 
 a.add-row {
 	display: block;
@@ -453,16 +503,24 @@ a.remove-row:hover {
 	vertical-align: middle;
 	color: #aaa;
 	text-shadow: #fff 0 1px 0;
-}
-
-.repeater table tr td.order {
+	
 	cursor: move;
-	background: #f4f4f4;
-	border-top-color: #e8e8e8;
-	border-right-color: #E1E1E1;
+	
+	
 }
 
-.repeater table tr td.order:hover {
+.repeater > table > tbody > tr > td.order {
+	border-right-color: #E1E1E1;
+	background: #f4f4f4;
+}
+
+.repeater > table > tbody > tr > td.remove {
+	background: #F9F9F9;
+}
+
+
+.repeater > table > thead > tr > th.order:hover,
+.repeater > table > tbody > tr > td.order:hover {
 	color: #666;
 }
 
@@ -472,66 +530,20 @@ a.remove-row:hover {
 	vertical-align: middle;
 }
 
-.repeater > table td.order a.order_up {
-	display: block;
-	width: 16px;
-	height: 16px;
-	background: green;
-	margin: 0 auto;
-}
 
-.repeater > table td.order a.order_down {
-	display: block;
-	width: 16px;
-	height: 16px;
-	background: red;
-	margin: 0 auto;
-}
-
-
+/*
 .repeater table tr td select {
 	width: 120px;
 	margin: 0;
 }
+*/
 
 .repeater .repeater-footer {
 	margin: 8px 0;
 }
 
-#acf_input .wp_themeSkin tr.mceFirst td.mceToolbar {
-     
-}
-
-#poststuff #acf_input .wp_themeSkin .mceStatusbar {
-  
-}
-
-#wpcontent select[multiple] {
-	height: auto;
-}
-
-#wpcontent select optgroup {
-	padding: 0 2px
-}
-
-#wpcontent select optgroup option {
-	padding-left: 6px;
-}
-
-ul.checkbox_list {
-	background: transparent !important;
-}
-
 .repeater tr.row-clone {
 	display: none;
-}
-
-.repeater td .row-layout-field {
-    padding: 30px 0 0;
-}
-
-.repeater td .row-layout-field:first-child {
-	padding-top: 10px;
 }
 
 .repeater > table > tbody > tr.ui-sortable-helper {
@@ -554,13 +566,15 @@ ul.checkbox_list {
 	border-bottom: 0 none;
 }
 
-.repeater > table > tbody > tr > td.acf_input-wrap {
+td.acf_input-wrap {
 	padding: 0 !important;;
 }
 
+/*
 .repeater > table > tbody > tr > td.acf_input-wrap .acf_input {
 	width: 100%;
 }
+*/
 
 .sub-field-instructions {
 	color: #999999;
@@ -568,18 +582,14 @@ ul.checkbox_list {
     font-family: sans-serif;
     font-size: 12px;
     text-shadow: 0 1px 0 #FFFFFF;
+    
+    font-weight: normal;
 }
-
-
-
-/*---------------------------------------------------------------------------------------------
-	In Box
----------------------------------------------------------------------------------------------*/
 
 
 /*---------------------------------------------------------------------------------------------
 *
-*	Relationship
+*	Field: Relationship
 *
 *---------------------------------------------------------------------------------------------*/
 
@@ -750,98 +760,56 @@ ul.checkbox_list {
 
 
 /*---------------------------------------------------------------------------------------------
-	Flexible Content
----------------------------------------------------------------------------------------------*/
-.acf_flexible_content {
-	
-}
+*
+*	Field: Flexible Content
+*
+*---------------------------------------------------------------------------------------------*/
 
-.acf_flexible_content .layout {
-	margin: 20px 0 30px;
+.acf_flexible_content {
 	position: relative;
 }
 
-.acf_flexible_content .layout .layout-label {
-	font-size: 12px;
-	line-height: 1em;
-	font-weight: bold;
-	color: #999999;
-	text-shadow: #fff 0 1px 0;
-	margin: 0 0 0.75em;
-	padding: 0;
+.acf_flexible_content .layout {
+	margin: 20px 0 0;
+	position: relative;
+	
+	border-radius: 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    background: #fff;
 }
 
-.acf_flexible_content .layout .actions {
-	position: absolute;
-	top: 7px;
-	right: 5px;
-	float: left;
-	background: #ffffff;
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#eaeaea'); /* for IE */
-	background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#eaeaea)); /* for webkit browsers */
-	background: -moz-linear-gradient(top,  #ffffff,  #eaeaea); /* for firefox 3.6+ */
-	
-	box-shadow: rgba(0,0,0,0.1) 0 1px 3px;
-	border-radius: 3px;
-	border: #d4d4d4 solid 1px;
-	
-	z-index: 1;
-	
-	visibility: hidden;
-	opacity: 0;
-	
-	-webkit-transition: right 0.25s 0s ease-in-out, opacity 0.25s 0s ease-in-out, visibility 0s linear 0.25s;
-	-moz-transition: right 0.25s 0s ease-in-out, opacity 0.25s 0s ease-in-out, visibility 0s linear 0.25s;
-	-o-transition: right 0.25s 0s ease-in-out, opacity 0.25s 0s ease-in-out, visibility 0s linear 0.25s; 	
-	transition: right 0.25s 0s ease-in-out, opacity 0.25s 0s ease-in-out, visibility 0s linear 0.25s; 
-	
-	
+.acf_flexible_content .layout:first-child {
+	margin-top: 0;
 }
 
-.acf_flexible_content .layout:hover .actions {
+.acf_flexible_content .layout .menu-item-handle {
+	display: block;
+	position: relative;
+	border-radius: 0;
+	width: auto;
+	margin: 0;
 	
-	visibility: visible;
-	opacity: 1;
-	right: 10px;
-	
-	-webkit-transition-delay:0s;
-	-moz-transition-delay:0s;
-	-o-transition-delay:0s;
-	transition-delay:0s;
+	color: #666;
 }
 
-.acf_flexible_content .layout .actions .order,
-.acf_flexible_content .layout .actions .delete {
+.acf_flexible_content .layout .fc-delete-layout {
 	width: 30px;
 	height: 25px;
-	display: block;
-	background: url(../images/sprite.png) 0px -100px no-repeat;
-}
-.acf_flexible_content .layout .actions .order:hover { background-position: 0px -150px; }
-.acf_flexible_content .layout .actions .delete { background-position: -50px -100px; }
-.acf_flexible_content .layout .actions .delete:hover { background-position: -50px -150px; }
-
-
-
-
-.acf_flexible_content table.widefat > tbody > tr > td {
-	padding: 15px 10px;
-    position: relative;
-    
-    border-left: #fff solid 1px;
-    border-right: #DFDFDF solid 1px;
-}
-
-.acf_flexible_content table.widefat > tbody > tr:first-child > td {
+	display: none;
+	background: url(../images/sprite.png) -50px -100px no-repeat;
 	
+	position: absolute;
+	top: 6px;
+	right: 6px;
+	z-index: 1;
 }
 
-.acf_flexible_content table.widefat > tbody > tr:last-child > td {
-	border-bottom: 0 none;
+.acf_flexible_content .layout:hover .fc-delete-layout {
+	display: block;
 }
 
-.acf_flexible_content table.widefat > tbody > tr > td:last-child {
-	border-right: 0 none;
+.acf_flexible_content .layout .fc-delete-layout:hover {
+	background-position: -50px -150px;
 }
 
 .acf_flexible_content .clones {
@@ -852,14 +820,30 @@ ul.checkbox_list {
 	visibility: visible !important;
 	border: #DFDFDF dashed 2px;
 	border-radius: 3px;
+	box-shadow: none;
 }
 
-.acf_flexible_content td .row-layout-field {
-    padding: 30px 0 0;
+.acf_flexible_content .layout > .acf-input-table {
+	border-top: 0 none;
+	box-shadow: none;
 }
 
-.acf_flexible_content td .row-layout-field:first-child {
-	padding-top: 3px;
+.acf_flexible_content .layout > .acf-input-table > tbody > tr {
+	background: #fff;
+}
+
+.acf_flexible_content .layout > .acf-input-table > thead > tr > th {
+	background: none repeat scroll 0 0 #F9F9F9;
+    border-bottom: 1px solid #E1E1E1;
+    border-right: 1px solid #E1E1E1;
+    
+    font-size: 12px;
+	font-family: sans-serif;
+	font-weight: bold;
+}
+
+.acf_flexible_content .layout > .acf-input-table > thead > tr > th:last-child {
+	border-right: 0 none;
 }
 
 .acf-popup {
@@ -982,7 +966,7 @@ ul.checkbox_list {
 }
 
 .acf_flexible_content .flexible-footer {
-	margin: 8px 0;
+	margin: 20px 0 0;
 }
 
 /*---------------------------------------------------------------------------------------------
@@ -1033,21 +1017,27 @@ ul.checkbox_list {
 	overflow: hidden;
 	border: #DFDFDF solid 1px;
 	border-radius: 3px;
-	box-shadow: #f9f9f9 0 1px 0;
 }
 
 .acf-gallery .thumbnails {
-	background: #ececec;
+	background-color:#f9f9f9;
+	/*
+background-image:-ms-linear-gradient(top,#f9f9f9,#ececec);
+	background-image:-moz-linear-gradient(top,#f9f9f9,#ececec);
+	background-image:-o-linear-gradient(top,#f9f9f9,#ececec);
+	background-image:-webkit-gradient(linear,left top,left bottom,from(#f9f9f9),to(#ececec));
+	background-image:-webkit-linear-gradient(top,#f9f9f9,#ececec);
+	background-image:linear-gradient(top,#f9f9f9,#ececec);
+*/
+	
+	box-shadow: inset 0px 1px 5px rgba(0,0,0,0.06);
+	
 	min-height: 400px;
 	margin: 0 0 0 0;
 	
 	position: relative;
 	z-index: 1;
-	
-	-webkit-transition: all 0.5s ease-out;  /* Saf3.2+, Chrome */
-	   -moz-transition: all 0.5s ease-out;  /* FF4+ */
-	     -o-transition: all 0.5s ease-out;  /* Opera 10.5+ */
-	        transition: all 0.5s ease-out;
+
 
 }
 

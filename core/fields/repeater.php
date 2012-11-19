@@ -20,29 +20,11 @@ class acf_Repeater extends acf_Field
     	$this->name = 'repeater';
 		$this->title = __("Repeater",'acf');
 		
+		
+		// filters
+		add_filter('acf_save_field-' . $this->name, array($this, 'acf_save_field'));
    	}
    	
-   	
-   	/*--------------------------------------------------------------------------------------
-	*
-	*	admin_print_scripts / admin_print_styles
-	*
-	*	@author Elliot Condon
-	*	@since 3.0.0
-	* 
-	*-------------------------------------------------------------------------------------*/
-	
-	function admin_print_scripts()
-	{
-		wp_enqueue_script(array(
-			'jquery-ui-sortable',
-		));
-	}
-	
-	function admin_print_styles()
-	{
-  
-	}
 	
 	
 	/*--------------------------------------------------------------------------------------
@@ -75,13 +57,21 @@ class acf_Repeater extends acf_Field
 		$field['row_min'] = (int) $field['row_min'];
 		
 		
+		// value may be false
+		if( !$field['value'] )
+		{
+			$field['value'] = array();
+		}
+		
+		
 		// row limit = 0?
-		if( $field['row_limit'] == 0 )
+		if( $field['row_limit'] < 1 )
 		{
 			$field['row_limit'] = 999;
 		}
 		
 		
+
 		// min rows
 		if( $field['row_min'] > count($field['value']) )
 		{
@@ -93,7 +83,7 @@ class acf_Repeater extends acf_Field
 				}
 			}
 		}
-		
+
 		
 		// max rows
 		if( $field['row_limit'] < count($field['value']) )
@@ -106,7 +96,7 @@ class acf_Repeater extends acf_Field
 				}
 			}
 		}
-		
+
 		
 		// setup values for row clone
 		$field['value'][999] = array();
@@ -117,9 +107,10 @@ class acf_Repeater extends acf_Field
 		}
 		
 
+
 ?>
 <div class="repeater" data-min_rows="<?php echo $field['row_min']; ?>" data-max_rows="<?php echo $field['row_limit']; ?>">
-	<table class="widefat <?php if( $field['layout'] == 'row' ): ?>row_layout<?php endif; ?>">
+	<table class="widefat acf-input-table <?php if( $field['layout'] == 'row' ): ?>row_layout<?php endif; ?>">
 	<?php if( $field['layout'] == 'table' ): ?>
 		<thead>
 			<tr>
@@ -315,7 +306,7 @@ class acf_Repeater extends acf_Field
 		}
 		
 		?>
-<tr class="field_option field_option_<?php echo $this->name; ?>">
+<tr class="field_option field_option_<?php echo $this->name; ?> field_option_<?php echo $this->name; ?>_fields">
 	<td class="label">
 		<label><?php _e("Repeater Fields",'acf'); ?></label>
 	</td>
@@ -515,7 +506,7 @@ class acf_Repeater extends acf_Field
 		?>
 	</td>
 </tr>
-<tr class="field_option field_option_<?php echo $this->name; ?>">
+<tr class="field_option field_option_<?php echo $this->name; ?> field_option_<?php echo $this->name; ?>_layout">
 	<td class="label">
 		<label><?php _e("Layout",'acf'); ?></label>
 	</td>
@@ -562,7 +553,7 @@ class acf_Repeater extends acf_Field
 	* 
 	*-------------------------------------------------------------------------------------*/
 	
-	function pre_save_field($field)
+	function acf_save_field($field, $post_id)
 	{
 		// format sub_fields
 		if( $field['sub_fields'] )
@@ -581,8 +572,9 @@ class acf_Repeater extends acf_Field
 				$f['order_no'] = $i;
 				$f['key'] = $key;
 				
-				// format
-				$f = $this->parent->pre_save_field($f);
+				// apply filters
+				$f = apply_filters('acf_save_field', $f, $post_id );
+				$f = apply_filters('acf_save_field-' . $f['type'], $f, $post_id );
 				
 				$field['sub_fields'][ $key ] = $f;
 			}

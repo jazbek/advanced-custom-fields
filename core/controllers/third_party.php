@@ -36,6 +36,38 @@ class acf_third_party
 		
 		// Duplicate Post - http://wordpress.org/extend/plugins/duplicate-post/
 		add_action( 'dp_duplicate_page', array($this, 'dp_duplicate_page'), 11, 2);
+		
+		
+		// Post Type Switcher - http://wordpress.org/extend/plugins/post-type-switcher/
+		add_filter('pts_post_type_filter', array($this, 'pts_post_type_filter'));
+	}
+	
+	
+	/*
+	*  pts_allowed_pages
+	*
+	*  @description: 
+	*  @since 3.5.3
+	*  @created: 19/11/12
+	*/
+	
+	function pts_post_type_filter( $args )
+	{
+		
+		// global
+		global $typenow;
+		
+		if( $typenow == "acf" )
+		{
+			$args = array(
+				'public'  => false,
+				'show_ui' => true
+			);
+		}
+		
+		
+		// return
+		return $args;
 	}
 	
 	

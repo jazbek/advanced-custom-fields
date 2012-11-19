@@ -5,7 +5,8 @@ var acf = {
 		'checked' : 'checked',
 		'conditional_no_fields' : 'No "toggle" fields avilable'
 	},
-	fields : []
+	fields : [],
+	sortable_helper : null
 	
 };
 
@@ -21,6 +22,23 @@ var acf = {
 	$.fn.exists = function()
 	{
 		return $(this).length>0;
+	};
+	
+	
+	/*
+	*  Sortable Helper
+	*
+	*  @description: keeps widths of td's inside a tr
+	*  @since 3.5.1
+	*  @created: 10/11/12
+	*/
+	
+	acf.sortable_helper = function(e, ui)
+	{
+		ui.children().each(function(){
+			$(this).width($(this).width());
+		});
+		return ui;
 	};
 	
 	
@@ -461,9 +479,7 @@ var acf = {
 			update: function(event, ui){
 				update_order_numbers();
 			},
-			handle: 'td.field_order',
-			axis: "y",
-			revert: true
+			handle: 'td.field_order'
 		});
 	});
 	
@@ -677,12 +693,6 @@ var acf = {
 		// add new tr
 		tr.after(new_tr);
 		
-		// add drag / drop
-		new_tr.find('.fields').sortable({
-			handle: 'td.field_order',
-			axis: "y",
-			revert: true
-		});
 		
 		return false;
 	});
@@ -724,20 +734,20 @@ var acf = {
 		
 		if(table.hasClass('sortable')) return false;
 		
-		var fixHelper = function(e, ui) {
-			ui.children().each(function() {
-				$(this).width($(this).width());
-			});
-			return ui;
-		};
-		
 		table.addClass('sortable').children('tbody').sortable({
 			items: ".field_option_flexible_content",
 			handle: 'a.acf_fc_reorder',
-			helper: fixHelper,
-			placeholder: "ui-state-highlight",
-			axis: "y",
-			revert: true
+			helper: acf.sortable_helper,
+			forceHelperSize : true,
+			forcePlaceholderSize : true,
+			scroll : true,
+			start : function (event, ui) {
+
+				// add markup to the placeholder
+				var td_count = ui.item.children('td').length;
+        		ui.placeholder.html('<td colspan="' + td_count + '"></td>');
+        		
+   			}
 		});
 		
 	});
@@ -762,6 +772,64 @@ var acf = {
 		}
 
 	});
+	
+	
+	/*
+	*  Repeater CHange layout display (Row | Table)
+	*
+	*  @description: 
+	*  @since 3.5.2
+	*  @created: 18/11/12
+	*/
+	
+	$('#acf_fields .field_option_repeater_layout input[type="radio"]').live('click', function(){
+		
+		// vars
+		var radio = $(this);
+		
+		
+		// Set class
+		radio.closest('.field_option_repeater').siblings('.field_option_repeater_fields').find('.repeater:first').removeClass('layout-row').removeClass('layout-table').addClass( 'layout-' + radio.val() );
+		
+	});
+	
+	$(document).live('acf/field_form-open', function(e, field){
+		
+		$(field).find('.field_option_repeater_layout input[type="radio"]:checked').each(function(){
+			$(this).trigger('click');
+		});
+		
+	});
+	
+	
+	
+	/*
+	*  Flexible Content CHange layout display (Row | Table)
+	*
+	*  @description: 
+	*  @since 3.5.2
+	*  @created: 18/11/12
+	*/
+	
+	$('#acf_fields .acf_fc_display select').live('change', function(){
+		
+		// vars
+		var select = $(this);
+		
+		
+		// Set class
+		select.closest('.repeater').removeClass('layout-row').removeClass('layout-table').addClass( 'layout-' + select.val() );
+		
+	});
+	
+	$(document).live('acf/field_form-open', function(e, field){
+		
+		$(field).find('.acf_fc_display select').each(function(){
+			$(this).trigger('change');
+		});
+		
+	});
+
 	
 	
 	/*

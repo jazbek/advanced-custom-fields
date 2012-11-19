@@ -122,7 +122,14 @@ class acf_Radio extends acf_Field
 				</p>
 			</td>
 			<td>
-				<textarea class="texarea field_option-choices" rows="5" name="fields[<?php echo $key; ?>][choices]" id=""><?php echo $field['choices']; ?></textarea>
+				<?php 
+				$this->parent->create_field(array(
+					'type'	=>	'textarea',
+					'class' => 	'textarea field_option-choices',
+					'name'	=>	'fields['.$key.'][choices]',
+					'value'	=>	$field['choices'],
+				));
+				?>
 			</td>
 		</tr>
 		<tr class="field_option field_option_<?php echo $this->name; ?>">
@@ -158,63 +165,11 @@ class acf_Radio extends acf_Field
 				?>
 			</td>
 		</tr>
-
-	
 		<?php
 	}
 
 	
-	/*--------------------------------------------------------------------------------------
-	*
-	*	pre_save_field
-	*	- called just before saving the field to the database.
-	*
-	*	@author Elliot Condon
-	*	@since 2.2.0
-	* 
-	*-------------------------------------------------------------------------------------*/
 	
-	function pre_save_field($field)
-	{
-		// defaults
-		$field['choices'] = isset($field['choices']) ? $field['choices'] : '';
-		
-		// vars
-		$new_choices = array();
-		
-		// explode choices from each line
-		if(strpos($field['choices'], "\n") !== false)
-		{
-			// found multiple lines, explode it
-			$field['choices'] = explode("\n", $field['choices']);
-		}
-		else
-		{
-			// no multiple lines! 
-			$field['choices'] = array($field['choices']);
-		}
-		
-		// key => value
-		foreach($field['choices'] as $choice)
-		{
-			if(strpos($choice, ' : ') !== false)
-			{
-				$choice = explode(' : ', $choice);
-				$new_choices[trim($choice[0])] = trim($choice[1]);
-			}
-			else
-			{
-				$new_choices[trim($choice)] = trim($choice);
-			}
-		}
-		
-		// update choices
-		$field['choices'] = $new_choices;
-		
-		// return updated field
-		return $field;
-
-	}
 }
 
 ?>

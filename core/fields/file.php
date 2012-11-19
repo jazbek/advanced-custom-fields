@@ -141,35 +141,6 @@ class acf_File extends acf_Field
 	
 	/*--------------------------------------------------------------------------------------
 	*
-	*	admin_print_scripts / admin_print_styles
-	*
-	*	@author Elliot Condon
-	*	@since 3.0.0
-	* 
-	*-------------------------------------------------------------------------------------*/
-	
-	function admin_print_scripts()
-	{
-		wp_enqueue_script(array(
-			'jquery',
-			'jquery-ui-core',
-			'jquery-ui-tabs',
-
-			'thickbox',
-			'media-upload',			
-		));
-	}
-	
-	function admin_print_styles()
-	{
-  		wp_enqueue_style(array(
-			'thickbox',		
-		));
-	}
-	
-	
-	/*--------------------------------------------------------------------------------------
-	*
 	*	create_field
 	*
 	*	@author Elliot Condon

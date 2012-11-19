@@ -64,6 +64,7 @@ class acf_settings
 	*  @description: 
 	*  @since 3.5.2
 	*  @created: 16/11/12
+	*  @thanks: Kevin Biloski and Charlie Eriksen via Secunia SVCRP
 	*/
 	
 	function load()

@@ -93,7 +93,7 @@ function get_fields($post_id = false)
 * 
 *-------------------------------------------------------------------------------------*/
  
-function get_field($field_key, $post_id = false) 
+function get_field($field_key, $post_id = false, $format_value = true) 
 { 
 	global $post, $acf; 
 	 
@@ -125,30 +125,40 @@ function get_field($field_key, $post_id = false)
 	);
 	 
 	
-	// is $field_name a name? pre 3.4.0
-	if( strpos($field_key, "field_") === false )
+	if( $format_value )
 	{
-		// get field key
-		if( is_numeric($post_id) )
+		// is $field_name a name? pre 3.4.0
+		if( strpos($field_key, "field_") === false )
 		{
-			$field_key = get_post_meta($post_id, '_' . $field_key, true); 
+			// get field key
+			if( is_numeric($post_id) )
+			{
+				$field_key = get_post_meta($post_id, '_' . $field_key, true); 
+			}
+			elseif( strpos($post_id, 'user_') !== false )
+			{
+				$temp_post_id = str_replace('user_', '', $post_id);
+				$field_key = get_user_meta($temp_post_id, '_' . $field_key, true); 
+			}
+			else
+			{
+				$field_key = get_option('_' . $post_id . '_' . $field_key); 
+			}
 		}
-		elseif( strpos($post_id, 'user_') !== false )
+		
+		
+		// get field
+		if( strpos($field_key, "field_") !== false )
 		{
-			$temp_post_id = str_replace('user_', '', $post_id);
-			$field_key = get_user_meta($temp_post_id, '_' . $field_key, true); 
-		}
-		else
-		{
-			$field_key = get_option('_' . $post_id . '_' . $field_key); 
+			$field = $acf->get_acf_field($field_key);
 		}
 	}
-	
-	
-	// get field
-	if( strpos($field_key, "field_") !== false )
+	else
 	{
-		$field = $acf->get_acf_field($field_key);
+		$field = array(
+			'type' => 'none',
+			'name' => $field_key
+		);
 	}
 	
 	
@@ -459,14 +469,16 @@ $GLOBALS['acf_register_options_page'] = array();
 
 function register_options_page($title = "")
 {
-	$GLOBALS['acf_register_options_page'][] =  array(
-		'title'	=> $title,
-		'slug' => 'acf-options-' . sanitize_title( $title ),
-	);
+	$GLOBALS['acf_register_options_page'][] = $title;
 }
 
 function acf_register_options_page($array)
 {
+	if( empty($GLOBALS['acf_register_options_page']) )
+	{
+		return $array;
+	}
+	
 	$array = array_merge($array, $GLOBALS['acf_register_options_page']);
 	
 	return $array;

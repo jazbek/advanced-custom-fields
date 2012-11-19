@@ -569,6 +569,21 @@ acf.text.gallery_tb_title_edit = "<?php _e("Edit Image",'acf'); ?>";
 	
 	function acf_print_scripts_input()
 	{
+		
+		wp_register_script('acf-datepicker', $this->parent->dir . '/core/fields/date_picker/jquery.ui.datepicker.js', false, $this->parent->version);
+    
+		wp_enqueue_script(array(
+			'jquery',
+			'jquery-ui-core',
+			'jquery-ui-tabs',
+			'jquery-ui-sortable',
+			'farbtastic',
+			'thickbox',
+			'media-upload',
+			'acf-datepicker',	
+		));
+
+		
 		foreach($this->parent->fields as $field)
 		{
 			$field->admin_print_scripts();
@@ -587,6 +602,14 @@ acf.text.gallery_tb_title_edit = "<?php _e("Edit Image",'acf'); ?>";
 	
 	function acf_print_styles_input()
 	{
+		wp_register_style('acf-datepicker', $this->parent->dir . '/core/fields/date_picker/style.date_picker.css', false, $this->parent->version);
+		
+		wp_enqueue_style(array(
+			'thickbox',
+			'farbtastic',
+			'acf-datepicker',	
+		));
+		
 		foreach($this->parent->fields as $field)
 		{
 			$field->admin_print_styles();

@@ -21,23 +21,6 @@ class acf_Date_picker extends acf_Field
 		$this->title = __("Date Picker",'acf');
 		
    	}
-   	
-	
-	/*--------------------------------------------------------------------------------------
-	*
-	*	admin_head
-	*
-	*	@author Elliot Condon
-	*	@since 2.0.6
-	* 
-	*-------------------------------------------------------------------------------------*/
-	
-	function admin_head()
-	{
-		// add datepicker
-		echo '<link rel="stylesheet" type="text/css" href="'.$this->parent->dir.'/core/fields/date_picker/style.date_picker.css" />';
-		echo '<script type="text/javascript" src="'.$this->parent->dir.'/core/fields/date_picker/jquery.ui.datepicker.js" ></script>';
-	}
 	
 	
 	/*--------------------------------------------------------------------------------------

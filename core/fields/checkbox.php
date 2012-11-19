@@ -121,75 +121,17 @@ class acf_Checkbox extends acf_Field
 				</p>
 			</td>
 			<td>
-				<textarea class="texarea field_option-choices" rows="5" name="fields[<?php echo $key; ?>][choices]" id=""><?php echo $field['choices']; ?></textarea>
+				<?php 
+				$this->parent->create_field(array(
+					'type'	=>	'textarea',
+					'class' => 	'textarea field_option-choices',
+					'name'	=>	'fields['.$key.'][choices]',
+					'value'	=>	$field['choices'],
+				));
+				?>
 			</td>
 		</tr>
 		<?php
-	}
-
-	
-	/*--------------------------------------------------------------------------------------
-	*
-	*	pre_save_field
-	*	- called just before saving the field to the database.
-	*
-	*	@author Elliot Condon
-	*	@since 2.2.0
-	* 
-	*-------------------------------------------------------------------------------------*/
-	
-	function pre_save_field($field)
-	{
-		// vars
-		$defaults = array(
-			'choices'	=>	'',
-		);
-		
-		$field = array_merge($defaults, $field);
-		
-		
-		// check if is array. Normal back end edit posts a textarea, but a user might use update_field from the front end
-		if( is_array( $field['choices'] ))
-		{
-		    return $field;
-		}
-
-
-		// vars
-		$new_choices = array();
-		
-		// explode choices from each line
-		if(strpos($field['choices'], "\n") !== false)
-		{
-			// found multiple lines, explode it
-			$field['choices'] = explode("\n", $field['choices']);
-		}
-		else
-		{
-			// no multiple lines! 
-			$field['choices'] = array($field['choices']);
-		}
-		
-		// key => value
-		foreach($field['choices'] as $choice)
-		{
-			if(strpos($choice, ' : ') !== false)
-			{
-				$choice = explode(' : ', $choice);
-				$new_choices[trim($choice[0])] = trim($choice[1]);
-			}
-			else
-			{
-				$new_choices[trim($choice)] = trim($choice);
-			}
-		}
-		
-		// update choices
-		$field['choices'] = $new_choices;
-		
-		// return updated field
-		return $field;
-
 	}
 		
 }
