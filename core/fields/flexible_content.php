@@ -355,7 +355,10 @@ class acf_Flexible_content extends acf_Field
 		// get name of all fields for use in field type
 		foreach($this->parent->fields as $f)
 		{
-			$fields_names[$f->name] = $f->title;
+			if( $f->name )
+			{
+				$fields_names[$f->name] = $f->title;
+			}
 		}
 		unset($fields_names['flexible_content']);
 		

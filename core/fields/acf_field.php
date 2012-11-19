@@ -117,9 +117,15 @@ class acf_Field
 		
 		// apply filters
 		$value = apply_filters('acf_update_value', $value, $field, $post_id );
-		$value = apply_filters('acf_update_value-' . $field['type'], $value, $field, $post_id);
-		$value = apply_filters('acf_update_value-' . $field['name'], $value, $field, $post_id);
-		$value = apply_filters('acf_update_value-' . $field['key'], $value, $field, $post_id);
+		
+		$keys = array('type', 'name', 'key');
+		foreach( $keys as $key )
+		{
+			if( isset($field[ $key ]) )
+			{
+				$value = apply_filters('acf_update_value-' . $field[ $key ], $value, $field, $post_id);
+			}
+		}
 				
 		
 		// if $post_id is a string, then it is used in the everything fields and can be found in the options table
@@ -231,20 +237,14 @@ class acf_Field
 		
 		// apply filters
 		$value = apply_filters('acf_load_value', $value, $field, $post_id );
-
-		if( isset($field['type']) )
-		{
-			$value = apply_filters('acf_load_value-' . $field['type'], $value, $field, $post_id);
-		}
 		
-		if( isset($field['name']) )
+		$keys = array('type', 'name', 'key');
+		foreach( $keys as $key )
 		{
-			$value = apply_filters('acf_load_value-' . $field['name'], $value, $field, $post_id);
-		}
-		
-		if( isset($field['key']) )
-		{
-			$value = apply_filters('acf_load_value-' . $field['key'], $value, $field, $post_id);
+			if( isset($field[ $key ]) )
+			{
+				$value = apply_filters('acf_load_value-' . $field[ $key ], $value, $field, $post_id);
+			}
 		}
 		
 		

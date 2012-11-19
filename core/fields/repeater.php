@@ -302,7 +302,10 @@ class acf_Repeater extends acf_Field
 		// get name of all fields for use in field type
 		foreach($this->parent->fields as $f)
 		{
-			$fields_names[$f->name] = $f->title;
+			if( $f->name )
+			{
+				$fields_names[$f->name] = $f->title;
+			}
 		}
 		
 		?>

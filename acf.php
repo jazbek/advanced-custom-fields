@@ -577,12 +577,22 @@ class Acf
 				$row['meta_value'] = maybe_unserialize( $row['meta_value'] ); // run again for WPML
 				
 				
-				// run filters
+				// store field
 				$field = $row['meta_value'];
+				
+				
+				// apply filters
 				$field = apply_filters('acf_load_field', $field);
-				$field = apply_filters('acf_load_field-' . $field['name'], $field);
-				$field = apply_filters('acf_load_field-' . $field['key'], $field);
-			
+				
+				$keys = array('type', 'name', 'key');
+				foreach( $keys as $key )
+				{
+					if( isset($field[ $key ]) )
+					{
+						$value = apply_filters('acf_load_field-' . $field[ $key ], $field);
+					}
+				}
+				
 			
 				// set cache
 				$this->set_cache('acf_field_' . $field_key, $field);
@@ -608,10 +618,18 @@ class Acf
 					{
 						if($field['key'] == $field_key)
 						{
-							// run filters
+							// apply filters
 							$field = apply_filters('acf_load_field', $field);
-							$field = apply_filters('acf_load_field-' . $field['name'], $field);
-							$field = apply_filters('acf_load_field-' . $field['key'], $field);
+							
+							$keys = array('type', 'name', 'key');
+							foreach( $keys as $key )
+							{
+								if( isset($field[ $key ]) )
+								{
+									$value = apply_filters('acf_load_field-' . $field[ $key ], $field);
+								}
+							}
+							
 							
 							// set cache
 							$this->set_cache('acf_field_' . $field_key, $field);

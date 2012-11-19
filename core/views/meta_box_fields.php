@@ -38,9 +38,12 @@ $fields[] = array(
 
 
 // get name of all fields for use in field type drop down
-foreach( $this->parent->fields as $field )
+foreach($this->parent->fields as $f)
 {
-	$fields_names[$field->name] = $field->title;
+	if( $f->name )
+	{
+		$fields_names[$f->name] = $f->title;
+	}
 }
 
 ?>
