@@ -87,6 +87,22 @@ http://support.advancedcustomfields.com/
 
 == Changelog ==
 
+= 3.5.3 =
+* [Updated] Update / overhaul flexible content field UI
+* [Added] Add Show / Hide for flexible content layouts
+* [Added] Add column width for flexible content - http://support.advancedcustomfields.com/discussion/3382/percentage-widths-on-fc-fields
+* [Added] Add instructions for flexible content sub fields
+* [Added] Add new parameter to get_field to allow for no formatting - http://support.advancedcustomfields.com/discussion/3188/update_field-repeater
+* [Fixed] Fix compatibility issue with post type switcher plugin - http://support.advancedcustomfields.com/discussion/3493/field-group-changes-to-post-when-i-save
+* [Added] Add new location rules for "Front Page" "Post Page" - http://support.advancedcustomfields.com/discussion/3485/groups-association-whit-page-slug-instead-of-id
+* [Fixed] Fix flexible content + repeater row limit bug - http://support.advancedcustomfields.com/discussion/3557/repeater-fields-inside-flexible-field-on-backend-not-visible-before-first-savingpublishing
+* [Added] Add filter "acf_load_value" for values - http://support.advancedcustomfields.com/discussion/3725/a-filter-for-get_field
+* [Fixed] Fix choices backslash issue - http://support.advancedcustomfields.com/discussion/3796/backslash-simple-quote-bug-in-radio-button-values-fields
+* [Updated] acf_options_page_title now overrides the menu and title. If your field groups are not showing after update, please re-save them to update the location rules.
+* [Updated] Update location rules to show all post types in page / page_parent / post
+* [Added] Change all "pre_save_field" functions to "acf_save_field" hooks
+* [Improved] Improve general CSS / JS
+
 = 3.5.2 =
 * Security update
 
